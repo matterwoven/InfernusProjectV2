@@ -1,4 +1,4 @@
-﻿using InfernusMod.Modules.BaseStates;
+using InfernusMod.Modules.BaseStates;
 using RoR2;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             hitboxGroupName = "SwordGroup";
 
             damageType = DamageTypeCombo.GenericPrimary;
-            damageCoefficient = InfernusStaticValues.swordDamageCoefficient;
+            damageCoefficient = InfernusStaticValues.napalmDamageCoefficient;
             procCoefficient = 1f;
             pushForce = 300f;
             bonusForce = Vector3.zero;

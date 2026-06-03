@@ -104,7 +104,7 @@ namespace InfernusMod.Survivors.Infernus
             InfernusTokens.Init();
 
             InfernusAssets.Init(assetBundle);
-            InfernusBuffs.Init(assetBundle);
+            InfernusDebuffs.Init(assetBundle);
 
             InitializeEntityStateMachines();
             InitializeSkills();
@@ -435,9 +435,9 @@ namespace InfernusMod.Survivors.Infernus
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
 
-            if (sender.HasBuff(InfernusBuffs.armorBuff))
+            if (sender.HasBuff(InfernusDebuffs.napalmDebuff))
             {
-                args.armorAdd += 300;
+                args.curseTotalMult += 30;
             }
         }
     }

@@ -17,6 +17,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public static float range = 256f;
         public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
 
+        public static int buildupThreshold = 10;
+
+        public static float afterburnDuration = 5f;
+
         private float duration;
         private float fireTime;
         private bool hasFired;
@@ -98,11 +102,87 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                         spreadYawScale = 1f,
                         queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                         hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab,
+                        hitCallback = OnBulletHit,
                     }.Fire();
                 }
             }
         }
+        #region callback
+        private bool OnBulletHit(BulletAttack attack, ref BulletAttack.BulletHit hitInfo)
+        {
+            // Let the base damage through unconditionally
+            if (hitInfo.hitHurtBox == null) return true;
+            HurtBox victimHurtBox = hitInfo.hitHurtBox;
+            //Victim health component
+            HealthComponent hc = hitInfo.hitHurtBox.healthComponent;
+            if (hc == null || !hc.alive) return true;
+            GameObject victimGameObject = hc.gameObject;
 
+            CharacterBody victim = hc.body;
+            if (victim == null) return true;
+
+            ApplyDebuffLogic(victim, victimHurtBox);
+
+            return true; // returning true keeps normal hit processing (damage, effects, etc.)
+        }
+
+        private void ApplyDebuffLogic(CharacterBody victim, HurtBox hitHurtBox)
+        {
+            bool isAlreadyBurning = victim.HasBuff(InfernusDebuffs.afterburnDebuff);
+
+            if (isAlreadyBurning)
+            {
+                // Target is already burning — refresh the dot to full duration.
+                // We manually clear all matching dot stacks from dotStackList
+                // (no public RemoveDotStacksForType exists in this RoR2 version)
+                // then immediately re-inflict so the timer resets cleanly.
+                DotController dc = DotController.FindDotController(victim.gameObject);
+                if (dc != null)
+                    ClearDotStacks(dc, InfernusDebuffs.afterburnDebuffIndex);
+
+                InflictAfterburn(victim, hitHurtBox);
+            }
+            else
+            {
+                // Add one buildup stack
+                victim.AddBuff(InfernusDebuffs.afterburnBuildup);
+
+                int currentStacks = victim.GetBuffCount(InfernusDebuffs.afterburnBuildup);
+
+                if (currentStacks >= buildupThreshold)
+                {
+                    // Clear ALL buildup stacks at once
+                    for (int i = 0; i < currentStacks; i++)
+                        victim.RemoveBuff(InfernusDebuffs.afterburnBuildup);
+
+                    // Apply afterburn dot fresh
+                    InflictAfterburn(victim, hitHurtBox);
+                }
+            }
+        }
+
+        private static void ClearDotStacks(DotController dc, DotController.DotIndex targetIndex)
+        {
+            // dotStackList is a public List<DotController.DotStack> on DotController
+            for (int i = dc.dotStackList.Count - 1; i >= 0; i--)
+            {
+                if (dc.dotStackList[i].dotIndex == targetIndex)
+                    dc.dotStackList.RemoveAt(i);
+            }
+        }
+
+        private void InflictAfterburn(CharacterBody victim, HurtBox hitHurtbox)
+        {
+            DotController.InflictDot(
+                victim.gameObject,
+                gameObject,                           // attacker
+                hitHurtbox,
+                InfernusDebuffs.afterburnDebuffIndex,
+                afterburnDuration,
+                1f                                    // damage multiplier on top of DotDef.damageCoefficient
+            );
+        }
+        #endregion
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.PrioritySkill;
