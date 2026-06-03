@@ -32,7 +32,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public static Vector3 splashHalfExtents   = new Vector3(1.2f, 1.2f, 1.2f);
 
         // ── Debuff ────────────────────────────────────────────────────────────
-        public static float napalmDebuffDuration  = 15f;
+        public static float napalmDebuffDuration  = 8f;
 
         // ── Private runtime ───────────────────────────────────────────────────
         private float     duration;

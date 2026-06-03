@@ -47,18 +47,18 @@ namespace InfernusMod.Survivors.Infernus
             #endregion
 
             #region Primary
-            Language.Add(prefix + "PRIMARY_SLASH_NAME", "Incendiary Remarks");
-            Language.Add(prefix + "PRIMARY_SLASH_DESCRIPTION", Tokens.emberPrefix + $"Shoot flaming bullets dealing <style=cIsDamage>{100f * InfernusStaticValues.gunDamageCoefficient}% damage</style>.");
+            Language.Add(prefix + "PRIMARY_REMARKS_NAME", "Incendiary Remarks");
+            Language.Add(prefix + "PRIMARY_REMARKS_DESCRIPTION", Tokens.emberPrefix + $"Shoot flaming bullets dealing <style=cIsDamage>{100f * InfernusStaticValues.gunDamageCoefficient}% damage</style>.");
             #endregion
 
             #region Secondary
-            Language.Add(prefix + "SECONDARY_GUN_NAME", "Napalm");
-            Language.Add(prefix + "SECONDARY_GUN_DESCRIPTION", Tokens.emberPrefix + $"Eject napalm to coat enemies dealing <style=cIsDamage>{100f * InfernusStaticValues.napalmDamageCoefficient}% damage</style>.");
+            Language.Add(prefix + "SECONDARY_NAPALM_NAME", "Napalm");
+            Language.Add(prefix + "SECONDARY_NAPALM_DESCRIPTION", Tokens.emberPrefix + $"Eject napalm to coat enemies dealing <style=cIsDamage>{100f * InfernusStaticValues.napalmDamageCoefficient}% damage</style>.");
             #endregion
 
             #region Utility
-            Language.Add(prefix + "UTILITY_ROLL_NAME", "Flame Dash");
-            Language.Add(prefix + "UTILITY_ROLL_DESCRIPTION", Tokens.emberPrefix + $"Dash swiftly while leaving behind a trail of flames that deals <style=cIsDamage>{100f * InfernusStaticValues.dashDamageCoefficient}% damage over time</style>.");
+            Language.Add(prefix + "UTILITY_DASH_NAME", "Flame Dash");
+            Language.Add(prefix + "UTILITY_DASH_DESCRIPTION", Tokens.emberPrefix + $"Dash swiftly while leaving behind a trail of flames that deals <style=cIsDamage>{100f * InfernusStaticValues.dashDamageCoefficient}% damage over time</style>.");
             #endregion
 
             #region Special

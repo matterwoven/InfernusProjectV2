@@ -14,7 +14,7 @@ namespace InfernusMod.Survivors.Infernus
     public class InfernusSurvivor : SurvivorBase<InfernusSurvivor>
     {
         //used to load the assetbundle for this character. must be unique
-        public override string assetBundleName => "matterDevAssetsFern"; //if you do not change this, you are giving permission to deprecate the mod
+        public override string assetBundleName => "matterDevFern"; //if you do not change this, you are giving permission to deprecate the mod
 
         //the name of the prefab we will create. conventionally ending in "Body". must be unique
         public override string bodyName => "InfernusBody"; //if you do not change this, you get the point by now
@@ -127,7 +127,7 @@ namespace InfernusMod.Survivors.Infernus
         public void AddHitboxes()
         {
             //example of how to create a HitBoxGroup. see summary for more details
-            Prefabs.SetupHitBoxGroup(characterModelObject, "SwordGroup", "SwordHitbox");
+            Prefabs.SetupHitBoxGroup(characterModelObject, "ConcussiveGroup", "ConcussiveCombustionHitbox");
         }
 
         public override void InitializeEntityStateMachines() 
@@ -220,11 +220,11 @@ namespace InfernusMod.Survivors.Infernus
             //it is also a SteppedSkillDef. Custom Skilldefs are very useful for custom behaviors related to casting a skill. see ror2's different skilldefs for reference
             SteppedSkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
                 (
-                    "InfernusSlash",
+                    "InfernusGun",
                     INFERNUS_PREFIX + "PRIMARY_SLASH_NAME",
                     INFERNUS_PREFIX + "PRIMARY_SLASH_DESCRIPTION",
                     assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
-                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
+                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
                     "Weapon",
                     true
                 ));
@@ -242,17 +242,17 @@ namespace InfernusMod.Survivors.Infernus
             //here is a basic skill def with all fields accounted for
             SkillDef secondarySkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "InfernusGun",
-                skillNameToken = INFERNUS_PREFIX + "SECONDARY_GUN_NAME",
-                skillDescriptionToken = INFERNUS_PREFIX + "SECONDARY_GUN_DESCRIPTION",
-                keywordTokens = new string[] { "KEYWORD_AGILE" },
+                skillName = "InfernusNapalm",
+                skillNameToken = INFERNUS_PREFIX + "SECONDARY_NAPALM_NAME",
+                skillDescriptionToken = INFERNUS_PREFIX + "SECONDARY_NAPALM_DESCRIPTION",
+                keywordTokens = new string[] { "KEYWORD_EMBER" },
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
                 activationStateMachineName = "Weapon2",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 1f,
+                baseRechargeInterval = 6f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -260,9 +260,9 @@ namespace InfernusMod.Survivors.Infernus
                 stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
-                fullRestockOnAssign = true,
+                fullRestockOnAssign = false,
                 dontAllowPastMaxStocks = false,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = true,
@@ -282,12 +282,12 @@ namespace InfernusMod.Survivors.Infernus
             //here's a skilldef of a typical movement skill.
             SkillDef utilitySkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "InfernusRoll",
-                skillNameToken = INFERNUS_PREFIX + "UTILITY_ROLL_NAME",
-                skillDescriptionToken = INFERNUS_PREFIX + "UTILITY_ROLL_DESCRIPTION",
+                skillName = "InfernusDash",
+                skillNameToken = INFERNUS_PREFIX + "UTILITY_DASH_NAME",
+                skillDescriptionToken = INFERNUS_PREFIX + "UTILITY_DASH_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(Roll)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(FlameDash)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
@@ -299,7 +299,7 @@ namespace InfernusMod.Survivors.Infernus
                 stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
-                fullRestockOnAssign = true,
+                fullRestockOnAssign = false,
                 dontAllowPastMaxStocks = false,
                 mustKeyPress = false,
                 beginSkillCooldownOnSkillEnd = false,
