@@ -1,8 +1,8 @@
-﻿using HenryMod.Modules.BaseStates;
+﻿using InfernusMod.Modules.BaseStates;
 using RoR2;
 using UnityEngine;
 
-namespace HenryMod.Survivors.Henry.SkillStates
+namespace InfernusMod.Survivors.Infernus.SkillStates
 {
     public class SlashCombo : BaseMeleeAttack
     {
@@ -11,7 +11,7 @@ namespace HenryMod.Survivors.Henry.SkillStates
             hitboxGroupName = "SwordGroup";
 
             damageType = DamageTypeCombo.GenericPrimary;
-            damageCoefficient = HenryStaticValues.swordDamageCoefficient;
+            damageCoefficient = InfernusStaticValues.swordDamageCoefficient;
             procCoefficient = 1f;
             pushForce = 300f;
             bonusForce = Vector3.zero;
@@ -29,14 +29,14 @@ namespace HenryMod.Survivors.Henry.SkillStates
             attackRecoil = 0.5f;
             hitHopVelocity = 4f;
 
-            swingSoundString = "HenrySwordSwing";
+            swingSoundString = "InfernusSwordSwing";
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingLeft" : "SwingRight";
             playbackRateParam = "Slash.playbackRate";
-            swingEffectPrefab = HenryAssets.swordSwingEffect;
-            hitEffectPrefab = HenryAssets.swordHitImpactEffect;
+            swingEffectPrefab = InfernusAssets.swordSwingEffect;
+            hitEffectPrefab = InfernusAssets.swordHitImpactEffect;
 
-            impactSound = HenryAssets.swordHitSoundEvent.index;
+            impactSound = InfernusAssets.swordHitSoundEvent.index;
 
             base.OnEnter();
         }

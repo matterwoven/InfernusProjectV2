@@ -1,12 +1,12 @@
-﻿using EntityStates;
+using EntityStates;
 using RoR2;
 using RoR2.Skills;
 using System;
 using System.Collections.Generic;
-using HenryMod;
+using InfernusMod;
 using UnityEngine;
 
-namespace HenryMod.Modules
+namespace InfernusMod.Modules
 {
     internal static class Skills
     {
@@ -185,7 +185,7 @@ namespace HenryMod.Modules
 
             skillDef.keywordTokens = skillDefInfo.keywordTokens;
 
-            HenryMod.Modules.Content.AddSkillDef(skillDef);
+            InfernusMod.Modules.Content.AddSkillDef(skillDef);
 
 
             return skillDef;

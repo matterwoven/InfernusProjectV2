@@ -9,7 +9,7 @@ using RoR2.UI;
 using RoR2.Projectile;
 using Path = System.IO.Path;
 
-namespace HenryMod.Modules
+namespace InfernusMod.Modules
 {
     internal static class Asset
     {
@@ -33,7 +33,7 @@ namespace HenryMod.Modules
             AssetBundle assetBundle = null;
             try
             {
-                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(HenryPlugin.instance.Info.Location), "AssetBundles", bundleName));
+                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(InfernusPlugin.instance.Info.Location), "AssetBundles", bundleName));
             }
             catch (System.Exception e)
             {

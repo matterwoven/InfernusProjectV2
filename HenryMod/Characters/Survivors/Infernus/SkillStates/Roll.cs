@@ -1,10 +1,10 @@
 ﻿using EntityStates;
-using HenryMod.Survivors.Henry;
+using InfernusMod.Survivors.Infernus;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace HenryMod.Survivors.Henry.SkillStates
+namespace InfernusMod.Survivors.Infernus.SkillStates
 {
     public class Roll : BaseSkillState
     {
@@ -12,7 +12,7 @@ namespace HenryMod.Survivors.Henry.SkillStates
         public static float initialSpeedCoefficient = 5f;
         public static float finalSpeedCoefficient = 2.5f;
 
-        public static string dodgeSoundString = "HenryRoll";
+        public static string dodgeSoundString = "InfernusRoll";
         public static float dodgeFOV = global::EntityStates.Commando.DodgeState.dodgeFOV;
 
         private float rollSpeed;
@@ -52,7 +52,7 @@ namespace HenryMod.Survivors.Henry.SkillStates
 
             if (NetworkServer.active)
             {
-                characterBody.AddTimedBuff(HenryBuffs.armorBuff, 3f * duration);
+                characterBody.AddTimedBuff(InfernusBuffs.armorBuff, 3f * duration);
                 characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
             }
         }

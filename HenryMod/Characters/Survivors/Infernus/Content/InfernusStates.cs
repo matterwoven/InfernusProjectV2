@@ -1,8 +1,8 @@
-﻿using HenryMod.Survivors.Henry.SkillStates;
+﻿using InfernusMod.Survivors.Infernus.SkillStates;
 
-namespace HenryMod.Survivors.Henry
+namespace InfernusMod.Survivors.Infernus
 {
-    public static class HenryStates
+    public static class InfernusStates
     {
         public static void Init()
         {

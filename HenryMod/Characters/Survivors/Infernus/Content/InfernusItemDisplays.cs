@@ -1,5 +1,5 @@
-﻿using HenryMod.Modules;
-using HenryMod.Modules.Characters;
+﻿using InfernusMod.Modules;
+using InfernusMod.Modules.Characters;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +11,9 @@ using UnityEngine;
                     {localScale})
 */
 
-namespace HenryMod.Survivors.Henry
+namespace InfernusMod.Survivors.Infernus
 {
-    public class HenryItemDisplays : ItemDisplaysBase
+    public class InfernusItemDisplays : ItemDisplaysBase
     {
         protected override void SetItemDisplayRules(List<ItemDisplayRuleSet.KeyAssetRuleGroup> itemDisplayRules)
         {
