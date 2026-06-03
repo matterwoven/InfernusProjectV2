@@ -120,7 +120,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
                     HealthComponent hc = hurtBox.healthComponent;
                     if (hc == null || !hc.alive)    continue;
-                    if (hitThisTick.Contains(hc))   continue; // dedupe per tick
+                    if (hitThisTick.Contains(hc))   continue;
                     if (hc.gameObject == attacker)  continue; // no self-damage
 
                     // Skip allies
