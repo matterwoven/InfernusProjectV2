@@ -27,12 +27,12 @@ namespace InfernusMod.Survivors.Infernus
              + "< ! > Flame Dash leaves behind a trail of flames that can damage crowds of enemies in an area." + Environment.NewLine + Environment.NewLine
              + "< ! > Concussive Combustion turns you into a living timebomb, stunning everyone around you after a windup." + Environment.NewLine + Environment.NewLine;
 
-            string outro = "..and so he left, searching for a new identity.";
-            string outroFailure = "..and so he vanished, forever a blank slate.";
+            string outro = "..and so he ran, dreaming of the new gifts he's obtained to save Jezebel's.";
+            string outroFailure = "..and so his flame drowned, returned to the haunted streets of New York.";
 
             Language.Add(prefix + "NAME", "Infernus");
             Language.Add(prefix + "DESCRIPTION", desc);
-            Language.Add(prefix + "SUBTITLE", "Debtor of Jezebel's");
+            Language.Add(prefix + "SUBTITLE", "Loyal friend of Hank");
             Language.Add(prefix + "LORE", "sample lore");
             Language.Add(prefix + "OUTRO_FLAVOR", outro);
             Language.Add(prefix + "OUTRO_FAILURE", outroFailure);
@@ -43,26 +43,26 @@ namespace InfernusMod.Survivors.Infernus
 
             #region Passive
             Language.Add(prefix + "PASSIVE_NAME", "Afterburn");
-            Language.Add(prefix + "PASSIVE_DESCRIPTION", "Weapon hits build up a burning effect, dealing damage over time.");
+            Language.Add(prefix + "PASSIVE_DESCRIPTION", $"Weapon hits build up a burning effect, dealing <style=cIsDamage>{100f * InfernusStaticValues.afterburnDamageCoefficient}% damage over time</style>.");
             #endregion
 
             #region Primary
             Language.Add(prefix + "PRIMARY_SLASH_NAME", "Incendiary Remarks");
-            Language.Add(prefix + "PRIMARY_SLASH_DESCRIPTION", Tokens.agilePrefix + $"Swing forward for <style=cIsDamage>{100f * InfernusStaticValues.swordDamageCoefficient}% damage</style>.");
+            Language.Add(prefix + "PRIMARY_SLASH_DESCRIPTION", Tokens.emberPrefix + $"Shoot flaming bullets dealing <style=cIsDamage>{100f * InfernusStaticValues.gunDamageCoefficient}% damage</style>.");
             #endregion
 
             #region Secondary
-            Language.Add(prefix + "SECONDARY_GUN_NAME", "Handgun");
-            Language.Add(prefix + "SECONDARY_GUN_DESCRIPTION", Tokens.agilePrefix + $"Fire a handgun for <style=cIsDamage>{100f * InfernusStaticValues.gunDamageCoefficient}% damage</style>.");
+            Language.Add(prefix + "SECONDARY_GUN_NAME", "Napalm");
+            Language.Add(prefix + "SECONDARY_GUN_DESCRIPTION", Tokens.emberPrefix + $"Eject napalm to coat enemies dealing <style=cIsDamage>{100f * InfernusStaticValues.napalmDamageCoefficient}% damage</style>.");
             #endregion
 
             #region Utility
-            Language.Add(prefix + "UTILITY_ROLL_NAME", "Roll");
-            Language.Add(prefix + "UTILITY_ROLL_DESCRIPTION", "Roll a short distance, gaining <style=cIsUtility>300 armor</style>. <style=cIsUtility>You cannot be hit during the roll.</style>");
+            Language.Add(prefix + "UTILITY_ROLL_NAME", "Flame Dash");
+            Language.Add(prefix + "UTILITY_ROLL_DESCRIPTION", Tokens.emberPrefix + $"Dash swiftly while leaving behind a trail of flames that deals <style=cIsDamage>{100f * InfernusStaticValues.dashDamageCoefficient}% damage over time</style>.");
             #endregion
 
             #region Special
-            Language.Add(prefix + "SPECIAL_BOMB_NAME", "Bomb");
+            Language.Add(prefix + "SPECIAL_BOMB_NAME", "Concussive Combustion");
             Language.Add(prefix + "SPECIAL_BOMB_DESCRIPTION", $"Throw a bomb for <style=cIsDamage>{100f * InfernusStaticValues.bombDamageCoefficient}% damage</style>.");
             #endregion
 

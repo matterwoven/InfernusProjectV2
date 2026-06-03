@@ -20,13 +20,13 @@ namespace InfernusMod.Survivors.Infernus
         public override string bodyName => "InfernusBody"; //if you do not change this, you get the point by now
 
         //name of the ai master for vengeance and goobo. must be unique
-        public override string masterName => "InfernusMonsterMaster"; //if you do not
+        public override string masterName => "InfernusesMonsterMaster"; //if you do not
 
         //the names of the prefabs you set up in unity that we will use to build your character
         public override string modelPrefabName => "mdlInfernus";
         public override string displayPrefabName => "InfernusDisplay";
 
-        public const string Infernus_PREFIX = InfernusPlugin.DEVELOPER_PREFIX + "_INFERNUS_";
+        public const string INFERNUS_PREFIX = InfernusPlugin.DEVELOPER_PREFIX + "_INFERNUS_";
 
         //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => INFERNUS_PREFIX;

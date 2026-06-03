@@ -1,4 +1,4 @@
-﻿using RoR2;
+using RoR2;
 using InfernusMod.Modules.Achievements;
 
 namespace InfernusMod.Survivors.Infernus.Achievements

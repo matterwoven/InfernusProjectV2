@@ -1,4 +1,4 @@
-﻿using EntityStates;
+using EntityStates;
 using InfernusMod.Survivors.Infernus;
 using RoR2;
 using UnityEngine;
@@ -8,13 +8,16 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 {
     public class Roll : BaseSkillState
     {
-        public static float duration = 0.5f;
+        public static float duration = 3f;
         public static float initialSpeedCoefficient = 5f;
         public static float finalSpeedCoefficient = 2.5f;
+        public static float damageCoefficient = 1f * InfernusStaticValues.dashDamageCoefficient;
+        public static float forwardMultiplier = 1.4f;
 
         public static string dodgeSoundString = "InfernusRoll";
         public static float dodgeFOV = global::EntityStates.Commando.DodgeState.dodgeFOV;
 
+        private Vector3 idealDirection;
         private float rollSpeed;
         private Vector3 forwardDirection;
         private Animator animator;
@@ -25,23 +28,24 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             base.OnEnter();
             animator = GetModelAnimator();
 
-            if (isAuthority && inputBank && characterDirection)
+
+            if (isAuthority)
             {
-                forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
+                if (base.inputBank)
+                {
+                    this.idealDirection = base.inputBank.aimDirection;
+                    this.idealDirection.y = 0f;
+                }
+                this.UpdateDirection();
+            }
+            if (base.modelLocator)
+            {
+                base.modelLocator.normalizeToFloor = true;
             }
 
-            Vector3 rhs = characterDirection ? characterDirection.forward : forwardDirection;
-            Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
-
-            float num = Vector3.Dot(forwardDirection, rhs);
-            float num2 = Vector3.Dot(forwardDirection, rhs2);
-
-            RecalculateRollSpeed();
-
-            if (characterMotor && characterDirection)
+            if (base.characterDirection)
             {
-                characterMotor.velocity.y = 0f;
-                characterMotor.velocity = forwardDirection * rollSpeed;
+                base.characterDirection.forward = this.idealDirection;
             }
 
             Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
@@ -49,14 +53,19 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
             PlayAnimation("FullBody, Override", "Roll", "Roll.playbackRate", duration);
             Util.PlaySound(dodgeSoundString, gameObject);
-
-            if (NetworkServer.active)
+        }
+        private void UpdateDirection()
+        {
+            if (base.inputBank)
             {
-                characterBody.AddTimedBuff(InfernusBuffs.armorBuff, 3f * duration);
-                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
+                Vector2 vector = Util.Vector3XZToVector2XY(base.inputBank.moveVector);
+                if (vector != Vector2.zero)
+                {
+                    vector.Normalize();
+                    this.idealDirection = new Vector3(vector.x, 0f, vector.y).normalized;
+                }
             }
         }
-
         private void RecalculateRollSpeed()
         {
             rollSpeed = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);

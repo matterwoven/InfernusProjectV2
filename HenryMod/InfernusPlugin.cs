@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using InfernusMod.Survivors.Infernus;
 using R2API.Utils;
 using RoR2;
@@ -25,7 +25,7 @@ namespace InfernusMod
         public const string MODVERSION = "1.0.0";
 
         // a prefix for name tokens to prevent conflicts- please capitalize all name tokens for convention
-        public const string DEVELOPER_PREFIX = "ROB";
+        public const string DEVELOPER_PREFIX = "MATTERDEV";
 
         public static InfernusPlugin instance;
 
