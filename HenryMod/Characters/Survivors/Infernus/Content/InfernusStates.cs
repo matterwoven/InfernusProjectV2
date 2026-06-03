@@ -6,7 +6,7 @@ namespace InfernusMod.Survivors.Infernus
     {
         public static void Init()
         {
-            Modules.Content.AddEntityState(typeof(SlashCombo));
+            Modules.Content.AddEntityState(typeof(Napalm));
 
             Modules.Content.AddEntityState(typeof(Shoot));
 

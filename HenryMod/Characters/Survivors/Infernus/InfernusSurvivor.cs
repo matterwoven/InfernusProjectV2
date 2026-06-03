@@ -224,7 +224,7 @@ namespace InfernusMod.Survivors.Infernus
                     INFERNUS_PREFIX + "PRIMARY_SLASH_NAME",
                     INFERNUS_PREFIX + "PRIMARY_SLASH_DESCRIPTION",
                     assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
-                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.SlashCombo)),
+                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
                     "Weapon",
                     true
                 ));
