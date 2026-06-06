@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 385945051
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5006d89204bf73fb1467376a71c5c179
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 1397ad235555a4f37791d5b3ff19e7a7
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Materials/HitboxPreview.mat
+- Assets/Materials/matFloor.mat
+Dependencies: []
