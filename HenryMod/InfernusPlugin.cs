@@ -20,12 +20,12 @@ namespace InfernusMod
         // if you do not change this, you are giving permission to deprecate the mod-
         //  please change the names to your own stuff, thanks
         //   this shouldn't even have to be said
-        public const string MODUID = "com.rob.InfernusMod";
+        public const string MODUID = "com.mat.InfernusMod";
         public const string MODNAME = "InfernusMod";
-        public const string MODVERSION = "1.0.0";
+        public const string MODVERSION = "3.0.0";
 
         // a prefix for name tokens to prevent conflicts- please capitalize all name tokens for convention
-        public const string DEVELOPER_PREFIX = "MATTERDEV";
+        public const string DEVELOPER_PREFIX = "MAT";
 
         public static InfernusPlugin instance;
 

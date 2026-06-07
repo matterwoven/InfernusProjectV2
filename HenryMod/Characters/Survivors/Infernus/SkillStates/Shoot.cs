@@ -102,28 +102,34 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                         spreadYawScale = 1f,
                         queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                         hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab,
-                        hitCallback = OnBulletHit,
+                        hitCallback = OnBulletHit(),
                     }.Fire();
                 }
             }
         }
         #region callback
-        private bool OnBulletHit(BulletAttack attack, ref BulletAttack.BulletHit hitInfo)
+        private BulletAttack.HitCallback OnBulletHit()
         {
-            // Let the base damage through unconditionally
-            if (hitInfo.hitHurtBox == null) return true;
-            HurtBox victimHurtBox = hitInfo.hitHurtBox;
-            //Victim health component
-            HealthComponent hc = hitInfo.hitHurtBox.healthComponent;
-            if (hc == null || !hc.alive) return true;
-            GameObject victimGameObject = hc.gameObject;
+            return (BulletAttack bulletAttack, ref BulletAttack.BulletHit hitInfo) =>
+            {
+                bool returnValue = BulletAttack.DefaultHitCallbackImplementation(bulletAttack, ref hitInfo);
+                bool isCrit = bulletAttack.isCrit;
 
-            CharacterBody victim = hc.body;
-            if (victim == null) return true;
+                // Let the base damage through unconditionally
+                if (hitInfo.hitHurtBox == null) return returnValue;
+                HurtBox victimHurtBox = hitInfo.hitHurtBox;
+                //Victim health component
+                HealthComponent hc = hitInfo.hitHurtBox.healthComponent;
+                if (hc == null || !hc.alive) return returnValue;
+                GameObject victimGameObject = hc.gameObject;
 
-            ApplyDebuffLogic(victim, victimHurtBox);
+                CharacterBody victim = hc.body;
+                if (victim == null) return returnValue;
 
-            return true; // returning true keeps normal hit processing (damage, effects, etc.)
+                ApplyDebuffLogic(victim, victimHurtBox);
+
+                return returnValue; // returning true keeps normal hit processing (damage, effects, etc.)
+            };
         }
 
         private void ApplyDebuffLogic(CharacterBody victim, HurtBox hitHurtBox)
@@ -134,7 +140,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             {
                 // Target is already burning — refresh the dot to full duration.
                 // We manually clear all matching dot stacks from dotStackList
-                // (no public RemoveDotStacksForType exists in this RoR2 version)
                 // then immediately re-inflict so the timer resets cleanly.
                 DotController dc = DotController.FindDotController(victim.gameObject);
                 if (dc != null)

@@ -68,25 +68,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
                 Renderer rend = visual.GetComponent<Renderer>();
                 if (!rend) return;
-
-                //Setting material settings with selection, set to transparent
-                Material mat = new Material(Shader.Find("Standard"));
-
-
-                mat.SetFloat("_Mode", 3f);
-                mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                mat.SetInt("_ZWrite", 0);
-                mat.DisableKeyword("_ALPHATEST_ON");
-                mat.EnableKeyword("_ALPHABLEND_ON");
-                mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                mat.renderQueue = 3000;
-
-                mat.color = new Color(1f, 0.1f, 0f, 0.25f); // transparent red-orange
-
-                rend.material             = mat;
-                rend.shadowCastingMode    = UnityEngine.Rendering.ShadowCastingMode.Off;
-                rend.receiveShadows       = false;
             }
             #endregion 
             private void FixedUpdate()

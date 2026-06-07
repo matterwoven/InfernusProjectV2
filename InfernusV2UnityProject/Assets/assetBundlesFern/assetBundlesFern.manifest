@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2496640738
+CRC: 3702448925
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -9,6 +9,3 @@ AssetBundleManifest:
       Name: infernusbundle
       Dependencies:
         Dependency_0: myassetbundle
-    Info_2:
-      Name: materials
-      Dependencies: {}

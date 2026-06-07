@@ -63,7 +63,7 @@ namespace InfernusMod.Survivors.Infernus
 
             #region Special
             Language.Add(prefix + "SPECIAL_BOMB_NAME", "Concussive Combustion");
-            Language.Add(prefix + "SPECIAL_BOMB_DESCRIPTION", $"Throw a bomb for <style=cIsDamage>{100f * InfernusStaticValues.bombDamageCoefficient}% damage</style>.");
+            Language.Add(prefix + "SPECIAL_BOMB_DESCRIPTION", $"Become a living bomb, detonating in 3 seconds for <style=cIsDamage>{100f * InfernusStaticValues.bombDamageCoefficient}% damage</style>.");
             #endregion
 
             #region Achievements

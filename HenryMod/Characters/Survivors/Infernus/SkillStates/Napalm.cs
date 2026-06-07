@@ -1,20 +1,21 @@
 using EntityStates;
 using RoR2;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace InfernusMod.Survivors.Infernus.SkillStates
 {
     public class Napalm : BaseSkillState
     {
-        //NOT HANDLED BY A HUMAN, Napalms wave logic was handled by Claude code and not by me, only as a learning element comparing the two did I make changes for readability
+        //WAVE LOGIC NOT HANDLED BY A HUMAN, Napalms wave logic was handled by Claude code and not by me, only as a learning element comparing the two did I make changes for readability
         // ── Timing ────────────────────────────────────────────────────────────
         /// Total state length in seconds (scaled by attack speed).
         public static float baseDuration          = 0.5f;
         /// Duration in seconds at which the hitbox starts sweeping.
         public static float attackStartPercent    = 0.15f;
         /// Duration in seconds at which the hitbox stops.
-        public static float attackEndPercent      = 0.55f;
+        public static float attackEndPercent      = 0.5f;
 
         // ── Damage ────────────────────────────────────────────────────────────
         public static float procCoefficient       = 1f;
@@ -27,7 +28,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
         /// How far along the aim ray the box travels by the END of the sweep.
         /// Increase this for a more "thrown" feel.
-        public static float splashEndOffset       = 3.5f;
+        public static float splashEndOffset       = 20f;
         /// Half-extents of the overlap box (width, height, depth).
         public static Vector3 splashHalfExtents   = new Vector3(1.2f, 1.2f, 1.2f);
 
@@ -62,6 +63,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             duration    = baseDuration / attackSpeedStat;
             attackStart = attackStartPercent * duration;
             attackEnd   = attackEndPercent   * duration;
+
+            PlayAnimation(duration);
 
             // Lock aim at the moment the skill is activated
             Ray aimRay          = GetAimRay();
@@ -136,6 +139,16 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         /// Runs a Physics.OverlapBox at the proxy position every fixed frame
         /// during the attack window. Already-hit targets are skipped so each
         /// enemy takes damage at most once per cast.
+        /// 
+        public void PlayAnimation(float duration)
+        {
+
+            if (GetModelAnimator())
+            {
+                PlayAnimation("Gesture, Override", "Napalm", "Slash.playbackRate", duration);
+            }
+        }
+
         private void FireSplashTick()
         {
             Collider[] cols = Physics.OverlapBox(
@@ -157,24 +170,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
                 hitTargets.Add(hurtBox);
 
-                // Deal damage
-                DamageInfo info = new DamageInfo
-                {
-                    attacker         = gameObject,
-                    inflictor        = gameObject,
-                    damage           = InfernusStaticValues.napalmDamageCoefficient * damageStat,
-                    procCoefficient  = procCoefficient,
-                    position         = hc.transform.position,
-                    force            = lockedAimDirection * pushForce,
-                    crit             = overlapAttack.isCrit,
-                    damageType       = DamageType.Generic,
-                    damageColorIndex = DamageColorIndex.Default,
-                };
-
-                hc.TakeDamage(info);
-                GlobalEventManager.instance.OnHitEnemy(info, hc.gameObject);
-                GlobalEventManager.instance.OnHitAll(info, hc.gameObject);
-
                 // Apply napalm debuff
                 CharacterBody body = hc.body;
                 if (body != null)
@@ -185,6 +180,27 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         // ════════════════════════════════════════════════════════════════════
         public override void OnExit()
         {
+            foreach (HurtBox hurtBox in hitTargets.Distinct())
+            {
+                HealthComponent hc = hurtBox.healthComponent;
+                // Deal damage once
+                DamageInfo info = new DamageInfo
+                {
+                    attacker = gameObject,
+                    inflictor = gameObject,
+                    damage = InfernusStaticValues.napalmDamageCoefficient * damageStat,
+                    procCoefficient = procCoefficient,
+                    position = hc.transform.position,
+                    force = lockedAimDirection * pushForce,
+                    crit = overlapAttack.isCrit,
+                    damageType = DamageType.Generic,
+                    damageColorIndex = DamageColorIndex.Default,
+                };
+
+                hc.TakeDamage(info);
+                GlobalEventManager.instance.OnHitEnemy(info, hc.gameObject);
+                GlobalEventManager.instance.OnHitAll(info, hc.gameObject);
+            }
             // Always clean up the proxy — it is not parented so Unity won't
             // destroy it automatically when this state exits.
             if (splashProxy != null)

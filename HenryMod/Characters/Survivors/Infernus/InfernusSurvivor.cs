@@ -14,7 +14,7 @@ namespace InfernusMod.Survivors.Infernus
     public class InfernusSurvivor : SurvivorBase<InfernusSurvivor>
     {
         //used to load the assetbundle for this character. must be unique
-        public override string assetBundleName => "matterDevFern"; //if you do not change this, you are giving permission to deprecate the mod
+        public override string assetBundleName => "infernusBundle"; //if you do not change this, you are giving permission to deprecate the mod
 
         //the name of the prefab we will create. conventionally ending in "Body". must be unique
         public override string bodyName => "InfernusBody"; //if you do not change this, you get the point by now
@@ -23,8 +23,8 @@ namespace InfernusMod.Survivors.Infernus
         public override string masterName => "InfernusesMonsterMaster"; //if you do not
 
         //the names of the prefabs you set up in unity that we will use to build your character
-        public override string modelPrefabName => "mdlInfernus";
-        public override string displayPrefabName => "InfernusDisplay";
+        public override string modelPrefabName => "mdlInfernusV2";
+        public override string displayPrefabName => "InfernusV2NODELETE";
 
         public const string INFERNUS_PREFIX = InfernusPlugin.DEVELOPER_PREFIX + "_INFERNUS_";
 
@@ -127,7 +127,7 @@ namespace InfernusMod.Survivors.Infernus
         public void AddHitboxes()
         {
             //example of how to create a HitBoxGroup. see summary for more details
-            Prefabs.SetupHitBoxGroup(characterModelObject, "ConcussiveGroup", "ConcussiveCombustionHitbox");
+            Prefabs.SetupHitBoxGroup(characterModelObject, "ConcussiveGroup", "ConcussiveCombustion");
         }
 
         public override void InitializeEntityStateMachines() 
@@ -221,8 +221,8 @@ namespace InfernusMod.Survivors.Infernus
             SteppedSkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
                 (
                     "InfernusGun",
-                    INFERNUS_PREFIX + "PRIMARY_SLASH_NAME",
-                    INFERNUS_PREFIX + "PRIMARY_SLASH_DESCRIPTION",
+                    INFERNUS_PREFIX + "PRIMARY_REMARKS_NAME",
+                    INFERNUS_PREFIX + "PRIMARY_REMARKS_DESCRIPTION",
                     assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
                     new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
                     "Weapon",
@@ -291,7 +291,7 @@ namespace InfernusMod.Survivors.Infernus
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
-                baseRechargeInterval = 4f,
+                baseRechargeInterval = 12f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -320,12 +320,12 @@ namespace InfernusMod.Survivors.Infernus
             //a basic skill. some fields are omitted and will just have default values
             SkillDef specialSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "InfernusBomb",
+                skillName = "Concussive Combustion",
                 skillNameToken = INFERNUS_PREFIX + "SPECIAL_BOMB_NAME",
                 skillDescriptionToken = INFERNUS_PREFIX + "SPECIAL_BOMB_DESCRIPTION",
                 skillIcon = assetBundle.LoadAsset<Sprite>("texSpecialIcon"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ThrowBomb)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ConcussiveCombustion)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
                 activationStateMachineName = "Weapon2", interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -429,16 +429,20 @@ namespace InfernusMod.Survivors.Infernus
 
         private void AddHooks()
         {
-            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+            On.RoR2.HealthComponent.TakeDamage += Ror2HealthComponent_TakeDamage;
         }
 
-        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
+        private void Ror2HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
+            CharacterBody body = self.body;
 
-            if (sender.HasBuff(InfernusDebuffs.napalmDebuff))
+            if (body && body.HasBuff(InfernusDebuffs.napalmDebuff))
             {
-                args.curseTotalMult += 30;
+                // Increase incoming damage by 30%
+                damageInfo.damage *= 1f + 0.3f;
             }
+
+            orig(self, damageInfo);
         }
     }
 }

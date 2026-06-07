@@ -2451,6 +2451,7 @@ Transform:
   - {fileID: 101112837308286402}
   - {fileID: 5907204856291350269}
   - {fileID: 4700466852739337838}
+  - {fileID: 1187589204389064726}
   m_Father: {fileID: 7149391486145654583}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6380,6 +6381,51 @@ Transform:
   m_Father: {fileID: 2134770733616447784}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6769372296965141086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1187589204389064726}
+  - component: {fileID: 9015238980856952529}
+  m_Layer: 0
+  m_Name: ConcussiveCombustion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1187589204389064726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769372296965141086}
+  m_LocalRotation: {x: 0.000000042146848, y: -0.00000004214685, z: -1, w: 0.00000013315805}
+  m_LocalPosition: {x: 0, y: -0.701, z: 0}
+  m_LocalScale: {x: 4.148011, y: 3.4692457, z: 7.8997445}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4065519278760165573}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &9015238980856952529
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769372296965141086}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6872566668235209619
 GameObject:
   m_ObjectHideFlags: 0
@@ -7242,6 +7288,8 @@ MonoBehaviour:
     transform: {fileID: 1509621788728927959}
   - name: MainHurtbox
     transform: {fileID: 4700466852739337838}
+  - name: ConcussiveCombustion
+    transform: {fileID: 1187589204389064726}
 --- !u!114 &7529012532033992076
 MonoBehaviour:
   m_ObjectHideFlags: 0

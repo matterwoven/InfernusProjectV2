@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 937664976
+CRC: 579593183
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c3a31aa48bdb08cb62173342851eb348
+    Hash: 127976bc52b95642c902e5a734c1a8ef
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 5fd8b047e4d37a2edfa47031219287b7
+    Hash: 48c671f1a4d25df84da3f8f0715b8388
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -41,6 +41,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 261c50d8a80898e4ebf2e8e415ea6766, type: 3}
 - Class: 115
   Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
 - Class: 136
   Script: {instanceID: 0}
 - Class: 137
@@ -52,6 +54,7 @@ SerializeReferenceClassIdentifiers:
   ClassName: ChildLocator/NameTransformPair
 Assets:
 - Assets/InfernusBundle/Textures/inferno_body_ao_png_6515a3_orm_574107905.png
+- Assets/InfernusBundle/Animation/New Avatar Mask.mask
 - Assets/InfernusBundle/Prefabs/mdlInfernusV2.prefab
 - Assets/InfernusBundle/Textures/inferno_clothes_emissive_psd_39697cda.png
 - Assets/InfernusBundle/Materials/inferno_clothes_vmat_g_tnormalroughness_7f69070c.png
