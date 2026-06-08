@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1374370879
+CRC: 1483441722
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2e9c9677432c953c4d16172ad039a93e
+    Hash: dd2aac7e62ce893d735cd78500ca6d5d
   TypeTreeHash:
     serializedVersion: 2
     Hash: 48c671f1a4d25df84da3f8f0715b8388
@@ -53,37 +53,37 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Assembly-CSharp
   ClassName: ChildLocator/NameTransformPair
 Assets:
-- Assets/InfernusBundle/Textures/inferno_body_ao_png_6515a3_orm_574107905.png
-- Assets/InfernusBundle/Animation/New Avatar Mask.mask
-- Assets/InfernusBundle/Prefabs/mdlInfernusV2.prefab
-- Assets/InfernusBundle/Textures/inferno_clothes_emissive_psd_39697cda.png
-- Assets/InfernusBundle/Materials/inferno_clothes_vmat_g_tnormalroughness_7f69070c.png
-- Assets/InfernusBundle/Materials/default_mask_tga_344101f8.png
-- Assets/InfernusBundle/Materials/inferno_clothes_color_png_9ce427e7.png
-- Assets/InfernusBundle/Animation/maskAimBazooka.mask
-- Assets/InfernusBundle/Animation/maskAimYaw.mask
-- Assets/InfernusBundle/Materials/default_metal_tga_9e174e3d_orm_1846368195.png
-- Assets/InfernusBundle/Materials/default_normal_tga_7be61377.png
-- Assets/InfernusBundle/Animation/maskGesture.mask
-- Assets/InfernusBundle/FBX/InfernusV2.fbx
-- Assets/InfernusBundle/Animation/maskAimPitch.mask
-- Assets/InfernusBundle/Materials/Materials/inferno_glow_psd_3c639d14.mat
-- Assets/InfernusBundle/Materials/inferno_armglow_vmat_g_tselfillummask_2b2ebb3f.png
-- Assets/InfernusBundle/Materials/inferno_body_color_psd_f66b9185.png
-- Assets/InfernusBundle/Materials/inferno_glow_psd_3c639d14.png
-- Assets/InfernusBundle/Prefabs/InfernusV2NODELETE.prefab
-- Assets/InfernusBundle/Materials/inferno_glow_png_c2e03ac5.png
-- Assets/InfernusBundle/Materials/default_metal_tga_9e174e3d_orm_1588306586.png
-- Assets/InfernusBundle/Materials/inferno_body_vmat_g_tnormalroughness_55f05031.png
-- Assets/InfernusBundle/Materials/Materials/inferno_glow_png_c2e03ac5.mat
-- Assets/InfernusBundle/Textures/inferno_body_emissive_psd_12778766.png
-- Assets/InfernusBundle/Materials/Materials/inferno_body_color_psd_f66b9185.mat
-- Assets/InfernusBundle/Animation/animInfernusMenu.controller
-- Assets/InfernusBundle/Animation/maskLeftArm.mask
-- Assets/InfernusBundle/Materials/Materials/inferno_clothes_color_png_9ce427e7.mat
-- Assets/InfernusBundle/Materials/physics_default.png
-- Assets/InfernusBundle/Materials/inferno_headglow_vmat_g_tnormalroughness_40f3df6.png
-- Assets/InfernusBundle/Animation/animInfernus.controller
-- Assets/InfernusBundle/Textures/inferno_clothes_ao_png_acb6a116_orm_178573463.png
+- Assets/BigContainer/InfernusBundle/Textures/inferno_body_ao_png_6515a3_orm_574107905.png
+- Assets/BigContainer/InfernusBundle/Animation/New Avatar Mask.mask
+- Assets/BigContainer/InfernusBundle/Prefabs/mdlInfernusV2.prefab
+- Assets/BigContainer/InfernusBundle/Textures/inferno_clothes_emissive_psd_39697cda.png
+- Assets/BigContainer/InfernusBundle/Materials/inferno_clothes_vmat_g_tnormalroughness_7f69070c.png
+- Assets/BigContainer/InfernusBundle/Materials/default_mask_tga_344101f8.png
+- Assets/BigContainer/InfernusBundle/Materials/inferno_clothes_color_png_9ce427e7.png
+- Assets/BigContainer/InfernusBundle/Animation/maskAimBazooka.mask
+- Assets/BigContainer/InfernusBundle/Animation/maskAimYaw.mask
+- Assets/BigContainer/InfernusBundle/Materials/default_metal_tga_9e174e3d_orm_1846368195.png
+- Assets/BigContainer/InfernusBundle/Materials/default_normal_tga_7be61377.png
+- Assets/BigContainer/InfernusBundle/Animation/maskGesture.mask
+- Assets/BigContainer/InfernusBundle/FBX/InfernusV2.fbx
+- Assets/BigContainer/InfernusBundle/Animation/maskAimPitch.mask
+- Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_glow_psd_3c639d14.mat
+- Assets/BigContainer/InfernusBundle/Materials/inferno_armglow_vmat_g_tselfillummask_2b2ebb3f.png
+- Assets/BigContainer/InfernusBundle/Materials/inferno_body_color_psd_f66b9185.png
+- Assets/BigContainer/InfernusBundle/Materials/inferno_glow_psd_3c639d14.png
+- Assets/BigContainer/InfernusBundle/Prefabs/InfernusV2NODELETE.prefab
+- Assets/BigContainer/InfernusBundle/Materials/inferno_glow_png_c2e03ac5.png
+- Assets/BigContainer/InfernusBundle/Materials/default_metal_tga_9e174e3d_orm_1588306586.png
+- Assets/BigContainer/InfernusBundle/Materials/inferno_body_vmat_g_tnormalroughness_55f05031.png
+- Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_glow_png_c2e03ac5.mat
+- Assets/BigContainer/InfernusBundle/Textures/inferno_body_emissive_psd_12778766.png
+- Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_body_color_psd_f66b9185.mat
+- Assets/BigContainer/InfernusBundle/Animation/animInfernusMenu.controller
+- Assets/BigContainer/InfernusBundle/Animation/maskLeftArm.mask
+- Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_clothes_color_png_9ce427e7.mat
+- Assets/BigContainer/InfernusBundle/Materials/physics_default.png
+- Assets/BigContainer/InfernusBundle/Materials/inferno_headglow_vmat_g_tnormalroughness_40f3df6.png
+- Assets/BigContainer/InfernusBundle/Animation/animInfernus.controller
+- Assets/BigContainer/InfernusBundle/Textures/inferno_clothes_ao_png_acb6a116_orm_178573463.png
 Dependencies:
 - C:/Users/User/OneDrive/Documents/rat-ruler/InfernusProjectV2/InfernusV2UnityProject/Assets/assetBundlesFern/myassetbundle

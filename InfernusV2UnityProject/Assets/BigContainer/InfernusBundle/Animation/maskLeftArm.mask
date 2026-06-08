@@ -1,0 +1,467 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: maskLeftArm
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Light
+    m_Weight: 0
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/hip_flask_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/hip_flask_0_L/hip_flask_end_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/hip_flask_0_L/hip_flask_end_L/hip_flask_end_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/hip_flask_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/hip_flask_0_R/hip_flask_end_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/hip_flask_0_R/hip_flask_end_R/hip_flask_end_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L/leg_lower_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L/leg_lower_L/ankle_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L/leg_lower_L/ankle_L/ball_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L/leg_lower_L/ankle_L/ball_L/ball_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L/leg_upper_L_TWIST
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L/leg_upper_L_TWIST/leg_upper_L_TWIST_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L/leg_upper_L_TWIST1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_L/leg_upper_L_TWIST1/leg_upper_L_TWIST1_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R/leg_lower_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R/leg_lower_R/ankle_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R/leg_lower_R/ankle_R/ball_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R/leg_lower_R/ankle_R/ball_R/ball_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R/leg_upper_R_TWIST
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R/leg_upper_R_TWIST/leg_upper_R_TWIST_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R/leg_upper_R_TWIST1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/leg_upper_R/leg_upper_R_TWIST1/leg_upper_R_TWIST1_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/muddler_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/muddler_0/muddler_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/muddler_0/muddler_end/muddler_end_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L/shotglass_a_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L/shotglass_a_0_L/shotglass_a_0_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L/shotglass_b_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L/shotglass_b_0_L/shotglass_b_0_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L/shotglass_c_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L/shotglass_c_0_L/shotglass_c_0_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L/shotglass_d_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_L/shotglass_d_0_L/shotglass_d_0_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R/shotglass_a_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R/shotglass_a_0_R/shotglass_a_0_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R/shotglass_b_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R/shotglass_b_0_R/shotglass_b_0_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R/shotglass_c_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R/shotglass_c_0_R/shotglass_c_0_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R/shotglass_d_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/shotglasses_0_R/shotglass_d_0_R/shotglass_d_0_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/chestHier_OFFSET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/chestHier_OFFSET/weaponHier_JNT
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/chestHier_OFFSET/weaponHier_JNT/weaponHier_R_IKTARGET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/chestHier_OFFSET/weaponHier_JNT/weaponHier_R_IKTARGET/weaponHier_L_IKTARGET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/chestHier_OFFSET/weaponHier_JNT/weaponHier_R_IKTARGET/weaponHier_L_IKTARGET/weaponHier_L_IKTARGET_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/arm_lower_L_TWIST
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/arm_lower_L_TWIST/arm_lower_L_TWIST_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/arm_lower_L_TWIST1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/arm_lower_L_TWIST1/arm_lower_L_TWIST1_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_index_meta_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_index_meta_L/finger_index_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_index_meta_L/finger_index_0_L/finger_index_1_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_index_meta_L/finger_index_0_L/finger_index_1_L/finger_index_2_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_index_meta_L/finger_index_0_L/finger_index_1_L/finger_index_2_L/finger_index_2_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_middle_meta_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_middle_meta_L/finger_middle_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_middle_meta_L/finger_middle_0_L/finger_middle_1_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_middle_meta_L/finger_middle_0_L/finger_middle_1_L/finger_middle_2_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_middle_meta_L/finger_middle_0_L/finger_middle_1_L/finger_middle_2_L/finger_middle_2_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_pinky_meta_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_pinky_meta_L/finger_pinky_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_pinky_meta_L/finger_pinky_0_L/finger_pinky_1_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_pinky_meta_L/finger_pinky_0_L/finger_pinky_1_L/finger_pinky_2_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_pinky_meta_L/finger_pinky_0_L/finger_pinky_1_L/finger_pinky_2_L/finger_pinky_2_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_ring_meta_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_ring_meta_L/finger_ring_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_ring_meta_L/finger_ring_0_L/finger_ring_1_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_ring_meta_L/finger_ring_0_L/finger_ring_1_L/finger_ring_2_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_ring_meta_L/finger_ring_0_L/finger_ring_1_L/finger_ring_2_L/finger_ring_2_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_thumb_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_thumb_0_L/finger_thumb_1_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_thumb_0_L/finger_thumb_1_L/finger_thumb_2_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/finger_thumb_0_L/finger_thumb_1_L/finger_thumb_2_L/finger_thumb_2_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/object_hand_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_lower_L/hand_L/object_hand_L/object_hand_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_upper_L_TWIST
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_upper_L_TWIST/arm_upper_L_TWIST_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_upper_L_TWIST1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/arm_upper_L/arm_upper_L_TWIST1/arm_upper_L_TWIST1_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_back_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_back_0/dishcloth_back_1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_back_0/dishcloth_back_1/dishcloth_back_2
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_back_0/dishcloth_back_1/dishcloth_back_2/dishcloth_back_3
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_back_0/dishcloth_back_1/dishcloth_back_2/dishcloth_back_3/dishcloth_back_4
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_back_0/dishcloth_back_1/dishcloth_back_2/dishcloth_back_3/dishcloth_back_4/dishcloth_back_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_back_0/dishcloth_back_1/dishcloth_back_2/dishcloth_back_3/dishcloth_back_4/dishcloth_back_end/dishcloth_back_end_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_front_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_front_0/dishcloth_front_1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_front_0/dishcloth_front_1/dishcloth_front_2
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_front_0/dishcloth_front_1/dishcloth_front_2/dishcloth_front_3
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_front_0/dishcloth_front_1/dishcloth_front_2/dishcloth_front_3/dishcloth_front_4
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_front_0/dishcloth_front_1/dishcloth_front_2/dishcloth_front_3/dishcloth_front_4/dishcloth_front_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_L/dishcloth_center_0/dishcloth_front_0/dishcloth_front_1/dishcloth_front_2/dishcloth_front_3/dishcloth_front_4/dishcloth_front_end/dishcloth_front_end_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/arm_lower_R_TWIST
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/arm_lower_R_TWIST/arm_lower_R_TWIST_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/arm_lower_R_TWIST1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/arm_lower_R_TWIST1/arm_lower_R_TWIST1_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_index_meta_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_index_meta_R/finger_index_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_index_meta_R/finger_index_0_R/finger_index_1_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_index_meta_R/finger_index_0_R/finger_index_1_R/finger_index_2_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_index_meta_R/finger_index_0_R/finger_index_1_R/finger_index_2_R/finger_index_end_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_index_meta_R/finger_index_0_R/finger_index_1_R/finger_index_2_R/finger_index_end_R/muzzle_fx
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_index_meta_R/finger_index_0_R/finger_index_1_R/finger_index_2_R/finger_index_end_R/muzzle_fx/muzzle_fx_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_middle_meta_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_middle_meta_R/finger_middle_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_middle_meta_R/finger_middle_0_R/finger_middle_1_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_middle_meta_R/finger_middle_0_R/finger_middle_1_R/finger_middle_2_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_middle_meta_R/finger_middle_0_R/finger_middle_1_R/finger_middle_2_R/finger_middle_2_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_pinky_meta_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_pinky_meta_R/finger_pinky_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_pinky_meta_R/finger_pinky_0_R/finger_pinky_1_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_pinky_meta_R/finger_pinky_0_R/finger_pinky_1_R/finger_pinky_2_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_pinky_meta_R/finger_pinky_0_R/finger_pinky_1_R/finger_pinky_2_R/finger_pinky_2_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_ring_meta_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_ring_meta_R/finger_ring_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_ring_meta_R/finger_ring_0_R/finger_ring_1_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_ring_meta_R/finger_ring_0_R/finger_ring_1_R/finger_ring_2_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_ring_meta_R/finger_ring_0_R/finger_ring_1_R/finger_ring_2_R/finger_ring_2_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_thumb_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_thumb_0_R/finger_thumb_1_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_thumb_0_R/finger_thumb_1_R/finger_thumb_2_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/finger_thumb_0_R/finger_thumb_1_R/finger_thumb_2_R/finger_thumb_2_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/object_hand_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/object_hand_R/object_hand_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/weapon_hand_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_lower_R/hand_R/weapon_hand_R/weapon_hand_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_upper_R_TWIST
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_upper_R_TWIST/arm_upper_R_TWIST_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_upper_R_TWIST1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/clavicle_R/arm_upper_R/arm_upper_R_TWIST1/arm_upper_R_TWIST1_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_2
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_2/flame_hair_3
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_2/flame_hair_3/flame_hair_4
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_2/flame_hair_3/flame_hair_4/flame_hair_5
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_2/flame_hair_3/flame_hair_4/flame_hair_5/flame_hair_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_2/flame_hair_3/flame_hair_4/flame_hair_5/flame_hair_end/flame_hair_end_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_tip_c_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_tip_c_0_L/flame_hair_tip_c_end_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_tip_c_0_L/flame_hair_tip_c_end_L/flame_hair_tip_c_end_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_tip_c_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_tip_c_0_R/flame_hair_tip_c_end_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_1/flame_hair_tip_c_0_R/flame_hair_tip_c_end_R/flame_hair_tip_c_end_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_tip_a_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_tip_a_0_R/flame_hair_tip_a_end_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_0/flame_hair_tip_a_0_R/flame_hair_tip_a_end_R/flame_hair_tip_a_end_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_tip_a_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_tip_a_0_L/flame_hair_tip_a_0_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_tip_b_0_L
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_tip_b_0_L/flame_hair_tip_b_0_L_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_tip_b_0_R
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_tip_b_0_R/flame_hair_tip_b_0_R_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_tip_bot_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/flame_hair_tip_bot_0/flame_hair_tip_bot_0_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/glasses_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/glasses_0/glasses_0_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hair_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hair_0/hair_1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hair_0/hair_1/hair_2
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hair_0/hair_1/hair_2/hair_3
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hair_0/hair_1/hair_2/hair_3/hair_4
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hair_0/hair_1/hair_2/hair_3/hair_4/hair_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hair_0/hair_1/hair_2/hair_3/hair_4/hair_end/hair_end_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hat_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/hat_0/hat_0_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/toothpick_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/head/toothpick_0/toothpick_0_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/neck_0_TWIST
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/neck_0_TWIST/neck_0_TWIST_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/neck_notwist
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/spine_0/spine_1/spine_2/spine_3/neck_0/neck_notwist/neck_notwist_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2/tail_3
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2/tail_3/tail_4
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2/tail_3/tail_4/tail_5
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2/tail_3/tail_4/tail_5/tail_6
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2/tail_3/tail_4/tail_5/tail_6/tail_7
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2/tail_3/tail_4/tail_5/tail_6/tail_7/tail_8
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2/tail_3/tail_4/tail_5/tail_6/tail_7/tail_8/tail_9
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/pelvis/tail_0/tail_1/tail_2/tail_3/tail_4/tail_5/tail_6/tail_7/tail_8/tail_9/tail_9_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/arm_L_IKTARGET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/arm_L_IKTARGET/arm_L_IKTARGET_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/arm_R_IKTARGET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/arm_R_IKTARGET/arm_R_IKTARGET_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/hip_flask_tracker
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/hip_flask_tracker/hip_flask_tracker_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/leg_L_OFFSET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/leg_L_OFFSET/leg_L_IKTARGET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/leg_L_OFFSET/leg_L_IKTARGET/leg_L_IKTARGET_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/leg_R_OFFSET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/leg_R_OFFSET/leg_R_IKTARGET
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c/root_motion/leg_R_OFFSET/leg_R_IKTARGET/leg_R_IKTARGET_end
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c.flame_hair
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c.flask_in_hand_l
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c.flask_in_hand_r
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c.flask_on_hip
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c.hat
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c.inferno
+    m_Weight: 1
+  - m_Path: models/heroes_staging/inferno_v4/inferno.vmdl_c.inferno_flames
+    m_Weight: 1

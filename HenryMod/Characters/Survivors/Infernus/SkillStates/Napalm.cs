@@ -52,7 +52,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         private bool          attackActive;
 
         /// Enemies already hit this cast — prevents double-hits during the sweep.
-        private readonly List<HurtBox> hitTargets = new List<HurtBox>();
+        private readonly HashSet<HealthComponent> hitTargets = new HashSet<HealthComponent>();
         private readonly List<OverlapAttack.OverlapInfo> overlapResults = new List<OverlapAttack.OverlapInfo>();
 
         // ════════════════════════════════════════════════════════════════════
@@ -64,7 +64,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             attackStart = attackStartPercent * duration;
             attackEnd   = attackEndPercent   * duration;
 
-            PlayAnimation(duration);
 
             // Lock aim at the moment the skill is activated
             Ray aimRay          = GetAimRay();
@@ -166,47 +165,49 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 HealthComponent hc = hurtBox.healthComponent;
                 if (hc == null || !hc.alive)       continue;
                 if (hurtBox.teamIndex == GetTeam()) continue; // no friendly fire
-                if (hitTargets.Contains(hurtBox))  continue; // already hit this cast
-
-                hitTargets.Add(hurtBox);
-
-                // Apply napalm debuff
-                CharacterBody body = hc.body;
-                if (body != null)
-                    body.AddTimedBuff(InfernusDebuffs.napalmDebuff, napalmDebuffDuration);
+                if (!hitTargets.Contains(hc))
+                {
+                    // Apply napalm debuff
+                    CharacterBody body = hc.body;
+                    if (body != null) body.AddTimedBuff(InfernusDebuffs.napalmDebuff, napalmDebuffDuration);
+                    dealDamageConstructed(hc);
+                    hitTargets.Add(hc);
+                }
             }
+        }
+
+        public void dealDamageConstructed(HealthComponent healthComponentDmg)
+        {
+            // Deal damage once
+            DamageInfo info = new DamageInfo
+            {
+                attacker = gameObject,
+                inflictor = gameObject,
+                damage = InfernusStaticValues.napalmDamageCoefficient * damageStat,
+                procCoefficient = procCoefficient,
+                position = healthComponentDmg.transform.position,
+                force = lockedAimDirection * pushForce,
+                crit = overlapAttack.isCrit,
+                damageType = DamageType.Generic,
+                damageColorIndex = DamageColorIndex.Default,
+            };
+
+            healthComponentDmg.TakeDamage(info);
+            GlobalEventManager.instance.OnHitEnemy(info, healthComponentDmg.gameObject);
+            GlobalEventManager.instance.OnHitAll(info, healthComponentDmg.gameObject);
         }
 
         // ════════════════════════════════════════════════════════════════════
         public override void OnExit()
         {
-            foreach (HurtBox hurtBox in hitTargets.Distinct())
-            {
-                HealthComponent hc = hurtBox.healthComponent;
-                // Deal damage once
-                DamageInfo info = new DamageInfo
-                {
-                    attacker = gameObject,
-                    inflictor = gameObject,
-                    damage = InfernusStaticValues.napalmDamageCoefficient * damageStat,
-                    procCoefficient = procCoefficient,
-                    position = hc.transform.position,
-                    force = lockedAimDirection * pushForce,
-                    crit = overlapAttack.isCrit,
-                    damageType = DamageType.Generic,
-                    damageColorIndex = DamageColorIndex.Default,
-                };
-
-                hc.TakeDamage(info);
-                GlobalEventManager.instance.OnHitEnemy(info, hc.gameObject);
-                GlobalEventManager.instance.OnHitAll(info, hc.gameObject);
-            }
             // Always clean up the proxy — it is not parented so Unity won't
             // destroy it automatically when this state exits.
             if (splashProxy != null)
                 UnityEngine.Object.Destroy(splashProxy.gameObject);
 
             base.OnExit();
+
+            PlayAnimation(duration);
         }
 
         // ════════════════════════════════════════════════════════════════════
