@@ -98,7 +98,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             //Check for forward/back press
             inputMovementManager();
-            if (brakesPressed == true)  speed *= 0.5f; 
             if (isAuthority && base.inputBank)
             {
                 Vector2 move = Util.Vector3XZToVector2XY(base.inputBank.moveVector);
@@ -160,7 +159,9 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             }
 
             applyAccelerationMultiplier(speedThisFrame);
+            if (brakesPressed == true)  speedThisFrame *= 0.6f; 
             applyTurnPenalty(speedThisFrame);
+
 
             //Adjusts directional speed based on current speed over time against movement direction
             if (characterDirection)     characterDirection.forward = dashDirection; 
@@ -202,6 +203,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
         public override void OnExit()
         {
+            //Model stops tracking to the floor like MulT
+            if (base.modelLocator) base.modelLocator.normalizeToFloor = false;
             if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
             if (characterMotor) characterMotor.disableAirControlUntilCollision = false;
             base.OnExit();

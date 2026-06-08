@@ -34,7 +34,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             characterBody.SetAimTimer(2f);
             muzzleString = "Muzzle";
 
-            PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
+            PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", duration);
         }
 
         public override void OnExit()
