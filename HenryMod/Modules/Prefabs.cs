@@ -1,4 +1,4 @@
-﻿using R2API;
+using R2API;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
@@ -533,10 +533,10 @@ namespace InfernusMod.Modules
         {
             AimAnimator aimAnimator = model.AddComponent<AimAnimator>();
             aimAnimator.directionComponent = prefab.GetComponent<CharacterDirection>();
-            aimAnimator.pitchRangeMax = 60f;
+            aimAnimator.pitchRangeMax = 10f;
             aimAnimator.pitchRangeMin = -60f;
-            aimAnimator.yawRangeMin = -80f;
-            aimAnimator.yawRangeMax = 80f;
+            aimAnimator.yawRangeMin = -80f; //was -80f
+            aimAnimator.yawRangeMax = 10f; //was 80f
             aimAnimator.pitchGiveupRange = 30f;
             aimAnimator.yawGiveupRange = 10f;
             aimAnimator.giveupDuration = 3f;

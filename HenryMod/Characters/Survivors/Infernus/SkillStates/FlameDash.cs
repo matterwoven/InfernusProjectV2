@@ -82,7 +82,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             distanceSinceLastZone = 0f;
 
             //This should be the infernus dash SFX and voiceline with animation
-            PlayAnimation("FullBody, Override", "Roll", "Roll.playbackRate", duration);
+            PlayAnimation("FullBody, Override", "Flame Dash", "Roll.playbackRate", duration);
             Util.PlaySound(dodgeSoundString, gameObject);
         }
 

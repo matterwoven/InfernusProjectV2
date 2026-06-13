@@ -3,7 +3,7 @@ namespace InfernusMod.Modules
     internal static class Tokens
     {
         public const string agilePrefix = "<style=cIsUtility>Agile.</style>";
-        public const string emberPrefix = "<style=cIsDamage>Ember.</style>";
+        public const string emberPrefix = "<style=cIsUtility>Ember.</style>";
 
         public static string DamageText(string text)
         {

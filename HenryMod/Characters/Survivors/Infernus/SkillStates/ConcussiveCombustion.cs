@@ -20,7 +20,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public static float firePercentTime = 1f;
         public static float pushForce = 10f;
         public static float windupTime = 3f; //3 secs
-        public static float hitboxScale = 100f;
+        public static float hitboxScale = 60f;
 
         private static float duration;
 

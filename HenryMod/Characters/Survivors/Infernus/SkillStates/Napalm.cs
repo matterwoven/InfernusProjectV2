@@ -80,8 +80,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             characterBody.SetAimTimer(2f);
 
             // Animation & sound placeholders
-            // PlayCrossfade("Gesture, Override", "Napalm", "Slash.playbackRate", duration, 0.05f);
-            // Util.PlaySound("InfernusNapalm", gameObject);
+            PlayCrossfade("Gesture, Override", "Napalm", "Slash.playbackRate", duration, 0.05f);
+            Util.PlaySound("InfernusNapalm", gameObject);
 
             if (isAuthority)
                 BuildOverlapAttack();
