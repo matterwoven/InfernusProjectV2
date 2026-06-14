@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2059448695
+CRC: 817140679
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f01733399f26424fc4ad4c07b801e1c2
+    Hash: 9b32f13f16b85e9fadefcb4612741537
   TypeTreeHash:
     serializedVersion: 2
     Hash: 01ab68918a4dd982bcc4a740d1c90321
@@ -79,10 +79,14 @@ Assets:
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshNeoCoat.mesh
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_run_fast_gun_up_w.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/Slash2.anim
+- Assets/BigContainer/InfernusBundle/FBX/lift.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/SprintR.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texUtilityIcon.png
 - Assets/BigContainer/InfernusBundle/Materials/inferno_body_vmat_g_tnormalroughness_55f05031.png
+- Assets/BigContainer/InfernusBundle/FBX/knockdown_large.anim
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_up_s.anim
 - Assets/BigContainer/InfernusBundle/Textures/inferno_body_emissive_psd_12778766.png
+- Assets/BigContainer/InfernusBundle/FBX/incendiary_napalm_throw.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/ShootGun.anim
 - Assets/BigContainer/InfernusBundle/Animation/animInfernusMenu.controller
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texHenryIcon.png
@@ -91,6 +95,7 @@ Assets:
 - Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_clothes_color_png_9ce427e7.mat
 - Assets/BigContainer/HenryAssets/HenryBundle/Textures/texHenry.png
 - Assets/BigContainer/InfernusBundle/Materials/inferno_headglow_vmat_g_tnormalroughness_40f3df6.png
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_up_w.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/IdleAdditive.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Mesh/meshBoxingGlove.mesh
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/WalkR.anim
@@ -106,20 +111,25 @@ Assets:
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/HenrySwordSwingEffect.prefab
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Textures/texDust.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshHenry.mesh
-- Assets/BigContainer/InfernusBundle/Materials/default_mask_tga_344101f8.png
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_gun_up_e.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matSwingEffect.mat
+- Assets/BigContainer/InfernusBundle/FBX/ability_flame_dash.anim
+- Assets/BigContainer/InfernusBundle/Materials/default_mask_tga_344101f8.png
+- Assets/BigContainer/InfernusBundle/FBX/primary_stand_gun_forward_idle.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshDanteCoat.mesh
 - Assets/BigContainer/InfernusBundle/Materials/default_normal_tga_7be61377.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/DescendFast.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matPunchImpact.mat
 - Assets/BigContainer/InfernusBundle/Animation/maskAimPitch V2.mask
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matFire.mat
-- Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_glow_psd_3c639d14.mat
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_gun_up_w.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/look_LR_Yaw1.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Textures/texFire.tga
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matTrail.mat
 - Assets/BigContainer/HenryAssets/HenryBundle/Materials/matHenryJedi.mat
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_gun_up_n.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Textures/texLightning.tif
+- Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_glow_psd_3c639d14.mat
 - Assets/BigContainer/HenryAssets/HenryBundle/Materials/matShotgun.mat
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_run_gun_up_w.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/FistBarrageEffect.prefab
@@ -143,26 +153,33 @@ Assets:
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/SprintF.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_stand_idle (1).anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/shoot_experiment.anim
-- Assets/BigContainer/InfernusBundle/Textures/inferno_body_ao_png_6515a3_orm_574107905.png
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_gun_forward_n.anim
 - Assets/BigContainer/HenryAssets/FBX/Henry.fbx
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshDante.mesh
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/RestIdle.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matFistSwing.mat
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Mesh/meshPunchShockwave.mesh
+- Assets/BigContainer/InfernusBundle/Textures/inferno_body_ao_png_6515a3_orm_574107905.png
+- Assets/BigContainer/InfernusBundle/FBX/knockdown_large_get_up.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/flask_stand_idle.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/HenryBazookaRocketGhost.prefab
+- Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/look_LR_YawFakeTest.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/jump_in_air_loop.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_stand_idle.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_run_gun_forward_e.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Materials/matBazooka.mat
 - Assets/BigContainer/HenryAssets/HenryBundle/Textures/texBoxingGlove.png
+- Assets/BigContainer/InfernusBundle/FBX/ability_flame_dash_put_hat_on.anim
 - Assets/BigContainer/InfernusBundle/Textures/inferno_clothes_ao_png_acb6a116_orm_178573463.png
+- Assets/BigContainer/InfernusBundle/FBX/flask_stand_idle.anim
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_up_e.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texMainSkin.png
 - Assets/BigContainer/HenryAssets/FBX/SwordSwingMesh.fbx
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texGrandMasteryAchievement.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Textures/texHenryNeo.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texVergilAchievement.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/maskBandana.mask
+- Assets/BigContainer/InfernusBundle/FBX/primary_stand_idle.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/WalkL.anim
 - Assets/BigContainer/InfernusBundle/FBX/InfernusV2.fbx
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matSwingShadow.mat
@@ -170,9 +187,11 @@ Assets:
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matHitSpark.mat
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshHenryNeo.mesh
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/jump_start.anim
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_gun_forward_s.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshHenrySwordAlt.mesh
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matHenrySwing2.mat
 - Assets/BigContainer/InfernusBundle/Prefabs/InfernusV2NODELETE.prefab
+- Assets/BigContainer/InfernusBundle/FBX/shoot_experiment.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Textures/texHenryAlt.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texBazookaFireIcon.png
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_run_gun_forward_n.anim
@@ -180,20 +199,24 @@ Assets:
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/ImpactHenryPunch.prefab
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/AimYaw.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshHenrySword.mesh
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_forward_n.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texDanteAchievement.png
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/ability_flame_dash.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/incendiary_napalm_throw.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_run_gun_forward_s.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_run_fast_gun_forward_e.anim
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_up_n.anim
 - Assets/BigContainer/InfernusBundle/Animation/clips/look_right.anim
 - Assets/BigContainer/InfernusBundle/Animation/maskAimYaw V2.mask
 - Assets/BigContainer/InfernusBundle/Materials/default_metal_tga_9e174e3d_orm_1846368195.png
 - Assets/BigContainer/InfernusBundle/FBX/InfernusWithAnimsActual.fbx
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshVergil.mesh
+- Assets/BigContainer/InfernusBundle/FBX/look_LR_YawSecondOutput.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/Descend.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texHenryAchievement.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texSpecialIcon.png
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/HenryFistSwingEffect.prefab
+- Assets/BigContainer/InfernusBundle/FBX/jump_start.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/WalkB.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/Idle.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshRebellion.mesh
@@ -205,15 +228,20 @@ Assets:
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texStingerIcon.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Textures/texBazooka.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshHenryAlt.mesh
+- Assets/BigContainer/InfernusBundle/FBX/jump_in_air_loop.anim
 - Assets/BigContainer/InfernusBundle/Materials/physics_default.png
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_gun_forward_w.anim
+- Assets/BigContainer/InfernusBundle/FBX/ability_flame_dash_intro.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/HenryBombGhost.prefab
 - Assets/BigContainer/HenryAssets/HenryBundle/Materials/matBoxingGlove.mat
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_forward_w.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/MeshHenryGun.mesh
 - Assets/BigContainer/InfernusBundle/Textures/inferno_clothes_emissive_psd_39697cda.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Textures/texHenryJediEmission.png
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/BombExplosionEffect.prefab
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Mesh/meshSwing.asset
 - Assets/BigContainer/InfernusBundle/Animation/animInfernus.controller
+- Assets/BigContainer/InfernusBundle/FBX/Look_DU_Pitch.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/RestIdleIn.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texPistolIcon.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texPrimaryIcon.png
@@ -264,12 +292,15 @@ Assets:
 - Assets/BigContainer/InfernusBundle/Materials/inferno_glow_png_c2e03ac5.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/animHenry.controller
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshUzi.mesh
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_gun_forward_e.anim
 - Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_glow_png_c2e03ac5.mat
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_gun_up_s.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/ThrowBomb.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Textures/texEmbers.png
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matHitSparkPunch.mat
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/knockdown_large.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/maskGesture.mask
+- Assets/BigContainer/InfernusBundle/FBX/knockdown_large_loop_on_ground.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/MenuIdleIn.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Textures/texHenrySwing2.png
 - Assets/BigContainer/HenryAssets/HenryBundle/Materials/matRoy.mat
@@ -277,8 +308,10 @@ Assets:
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Textures/texHitSpark.png
 - Assets/BigContainer/InfernusBundle/Animation/clips/look_LR.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Textures/texRipple.png
+- Assets/BigContainer/InfernusBundle/FBX/ability_stun_bomb_explode.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/knockdown_large_get_up.anim
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/look_LR_Yaw.anim
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_forward_s.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/LightImpact.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matSmoke.mat
 - Assets/BigContainer/HenryAssets/HenryBundle/Animation/clips/WalkF.anim
@@ -287,6 +320,7 @@ Assets:
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texScepterSpecialIcon.png
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Textures/texPunchImpactShadow.png
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_run_fast_gun_forward_w.anim
+- Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_forward_e.anim
 - Assets/BigContainer/HenryAssets/HenryBundle/Mesh/meshVergilCoat.mesh
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/ImpactHenrySlash.prefab
 - Assets/BigContainer/InfernusBundle/Animation/clipsNewFern/primary_run_fast_gun_forward_n.anim

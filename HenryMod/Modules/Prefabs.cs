@@ -536,7 +536,7 @@ namespace InfernusMod.Modules
             aimAnimator.pitchRangeMax = 10f;
             aimAnimator.pitchRangeMin = -60f;
             aimAnimator.yawRangeMin = -80f; //was -80f
-            aimAnimator.yawRangeMax = 10f; //was 80f
+            aimAnimator.yawRangeMax = 80f; //was 80f
             aimAnimator.pitchGiveupRange = 30f;
             aimAnimator.yawGiveupRange = 10f;
             aimAnimator.giveupDuration = 3f;
