@@ -180,6 +180,7 @@ namespace InfernusMod.Survivors.Infernus
                 skillNameToken = INFERNUS_PREFIX + "PASSIVE_NAME",
                 skillDescriptionToken = INFERNUS_PREFIX + "PASSIVE_DESCRIPTION",
                 keywordTokens = new string[] { "KEYWORD_AGILE" },
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
                 skillIcon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
 
                 //unless you're somehow activating your passive like a skill, none of the following is needed.
