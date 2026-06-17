@@ -42,6 +42,7 @@ namespace InfernusMod.Survivors.Infernus
                 associatedBuff = afterburnDebuff,
                 damageCoefficient = InfernusStaticValues.afterburnDamageCoefficient * 0.5f,
                 interval = 0.5f,
+                terminalTimedBuffDuration = 8.0f,
                 damageColorIndex = DamageColorIndex.Void,
                 resetTimerOnAdd = true
             };

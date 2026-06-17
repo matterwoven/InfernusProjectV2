@@ -1,4 +1,5 @@
 using BepInEx.Configuration;
+using InfernusMod.Characters.Survivors.Infernus.SkillStates;
 using InfernusMod.Modules;
 using InfernusMod.Modules.Characters;
 using InfernusMod.Survivors.Infernus.Components;
@@ -173,21 +174,21 @@ namespace InfernusMod.Survivors.Infernus
             };
 
             //option 2. a new SkillFamily for a passive, used if you want multiple selectable passives
-            GenericSkill passiveGenericSkill = Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, "PassiveSkill");
-            SkillDef passiveSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
-            {
-                skillName = "InfernusPassive",
-                skillNameToken = INFERNUS_PREFIX + "PASSIVE_NAME",
-                skillDescriptionToken = INFERNUS_PREFIX + "PASSIVE_DESCRIPTION",
-                keywordTokens = new string[] { "KEYWORD_AGILE" },
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
-                skillIcon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+            //GenericSkill passiveGenericSkill = Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, "PassiveSkill");
+            //SkillDef passiveSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
+            //{
+                //skillName = "InfernusPassive",
+                //skillNameToken = INFERNUS_PREFIX + "PASSIVE_NAME",
+                //skillDescriptionToken = INFERNUS_PREFIX + "PASSIVE_DESCRIPTION",
+                //keywordTokens = new string[] { "KEYWORD_AGILE" },
+                //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
+                //skillIcon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
 
                 //unless you're somehow activating your passive like a skill, none of the following is needed.
                 //but that's just me saying things. the tools are here at your disposal to do whatever you like with
 
                 //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
-                //activationStateMachineName = "Weapon1",
+                //activationStateMachineName = "Weapon1",k
                 //interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 //baseRechargeInterval = 1f,
@@ -208,8 +209,8 @@ namespace InfernusMod.Survivors.Infernus
                 //cancelSprintingOnActivation = false,
                 //forceSprintDuringState = false,
 
-            });
-            Skills.AddSkillsToFamily(passiveGenericSkill.skillFamily, passiveSkillDef1);
+            //});
+            //Skills.AddSkillsToFamily(passiveGenericSkill.skillFamily, passiveSkillDef1);
         }
 
         //if this is your first look at skilldef creation, take a look at Secondary first
@@ -431,6 +432,17 @@ namespace InfernusMod.Survivors.Infernus
         private void AddHooks()
         {
             On.RoR2.HealthComponent.TakeDamage += Ror2HealthComponent_TakeDamage;
+            CharacterBody.onBodyStartGlobal += OnBodyStart;
+        }
+
+        private static void OnBodyStart(CharacterBody body)
+        {
+            // Only attach to Infernus – match by prefab name or body index
+            // Adjust the string to match your actual body prefab name
+            if (body.name != "InfernusBody") return;
+
+            Afterburn controller = body.gameObject.AddComponent<Afterburn>();
+            controller.Init(body);
         }
 
         private void Ror2HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)

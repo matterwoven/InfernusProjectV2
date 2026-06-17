@@ -9,30 +9,63 @@ using UnityEngine;
 
 namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 {
-    public class Afterburn : BaseSkillState
+    public class AfterburnData
+    {
+        public float remaining;
+        public float tickAccumulator;
+
+        public AfterburnData(float initialDuration)
+        {
+            remaining = initialDuration;
+            tickAccumulator = 0f;
+        }
+    }
+
+    public class Afterburn : MonoBehaviour
     {
         public float procCoefficientAfterburn = 1.0f;
         public float procCoefficientDash = 1.0f;
-        private float maxDuration = 8.0f;
+        public float maxDuration = 8.0f;
+
+        private const float PollInterval = 0.1f;
+        private const float TickThreshold = 0.5f;
+
         private bool windowPassed;
-        private static Dictionary<RoR2.HealthComponent, float> afterburnTimers = new Dictionary<RoR2.HealthComponent, float>();
-        private static LinkedList<RoR2.HealthComponent> flameDashVictims = new LinkedList<RoR2.HealthComponent>();
+        private float fixedAge;
+        private float damageCompiled;
+        private float damageInst;
+        private CharacterBody ownerBody;
+        private GameObject ownerObject;
+        private bool isCrit;
 
-        public override void FixedUpdate()
+        private Dictionary<RoR2.HealthComponent, AfterburnData> afterburnTimers = new Dictionary<RoR2.HealthComponent, AfterburnData>();
+
+        private LinkedList<RoR2.HealthComponent> flameDashVictims = new LinkedList<RoR2.HealthComponent>();
+
+        private readonly List<RoR2.HealthComponent> toRemove = new List<RoR2.HealthComponent>();
+        private readonly List<RoR2.HealthComponent> toDamageThisPoll = new List<RoR2.HealthComponent>();
+
+        public void Init(CharacterBody body)
         {
-            base.FixedUpdate();
+            ownerBody = body;
+            ownerObject = body.gameObject;
+        }
 
+        public void FixedUpdate()
+        {
+            float dt = Time.fixedDeltaTime;
+            fixedAge += dt;
+
+
+            refreshDashContacts();
             windowPassed = false;
 
-            if (fixedAge >= 0.5f) fixedAge -= 0.5f; windowPassed = true;
-            if (windowPassed != false)
+            if (fixedAge >= 0.5f)
             {
-                foreach(HealthComponent a in afterburnTimers.Keys)
-                {
-                    //Update timers
-                    afterburnTimers.Add(a, afterburnTimers.GetValueOrDefault(a, 0f) - fixedAge);
-                }
-                dealDamageBurn();
+                fixedAge -= 0.5f; 
+                windowPassed = true;
+
+                damageCompiled = ownerBody.damageFromRecalculateStats;
                 dealDamageDash();
             }
 
@@ -40,32 +73,64 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             flameDashVictims.Clear();
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        /// Runs a Physics.OverlapBox at the proxy position every fixed frame
-        /// during the attack window. Already-hit targets are skipped so each
-        /// enemy takes damage at most once per cast.
-        /// 
+        private void refreshDashContacts()
+        {
+            foreach (RoR2.HealthComponent hc in flameDashVictims)
+            {
+                if (afterburnTimers.TryGetValue(hc, out AfterburnData data))
+                {
+                    data.remaining = maxDuration;
+                }
+            }
+        }
+
         private void afterburnUpdate()
         {
+            toRemove.Clear();
+            toDamageThisPoll.Clear();
+
             foreach(RoR2.HealthComponent hc in afterburnTimers.Keys)
             {
-                if (flameDashVictims.Contains(hc))
+                AfterburnData data = afterburnTimers[hc];
+
+                if (!hc.alive)
                 {
-                    afterburnTimers.Add(hc, maxDuration);
+                    toRemove.Add(hc);
+                    continue;
                 }
-                if(afterburnTimers.GetValueOrDefault(hc, 0.0f) < 0f)
+
+                data.remaining -= PollInterval;
+                if (data.remaining <= 0f)
                 {
-                    afterburnTimers.Remove(hc);
+                    toRemove.Add(hc);
+                    continue;
+                }
+
+                data.tickAccumulator += PollInterval;
+                if (data.tickAccumulator >= TickThreshold)
+                {
+                    data.tickAccumulator -= TickThreshold;
+                    toDamageThisPoll.Add(hc);
+                }
+            }
+
+            foreach (RoR2.HealthComponent hc in toRemove)
+                RemoveBurn(hc);
+
+            if (toDamageThisPoll.Count > 0)
+            {
+                damageCompiled = ownerBody.damageFromRecalculateStats;
+                damageInst = InfernusStaticValues.afterburnDamageCoefficient * damageCompiled;
+                foreach (RoR2.HealthComponent hc in toDamageThisPoll)
+                {
+                    dealDamageBurn(hc);
                 }
             }
         }
 
         public void addDashTarget(RoR2.HurtBox hurtBox)
         {
-            if (!flameDashVictims.Contains(hurtBox.healthComponent))
-            {
-                flameDashVictims.AddFirst(hurtBox.healthComponent);
-            }
+            addDashTarget(hurtBox.healthComponent);
         }
 
         public void addDashTarget(RoR2.HealthComponent hc)
@@ -73,44 +138,81 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             if (!flameDashVictims.Contains(hc))
             {
                 flameDashVictims.AddFirst(hc);
+                dealDamageDash(hc);
+            }
+
+            if (!afterburnTimers.ContainsKey(hc))
+            {
+                afterburnTimers[hc] = new AfterburnData(8.0f);
+            }
+        }
+        public void addBurnTarget(RoR2.HurtBox hurtBox)
+        {
+            addBurnTarget(hurtBox.healthComponent);
+        }
+
+        public void addBurnTarget(RoR2.HealthComponent hc)
+        {
+            if (!afterburnTimers.ContainsKey(hc))
+            {
+                afterburnTimers[hc] = new AfterburnData(8.0f);
+            }
+            //Adds duration if called on target
+            else
+            {
+                afterburnTimers[hc].remaining += Mathf.Min(afterburnTimers[hc].remaining + 0.5f, maxDuration);
+            }
+        }
+
+        public void addBurnTargetCrit(RoR2.HurtBox hurtBox)
+        {
+            addBurnTargetCrit(hurtBox.healthComponent);
+        }
+
+        public void addBurnTargetCrit(RoR2.HealthComponent hc)
+        {
+            if (!afterburnTimers.ContainsKey(hc))
+            {
+                afterburnTimers.Add(hc, new AfterburnData(maxDuration));
+            }
+            //Adds duration if called on target
+            else
+            {
+                AfterburnData record = afterburnTimers[hc];
+                record.remaining = Mathf.Min(record.remaining + 1.0f, maxDuration);
             }
         }
 
         private void dealDamageBurn()
         {
+            damageInst = InfernusStaticValues.afterburnDamageCoefficient * damageCompiled;
             foreach (HealthComponent a in afterburnTimers.Keys)
             {
-                // Deal damage once
-                DamageInfo info = new DamageInfo
-                {
-                    attacker = gameObject,
-                    inflictor = gameObject,
-                    damage = InfernusStaticValues.afterburnDamageCoefficient * damageStat,
-                    procCoefficient = procCoefficientAfterburn,
-                    position = a.transform.position,
-                    crit = false,
-                    damageType = DamageType.Generic,
-                    damageColorIndex = DamageColorIndex.Default,
-                };
-
-                a.TakeDamage(info);
-                GlobalEventManager.instance.OnHitEnemy(info, a.gameObject);
-                GlobalEventManager.instance.OnHitAll(info, a.gameObject);
+                dealDamageBurn(a);
             }
+        }
+
+        public void dealDamageBurn(HurtBox hurt)
+        {
+            dealDamageBurn(hurt.healthComponent);
         }
 
         public void dealDamageBurn(HealthComponent a)
         {
             //Single target version by healthComponent value
             //For outside use
+
+            if (a == null || !a.alive) return;
+
+            isCrit = ownerBody.RollCrit();
             DamageInfo info = new DamageInfo
             {
-                attacker = gameObject,
-                inflictor = gameObject,
-                damage = InfernusStaticValues.afterburnDamageCoefficient * damageStat,
+                attacker = ownerObject,
+                inflictor = ownerObject,
+                damage = damageInst,
                 procCoefficient = procCoefficientAfterburn,
                 position = a.transform.position,
-                crit = false,
+                crit = isCrit,
                 damageType = DamageType.Generic,
                 damageColorIndex = DamageColorIndex.Default,
             };
@@ -120,38 +222,52 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             GlobalEventManager.instance.OnHitAll(info, a.gameObject);
         }
 
-
-
-        private void dealDamageDash()
+        private void RemoveBurn(RoR2.HealthComponent hc)
         {
-            foreach (HealthComponent a in flameDashVictims)
-            {
-                // Deal damage once
-                DamageInfo info = new DamageInfo
-                {
-                    attacker = gameObject,
-                    inflictor = gameObject,
-                    damage = InfernusStaticValues.dashDamageCoefficient * damageStat,
-                    procCoefficient = procCoefficientDash,
-                    position = a.transform.position,
-                    crit = false,
-                    damageType = DamageType.Generic,
-                    damageColorIndex = DamageColorIndex.Default,
-                };
+            afterburnTimers.Remove(hc);
 
-                a.TakeDamage(info);
-                GlobalEventManager.instance.OnHitEnemy(info, a.gameObject);
-                GlobalEventManager.instance.OnHitAll(info, a.gameObject);
+            CharacterBody victimBody = hc.body;
+            if (victimBody.HasBuff(InfernusDebuffs.afterburnDebuff))
+            {
+                victimBody.RemoveBuff(InfernusDebuffs.afterburnDebuff);
             }
         }
 
-        public override void OnEnter()
+        private void dealDamageDash()
         {
-            base.OnEnter();
-            //No entrance logic for this passive
-            //Once you have anims PlayAnimation();
+            damageInst = InfernusStaticValues.dashDamageCoefficient * damageCompiled;
+            isCrit = ownerBody.RollCrit();
+            foreach (HealthComponent a in flameDashVictims)
+            {
+                dealDamageDash(a);
+            }
+        }
 
-            //Once you have the audio Util.PlaySound("InfernusNapalm", gameObject);
+        public void dealDamageDash(HurtBox damagedHurtBox)
+        {
+            dealDamageDash(damagedHurtBox.healthComponent);
+        }
+
+        public void dealDamageDash(HealthComponent a)
+        {
+            if (a == null || !a.alive) return;
+
+            // Deal damage once
+            DamageInfo info = new DamageInfo
+            {
+                attacker = ownerObject,
+                inflictor = ownerObject,
+                damage = damageInst,
+                procCoefficient = procCoefficientDash,
+                position = a.transform.position,
+                crit = isCrit,
+                damageType = DamageType.Generic,
+                damageColorIndex = DamageColorIndex.Default,
+            };
+
+            a.TakeDamage(info);
+            GlobalEventManager.instance.OnHitEnemy(info, a.gameObject);
+            GlobalEventManager.instance.OnHitAll(info, a.gameObject);
         }
     }
 }

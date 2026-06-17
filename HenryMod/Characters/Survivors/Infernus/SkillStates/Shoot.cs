@@ -1,4 +1,5 @@
 using EntityStates;
+using InfernusMod.Characters.Survivors.Infernus.SkillStates;
 using InfernusMod.Survivors.Infernus;
 using RoR2;
 using UnityEngine;
@@ -19,8 +20,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
         public static int buildupThreshold = 10;
 
-        public static float afterburnDuration = 5f;
-
+        private bool prevIsCrit;
         private float duration;
         private float fireTime;
         private bool hasFired;
@@ -63,6 +63,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             if (!hasFired)
             {
                 hasFired = true;
+                prevIsCrit = RollCrit();
 
                 characterBody.AddSpreadBloom(1.5f);
                 EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
@@ -87,7 +88,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                         hitMask = LayerIndex.CommonMasks.bullet,
                         minSpread = 0f,
                         maxSpread = 0f,
-                        isCrit = RollCrit(),
+                        isCrit = prevIsCrit,
                         owner = gameObject,
                         muzzleName = muzzleString,
                         smartCollision = true,
@@ -128,29 +129,31 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
                 ApplyDebuffLogic(victim, victimHurtBox);
 
-                return returnValue; // returning true keeps normal hit processing (damage, effects, etc.)
+                return returnValue; // returning returnValue keeps normal hit processing (damage, effects, etc.) DONT CHANGE TO TRUE/FALSE
             };
         }
 
         private void ApplyDebuffLogic(CharacterBody victim, HurtBox hitHurtBox)
         {
+            Afterburn afterburnController = GetComponent<Afterburn>();
+
             bool isAlreadyBurning = victim.HasBuff(InfernusDebuffs.afterburnDebuff);
 
             if (isAlreadyBurning)
             {
-                // Target is already burning — refresh the dot to full duration.
-                // We manually clear all matching dot stacks from dotStackList
-                // then immediately re-inflict so the timer resets cleanly.
-                DotController dc = DotController.FindDotController(victim.gameObject);
-                if (dc != null)
-                    ClearDotStacks(dc, InfernusDebuffs.afterburnDebuffIndex);
-
-                InflictAfterburn(victim, hitHurtBox);
+                // Target is already burning — refresh to full duration.
+                // Made MonoBehavior handle the tick-timing itself.
+                if (prevIsCrit)
+                    afterburnController.addBurnTargetCrit(hitHurtBox);
+                else
+                    afterburnController.addBurnTarget(hitHurtBox);
             }
             else
             {
                 // Add one buildup stack
                 victim.AddBuff(InfernusDebuffs.afterburnBuildup);
+                if (prevIsCrit)
+                    victim.AddBuff(InfernusDebuffs.afterburnBuildup);
 
                 int currentStacks = victim.GetBuffCount(InfernusDebuffs.afterburnBuildup);
 
@@ -160,8 +163,13 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                     for (int i = 0; i < currentStacks; i++)
                         victim.RemoveBuff(InfernusDebuffs.afterburnBuildup);
 
+                    //Deal on-proc damage
+                    afterburnController.dealDamageBurn(hitHurtBox);
+
                     // Apply afterburn dot fresh
-                    InflictAfterburn(victim, hitHurtBox);
+                    afterburnController.addBurnTarget(hitHurtBox);
+
+                    victim.AddBuff(InfernusDebuffs.afterburnDebuff);
                 }
             }
         }
@@ -174,18 +182,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 if (dc.dotStackList[i].dotIndex == targetIndex)
                     dc.dotStackList.RemoveAt(i);
             }
-        }
-
-        private void InflictAfterburn(CharacterBody victim, HurtBox hitHurtbox)
-        {
-            DotController.InflictDot(
-                victim.gameObject,
-                gameObject,                           // attacker
-                hitHurtbox,
-                InfernusDebuffs.afterburnDebuffIndex,
-                afterburnDuration,
-                1f                                    // damage multiplier on top of DotDef.damageCoefficient
-            );
         }
         #endregion
         public override InterruptPriority GetMinimumInterruptPriority()
