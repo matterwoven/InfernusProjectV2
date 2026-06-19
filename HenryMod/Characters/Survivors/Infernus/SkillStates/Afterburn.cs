@@ -20,6 +20,18 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             tickAccumulator = 0f;
         }
     }
+    public class DashStandData
+    {
+        public float tickAccumulator;
+        public float lastFreshFrame;
+
+        public DashStandData(float currentFrame)
+        {
+            tickAccumulator = 0f;
+            lastFreshFrame = currentFrame;
+        }
+    }
+
 
     public class Afterburn : MonoBehaviour
     {
@@ -31,6 +43,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         private const float TickThreshold = 0.5f;
 
         private float tankMult = 1f;
+        private int currentFixedFrame;
         private float dashTickAccumulator;
         private float fixedAge;
         private float bodyDmgStat;
@@ -39,7 +52,11 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         private GameObject ownerObject;
         private bool isCrit;
 
+        private readonly List<RoR2.HealthComponent> standersToRemove = new List<RoR2.HealthComponent>();
+        private readonly List<RoR2.HealthComponent> standersToDamageThisPoll = new List<RoR2.HealthComponent>();
+
         private Dictionary<RoR2.HealthComponent, AfterburnData> afterburnTimers = new Dictionary<RoR2.HealthComponent, AfterburnData>();
+        private Dictionary<RoR2.HealthComponent, DashStandData> dashStandTimers = new Dictionary<RoR2.HealthComponent, DashStandData>();
 
         private LinkedList<RoR2.HealthComponent> flameDashVictims = new LinkedList<RoR2.HealthComponent>();
 
@@ -54,9 +71,9 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         public void FixedUpdate()
         {
+            currentFixedFrame = Time.frameCount;
 
             float dt = Time.fixedDeltaTime;
-
 
             refreshDashContacts();
 
@@ -66,10 +83,10 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 updateTankCount();
                 dashTickAccumulator -= TickThreshold; 
                 bodyDmgStat = ownerBody.damageFromRecalculateStats;
-                dealDamageDash();
             }
-
             afterburnUpdate(dt);
+            dashStandUpdate(dt);
+
             flameDashVictims.Clear();
         }
 
@@ -80,6 +97,44 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 if (afterburnTimers.TryGetValue(hc, out AfterburnData data))
                 {
                     data.remaining = maxDuration;
+                }
+            }
+        }
+        private void dashStandUpdate(float dt)
+        {
+            standersToRemove.Clear();
+            standersToDamageThisPoll.Clear();
+
+            foreach (RoR2.HealthComponent hc in dashStandTimers.Keys)
+            {
+                DashStandData data = dashStandTimers[hc];
+                bool stillStanding = data.lastFreshFrame >= currentFixedFrame - 1;
+
+                if (!hc.alive || !stillStanding)
+                {
+                    standersToRemove.Add(hc);
+                    continue;
+                }
+
+                data.tickAccumulator += dt;
+                if (data.tickAccumulator >= TickThreshold)
+                {
+                    data.tickAccumulator -= TickThreshold;
+                    standersToDamageThisPoll.Add(hc);
+                }
+            }
+
+            foreach (RoR2.HealthComponent hc in standersToRemove)
+                dashStandTimers.Remove(hc);
+
+            if (standersToDamageThisPoll.Count > 0)
+            {
+                bodyDmgStat = ownerBody.damageFromRecalculateStats;
+                damageInst = InfernusStaticValues.dashDamageCoefficient * bodyDmgStat * tankMult;
+                isCrit = ownerBody.RollCrit();
+                foreach (RoR2.HealthComponent hc in standersToDamageThisPoll)
+                {
+                    dealDamageDash(hc);
                 }
             }
         }
@@ -274,5 +329,25 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             GlobalEventManager.instance.OnHitEnemy(info, a.gameObject);
             GlobalEventManager.instance.OnHitAll(info, a.gameObject);
         }
+
+        public void notifyStanding(RoR2.HurtBox hurtBox)
+        {
+            notifyStanding(hurtBox.healthComponent);
+        }
+
+        public void notifyStanding(RoR2.HealthComponent hc)
+        {
+            if (hc == null) return;
+
+            if (!dashStandTimers.TryGetValue(hc, out DashStandData data))
+            {
+                dashStandTimers[hc] = new DashStandData(currentFixedFrame);
+            }
+            else
+            {
+                data.lastFreshFrame = currentFixedFrame;
+            }
+        }
+
     }
 }

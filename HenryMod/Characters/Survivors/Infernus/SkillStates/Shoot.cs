@@ -141,6 +141,9 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             bool isAlreadyBurning = victim.HasBuff(InfernusDebuffs.afterburnDebuff);
 
+            TeamComponent tc = hitHurtBox.healthComponent.GetComponent<TeamComponent>();
+            if (tc != null && tc.teamIndex != GetTeam()) return;
+
             if (isAlreadyBurning)
             {
                 // Target is already burning — refresh to full duration.

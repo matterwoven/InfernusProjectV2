@@ -92,13 +92,27 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             private void FixedUpdate()
             {
                 age += Time.fixedDeltaTime;
-                timeSinceTick += Time.fixedDeltaTime;
 
-                if (timeSinceTick >= tickInterval)
+                Collider[] cols = Physics.OverlapBox(
+                    transform.position,
+                    halfExtents,
+                    Quaternion.identity,
+                    LayerIndex.entityPrecise.mask
+                );
+
+                foreach (Collider col in cols)
                 {
-                    timeSinceTick -= tickInterval;
-                    hitThisTick.Clear();
-                    TickDamage();
+                    HurtBox hurtBox = col.GetComponent<HurtBox>();
+                    if (hurtBox == null) continue;
+
+                    HealthComponent hc = hurtBox.healthComponent;
+                    if (hc == null || !hc.alive) continue;
+                    if (hc.gameObject == attacker) continue;
+
+                    TeamComponent tc = hc.GetComponent<TeamComponent>();
+                    if (tc != null && tc.teamIndex == teamIndex) continue;
+
+                    afterBurnController?.notifyStanding(hc);
                 }
 
                 if (age >= lifetime)
