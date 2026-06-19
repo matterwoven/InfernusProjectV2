@@ -141,7 +141,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
             if (!afterburnTimers.ContainsKey(hc))
             {
-                afterburnTimers[hc] = new AfterburnData(8.0f);
+                afterburnTimers[hc] = new AfterburnData(5.0f);
             }
         }
         public void addBurnTarget(RoR2.HurtBox hurtBox)
