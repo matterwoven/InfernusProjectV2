@@ -152,13 +152,12 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             //Base speed
             speedThisFrame = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, transition);
 
-            //Cancel button
-            //if (inputBank.jump.justPressed)
-            //{
-                //base.
-            //}
+            if (inputBank.jump.justPressed && base.isGrounded)
+            {
+                characterMotor.Jump(1.0f, 1.0f);
+            }
 
-            if (inputBank.skill3.justReleased)
+            if (inputBank.skill3.justPressed)
             {
                 outer.SetNextStateToMain();
             }

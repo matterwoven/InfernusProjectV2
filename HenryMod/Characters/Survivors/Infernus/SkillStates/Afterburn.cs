@@ -30,9 +30,10 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         private const float PollInterval = 0.1f;
         private const float TickThreshold = 0.5f;
 
+        private float tankMult = 1f;
         private float dashTickAccumulator;
         private float fixedAge;
-        private float damageCompiled;
+        private float bodyDmgStat;
         private float damageInst;
         private CharacterBody ownerBody;
         private GameObject ownerObject;
@@ -62,9 +63,9 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             dashTickAccumulator += PollInterval;
             if (dashTickAccumulator >= TickThreshold)
             {
+                updateTankCount();
                 dashTickAccumulator -= TickThreshold; 
-
-                damageCompiled = ownerBody.damageFromRecalculateStats;
+                bodyDmgStat = ownerBody.damageFromRecalculateStats;
                 dealDamageDash();
             }
 
@@ -118,7 +119,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
             if (toDamageThisPoll.Count > 0)
             {
-                damageCompiled = ownerBody.damageFromRecalculateStats;
                 foreach (RoR2.HealthComponent hc in toDamageThisPoll)
                 {
                     dealDamageBurn(hc);
@@ -153,7 +153,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         {
             if (!afterburnTimers.ContainsKey(hc))
             {
-                afterburnTimers[hc] = new AfterburnData(8.0f);
+                afterburnTimers[hc] = new AfterburnData(5.0f);
             }
             //Adds duration if called on target
             else
@@ -183,7 +183,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         private void dealDamageBurn()
         {
-            damageInst = InfernusStaticValues.afterburnDamageCoefficient * damageCompiled * 0.5f;
+            damageInst = InfernusStaticValues.afterburnDamageCoefficient * bodyDmgStat * 0.5f;
             foreach (HealthComponent a in afterburnTimers.Keys)
             {
                 dealDamageBurn(a);
@@ -206,8 +206,8 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             DamageInfo info = new DamageInfo
             {
                 attacker = ownerObject,
-                inflictor = ownerObject,
-                damage = damageInst,
+                inflictor = ownerObject, 
+                damage = InfernusStaticValues.afterburnDamageCoefficient * damageInst * tankMult,
                 procCoefficient = procCoefficientAfterburn,
                 position = a.transform.position,
                 crit = false,
@@ -233,9 +233,14 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             }
         }
 
+        private void updateTankCount()
+        {
+            tankMult = ownerBody.inventory.GetItemCountEffective(DLC1Content.Items.StrengthenBurn);
+        }
+
         private void dealDamageDash()
         {
-            damageInst = InfernusStaticValues.dashDamageCoefficient * damageCompiled;
+            damageInst = InfernusStaticValues.dashDamageCoefficient * bodyDmgStat * tankMult * 0.5f;
             isCrit = ownerBody.RollCrit();
             foreach (HealthComponent a in flameDashVictims)
             {
