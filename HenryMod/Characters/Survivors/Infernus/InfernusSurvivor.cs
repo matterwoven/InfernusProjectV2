@@ -437,8 +437,12 @@ namespace InfernusMod.Survivors.Infernus
 
         private static void OnBodyStart(CharacterBody body)
         {
-            Afterburn controller = body.gameObject.AddComponent<Afterburn>();
-            controller.Init(body);
+            if ( body.master.teamIndex == TeamIndex.Player && body.inventory)
+            {
+                if (body.name != "InfernusBody(Clone)") return;
+                Afterburn controller = body.gameObject.AddComponent<Afterburn>();
+                controller.Init(body);
+            }
         }
 
         private void Ror2HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)

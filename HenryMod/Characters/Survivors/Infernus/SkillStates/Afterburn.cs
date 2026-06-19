@@ -23,14 +23,14 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
     public class Afterburn : MonoBehaviour
     {
-        public float procCoefficientAfterburn = 1.0f;
-        public float procCoefficientDash = 1.0f;
+        public float procCoefficientAfterburn = 0.0f;
+        public float procCoefficientDash = 0.0f;
         public float maxDuration = 8.0f;
 
         private const float PollInterval = 0.1f;
         private const float TickThreshold = 0.5f;
 
-        private bool windowPassed;
+        private float dashTickAccumulator;
         private float fixedAge;
         private float damageCompiled;
         private float damageInst;
@@ -55,22 +55,20 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         {
 
             float dt = Time.fixedDeltaTime;
-            fixedAge += dt;
 
 
             refreshDashContacts();
-            windowPassed = false;
 
-            if (fixedAge >= 0.5f)
+            dashTickAccumulator += PollInterval;
+            if (dashTickAccumulator >= TickThreshold)
             {
-                fixedAge -= 0.5f; 
-                windowPassed = true;
+                dashTickAccumulator -= TickThreshold; 
 
                 damageCompiled = ownerBody.damageFromRecalculateStats;
                 dealDamageDash();
             }
 
-            afterburnUpdate();
+            afterburnUpdate(dt);
             flameDashVictims.Clear();
         }
 
@@ -85,7 +83,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             }
         }
 
-        private void afterburnUpdate()
+        private void afterburnUpdate(float dt)
         {
             toRemove.Clear();
             toDamageThisPoll.Clear();
@@ -100,14 +98,14 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                     continue;
                 }
 
-                data.remaining -= PollInterval;
+                data.remaining -= dt;
                 if (data.remaining <= 0f)
                 {
                     toRemove.Add(hc);
                     continue;
                 }
 
-                data.tickAccumulator += PollInterval;
+                data.tickAccumulator += dt;
                 if (data.tickAccumulator >= TickThreshold)
                 {
                     data.tickAccumulator -= TickThreshold;
@@ -121,7 +119,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             if (toDamageThisPoll.Count > 0)
             {
                 damageCompiled = ownerBody.damageFromRecalculateStats;
-                damageInst = InfernusStaticValues.afterburnDamageCoefficient * damageCompiled;
                 foreach (RoR2.HealthComponent hc in toDamageThisPoll)
                 {
                     dealDamageBurn(hc);
@@ -161,7 +158,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             //Adds duration if called on target
             else
             {
-                afterburnTimers[hc].remaining += Mathf.Min(afterburnTimers[hc].remaining + 0.5f, maxDuration);
+                afterburnTimers[hc].remaining = Mathf.Min(afterburnTimers[hc].remaining + 0.5f, maxDuration);
             }
         }
 
@@ -186,7 +183,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         private void dealDamageBurn()
         {
-            damageInst = InfernusStaticValues.afterburnDamageCoefficient * damageCompiled;
+            damageInst = InfernusStaticValues.afterburnDamageCoefficient * damageCompiled * 0.5f;
             foreach (HealthComponent a in afterburnTimers.Keys)
             {
                 dealDamageBurn(a);
@@ -213,7 +210,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 damage = damageInst,
                 procCoefficient = procCoefficientAfterburn,
                 position = a.transform.position,
-                crit = isCrit,
+                crit = false,
                 damageType = DamageType.Generic,
                 damageColorIndex = DamageColorIndex.Default,
             };
@@ -225,6 +222,8 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         private void RemoveBurn(RoR2.HealthComponent hc)
         {
+            if (hc == null || !hc.alive) return;
+
             afterburnTimers.Remove(hc);
 
             CharacterBody victimBody = hc.body;
@@ -261,7 +260,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 damage = damageInst,
                 procCoefficient = procCoefficientDash,
                 position = a.transform.position,
-                crit = isCrit,
+                crit = false,
                 damageType = DamageType.Generic,
                 damageColorIndex = DamageColorIndex.Default,
             };

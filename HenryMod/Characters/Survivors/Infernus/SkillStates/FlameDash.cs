@@ -12,10 +12,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         //Dash duration (seconds)
         public static float duration = 3f;
 
-        //Start speed fast
-        public static float initialSpeedCoefficient = 3.8f;
-        //Coast to a slower speed towards end
-        public static float finalSpeedCoefficient = 4.2f;
+        //Start speed fast 3.8 -> 2/3 -> 2.53
+        public static float initialSpeedCoefficient = 2.5f;
+        //Coast to a faster speed towards end 4.2 -> 2/3 -> 2.79
+        public static float finalSpeedCoefficient = 2.8f;
         //W key multiplier
         public static float forwardMultiplier = 1.2f;
 
@@ -153,7 +153,12 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             speedThisFrame = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, transition);
 
             //Cancel button
-            if (inputBank.jump.justPressed)
+            //if (inputBank.jump.justPressed)
+            //{
+                //base.
+            //}
+
+            if (inputBank.skill3.justReleased)
             {
                 outer.SetNextStateToMain();
             }
@@ -232,6 +237,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
             FlameDashController.FlameDashZone zone =
                 zoneObj.AddComponent<FlameDashController.FlameDashZone>();
+
 
             zone.Initialize(
                 attacker: gameObject,

@@ -125,14 +125,14 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
                     HealthComponent hc = hurtBox.healthComponent;
                     if (hc == null || !hc.alive) continue;
-                    if (hitThisTick.Contains(hc)) continue;
+                    //if (hitThisTick.Contains(hc)) continue;
                     if (hc.gameObject == attacker) continue; // no self-damage
 
                     // Skip allies
                     TeamComponent tc = hc.GetComponent<TeamComponent>();
                     if (tc != null && tc.teamIndex == teamIndex) continue;
 
-                    hitThisTick.Add(hc);
+                    //hitThisTick.Add(hc);
 
                     // ── Bridge: tell AfterBurnController this enemy was hit ──
                     // This refreshes their burn timer and registers them for
@@ -140,22 +140,22 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                     afterBurnController?.addDashTarget(hc);
 
                     // ── Direct zone damage (immediate, handled here) ──
-                    DamageInfo info = new DamageInfo
-                    {
-                        attacker = attacker,
-                        inflictor = gameObject,
-                        damage = damage,
-                        procCoefficient = procCoefficient,
-                        position = hc.transform.position,
-                        force = Vector3.zero,
-                        crit = false,
-                        damageType = DamageType.IgniteOnHit,
-                        damageColorIndex = DamageColorIndex.Item,
-                    };
+                    //DamageInfo info = new DamageInfo
+                    //{
+                        //attacker = attacker,
+                        //inflictor = gameObject,
+                        //damage = damage,
+                        //procCoefficient = procCoefficient,
+                        //position = hc.transform.position,
+                        //force = Vector3.zero,
+                        //crit = false,
+                        //damageType = DamageType.IgniteOnHit,
+                        //damageColorIndex = DamageColorIndex.Item,
+                    //};
 
-                    hc.TakeDamage(info);
-                    GlobalEventManager.instance.OnHitEnemy(info, hc.gameObject);
-                    GlobalEventManager.instance.OnHitAll(info, hc.gameObject);
+                    //hc.TakeDamage(info);
+                    //GlobalEventManager.instance.OnHitEnemy(info, hc.gameObject);
+                    //GlobalEventManager.instance.OnHitAll(info, hc.gameObject);
                 }
             }
         }

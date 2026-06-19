@@ -13,7 +13,7 @@ namespace InfernusMod.Survivors.Infernus
         public const float dashDamageCoefficient = 3.0f;
 
         //6.36 hits
-        public const float afterburnDamageCoefficient = 2.0f;
+        public const float afterburnDamageCoefficient = 0.9f;
 
         //44.36 hits
         public const float bombDamageCoefficient = 8.0f;

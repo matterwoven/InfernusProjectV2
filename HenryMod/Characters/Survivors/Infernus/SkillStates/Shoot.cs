@@ -18,7 +18,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public static float range = 256f;
         public static Afterburn afterburnController;
         public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
-        public static bool initialized = false;
 
 
         public static int buildupThreshold = 10;
@@ -32,11 +31,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            if (initialized == false)
-            {
-                afterburnController = GetComponent<Afterburn>();
-                initialized = true;
-            }
+            afterburnController = GetComponent<Afterburn>();
 
             duration = baseDuration / attackSpeedStat;
             fireTime = firePercentTime * duration;
