@@ -1,9 +1,11 @@
 using BepInEx.Configuration;
+using EntityStates.AffixVoid;
 using InfernusMod.Characters.Survivors.Infernus.SkillStates;
 using InfernusMod.Modules;
 using InfernusMod.Modules.Characters;
 using InfernusMod.Survivors.Infernus.Components;
 using InfernusMod.Survivors.Infernus.SkillStates;
+using R2API;
 using RoR2;
 using RoR2.Skills;
 using System;
@@ -122,6 +124,7 @@ namespace InfernusMod.Survivors.Infernus
             AddHitboxes();
             bodyPrefab.AddComponent<InfernusWeaponComponent>();
             //bodyPrefab.AddComponent<HuntressTrackerComopnent>();
+            //bodyPrefab.gameObject.AddComponent<Afterburn>();
             //anything else here
         }
 
@@ -173,41 +176,43 @@ namespace InfernusMod.Survivors.Infernus
                 icon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
             };
 
+            Afterburn controller = bodyPrefab.AddComponent<Afterburn>();
+            controller.Init(prefabCharacterBody);
             //option 2. a new SkillFamily for a passive, used if you want multiple selectable passives
             //GenericSkill passiveGenericSkill = Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, "PassiveSkill");
             //SkillDef passiveSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
             //{
-                //skillName = "InfernusPassive",
-                //skillNameToken = INFERNUS_PREFIX + "PASSIVE_NAME",
-                //skillDescriptionToken = INFERNUS_PREFIX + "PASSIVE_DESCRIPTION",
-                //keywordTokens = new string[] { "KEYWORD_AGILE" },
-                //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
-                //skillIcon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+            //skillName = "InfernusPassive",
+            //skillNameToken = INFERNUS_PREFIX + "PASSIVE_NAME",
+            //skillDescriptionToken = INFERNUS_PREFIX + "PASSIVE_DESCRIPTION",
+            //keywordTokens = new string[] { "KEYWORD_AGILE" },
+            //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
+            //skillIcon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
 
-                //unless you're somehow activating your passive like a skill, none of the following is needed.
-                //but that's just me saying things. the tools are here at your disposal to do whatever you like with
+            //unless you're somehow activating your passive like a skill, none of the following is needed.
+            //but that's just me saying things. the tools are here at your disposal to do whatever you like with
 
-                //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
-                //activationStateMachineName = "Weapon1",k
-                //interruptPriority = EntityStates.InterruptPriority.Skill,
+            //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
+            //activationStateMachineName = "Weapon1",k
+            //interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                //baseRechargeInterval = 1f,
-                //baseMaxStock = 1,
+            //baseRechargeInterval = 1f,
+            //baseMaxStock = 1,
 
-                //rechargeStock = 1,
-                //requiredStock = 1,
-                //stockToConsume = 1,
+            //rechargeStock = 1,
+            //requiredStock = 1,
+            //stockToConsume = 1,
 
-                //resetCooldownTimerOnUse = false,
-                //fullRestockOnAssign = true,
-                //dontAllowPastMaxStocks = false,
-                //mustKeyPress = false,
-                //beginSkillCooldownOnSkillEnd = false,
+            //resetCooldownTimerOnUse = false,
+            //fullRestockOnAssign = true,
+            //dontAllowPastMaxStocks = false,
+            //mustKeyPress = false,
+            //beginSkillCooldownOnSkillEnd = false,
 
-                //isCombatSkill = true,
-                //canceledFromSprinting = false,
-                //cancelSprintingOnActivation = false,
-                //forceSprintDuringState = false,
+            //isCombatSkill = true,
+            //canceledFromSprinting = false,
+            //cancelSprintingOnActivation = false,
+            //forceSprintDuringState = false,
 
             //});
             //Skills.AddSkillsToFamily(passiveGenericSkill.skillFamily, passiveSkillDef1);
@@ -431,8 +436,7 @@ namespace InfernusMod.Survivors.Infernus
 
         private void AddHooks()
         {
-            On.RoR2.HealthComponent.TakeDamage += Ror2HealthComponent_TakeDamage;
-            CharacterBody.onBodyStartGlobal += OnBodyStart;
+            R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
         }
 
         private static void OnBodyStart(CharacterBody body)
@@ -441,21 +445,16 @@ namespace InfernusMod.Survivors.Infernus
             {
                 if (body.name != "InfernusBody(Clone)") return;
                 Afterburn controller = body.gameObject.AddComponent<Afterburn>();
-                controller.Init(body);
             }
         }
 
-        private void Ror2HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
-            CharacterBody body = self.body;
 
-            if (body && body.HasBuff(InfernusDebuffs.napalmDebuff))
+            if (sender.HasBuff(InfernusDebuffs.napalmDebuff))
             {
-                // Increase incoming damage by 30%
-                damageInfo.damage *= 1f + 0.3f;
+                args.armorAdd -= 38;
             }
-
-            orig(self, damageInfo);
         }
     }
 }

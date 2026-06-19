@@ -47,7 +47,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         private float dashTickAccumulator;
         private float fixedAge;
         private float bodyDmgStat;
-        private float damageInst;
+        private float damagePreCoefficient;
         private CharacterBody ownerBody;
         private GameObject ownerObject;
         private bool isCrit;
@@ -72,6 +72,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         public void FixedUpdate()
         {
             currentFixedFrame = Time.frameCount;
+            if (ownerBody == null) return;
 
             float dt = Time.fixedDeltaTime;
 
@@ -83,6 +84,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 updateTankCount();
                 dashTickAccumulator -= TickThreshold; 
                 bodyDmgStat = ownerBody.damageFromRecalculateStats;
+                damagePreCoefficient = bodyDmgStat * tankMult * 0.5f;
             }
             afterburnUpdate(dt);
             dashStandUpdate(dt);
@@ -130,7 +132,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             if (standersToDamageThisPoll.Count > 0)
             {
                 bodyDmgStat = ownerBody.damageFromRecalculateStats;
-                damageInst = InfernusStaticValues.dashDamageCoefficient * bodyDmgStat * tankMult;
+                damagePreCoefficient = bodyDmgStat * tankMult * 0.5f;
                 isCrit = ownerBody.RollCrit();
                 foreach (RoR2.HealthComponent hc in standersToDamageThisPoll)
                 {
@@ -179,6 +181,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                     dealDamageBurn(hc);
                 }
             }
+
         }
 
         public void addDashTarget(RoR2.HurtBox hurtBox)
@@ -238,7 +241,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         private void dealDamageBurn()
         {
-            damageInst = InfernusStaticValues.afterburnDamageCoefficient * bodyDmgStat * 0.5f;
             foreach (HealthComponent a in afterburnTimers.Keys)
             {
                 dealDamageBurn(a);
@@ -262,11 +264,11 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             {
                 attacker = ownerObject,
                 inflictor = ownerObject, 
-                damage = InfernusStaticValues.afterburnDamageCoefficient * damageInst * tankMult,
+                damage = InfernusStaticValues.afterburnDamageCoefficient * damagePreCoefficient,
                 procCoefficient = procCoefficientAfterburn,
                 position = a.transform.position,
                 crit = false,
-                damageType = DamageType.Generic,
+                damageType = DamageType.DoT,
                 damageColorIndex = DamageColorIndex.Default,
             };
 
@@ -290,12 +292,11 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         private void updateTankCount()
         {
-            tankMult = ownerBody.inventory.GetItemCountEffective(DLC1Content.Items.StrengthenBurn);
+            tankMult = 1f + ownerBody.inventory.GetItemCountEffective(DLC1Content.Items.StrengthenBurn);
         }
 
         private void dealDamageDash()
         {
-            damageInst = InfernusStaticValues.dashDamageCoefficient * bodyDmgStat * tankMult * 0.5f;
             isCrit = ownerBody.RollCrit();
             foreach (HealthComponent a in flameDashVictims)
             {
@@ -311,17 +312,16 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         public void dealDamageDash(HealthComponent a)
         {
             if (a == null || !a.alive) return;
-
             // Deal damage once
             DamageInfo info = new DamageInfo
             {
                 attacker = ownerObject,
                 inflictor = ownerObject,
-                damage = damageInst,
+                damage = InfernusStaticValues.dashDamageCoefficient * damagePreCoefficient,
                 procCoefficient = procCoefficientDash,
                 position = a.transform.position,
                 crit = false,
-                damageType = DamageType.Generic,
+                damageType = DamageType.AOE,
                 damageColorIndex = DamageColorIndex.Default,
             };
 

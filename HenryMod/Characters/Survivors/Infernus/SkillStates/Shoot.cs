@@ -19,7 +19,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public static Afterburn afterburnController;
         public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
 
-
+        public static bool startFlag = true;
         public static int buildupThreshold = 10;
 
         private bool prevIsCrit;
@@ -31,8 +31,12 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            afterburnController = GetComponent<Afterburn>();
-
+            if (startFlag == true)
+            {
+                afterburnController = GetComponent<Afterburn>();
+                afterburnController.Init(this.characterBody);
+                startFlag = false;
+            }
             duration = baseDuration / attackSpeedStat;
             fireTime = firePercentTime * duration;
             characterBody.SetAimTimer(2f);
@@ -142,7 +146,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             bool isAlreadyBurning = victim.HasBuff(InfernusDebuffs.afterburnDebuff);
 
             TeamComponent tc = hitHurtBox.healthComponent.GetComponent<TeamComponent>();
-            if (tc != null && tc.teamIndex != GetTeam()) return;
+            if (tc != null && tc.teamIndex == GetTeam()) return;
 
             if (isAlreadyBurning)
             {

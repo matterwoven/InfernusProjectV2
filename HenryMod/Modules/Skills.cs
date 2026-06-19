@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using InfernusMod;
 using UnityEngine;
+using InfernusMod.Characters.Survivors.Infernus.SkillStates;
 
 namespace InfernusMod.Modules
 {

@@ -88,7 +88,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             // ════════════════════════════════════════════════════════════════
             // Lifecycle
             // ════════════════════════════════════════════════════════════════
-
             private void FixedUpdate()
             {
                 age += Time.fixedDeltaTime;
@@ -118,7 +117,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 if (age >= lifetime)
                     Destroy(gameObject);
             }
-
             // ════════════════════════════════════════════════════════════════
             // Damage tick
             // ════════════════════════════════════════════════════════════════
@@ -151,7 +149,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                     // ── Bridge: tell AfterBurnController this enemy was hit ──
                     // This refreshes their burn timer and registers them for
                     // the dash damage tick in AfterBurnController.DealDamageDash()
-                    afterBurnController?.addDashTarget(hc);
+                    afterBurnController?.notifyStanding(hc);
 
                     // ── Direct zone damage (immediate, handled here) ──
                     //DamageInfo info = new DamageInfo

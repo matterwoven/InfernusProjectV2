@@ -17,5 +17,8 @@ namespace InfernusMod.Survivors.Infernus
 
         //44.36 hits
         public const float bombDamageCoefficient = 8.0f;
+
+        //Basic move speed was 7f
+        public const float baseMovementSpeed = 9f;
     }
 }

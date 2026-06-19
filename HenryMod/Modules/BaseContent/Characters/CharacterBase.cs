@@ -1,3 +1,4 @@
+using InfernusMod.Survivors.Infernus;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -114,7 +115,7 @@ namespace InfernusMod.Modules.Characters
         public float crit = 1f;
 
         //misc stats
-        public float moveSpeed = 7f;
+        public float moveSpeed = InfernusStaticValues.baseMovementSpeed;
         public float acceleration = 80f;
         public float jumpPower = 15f;
 
