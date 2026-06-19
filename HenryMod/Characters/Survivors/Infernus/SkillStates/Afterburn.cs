@@ -20,18 +20,20 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             tickAccumulator = 0f;
         }
     }
+
     public class DashStandData
     {
-        public float remaining;
+        // True if a zone reported this target as "still standing" THIS frame.
+        // Afterburn.FixedUpdate reads it, then clears it before the zones run again.
+        public bool presentThisFrame;
         public float tickAccumulator;
 
-        public DashStandData(float nextStandCheck)
+        public DashStandData()
         {
-            remaining = nextStandCheck;
+            presentThisFrame = true;
             tickAccumulator = 0f;
         }
     }
-
 
     public class Afterburn : MonoBehaviour
     {
@@ -43,25 +45,21 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         private const float TickThreshold = 0.5f;
 
         private float tankMult = 1f;
-        private int currentFixedFrame;
         private float dashTickAccumulator;
-        private float fixedAge;
         private float bodyDmgStat;
         private float damagePreCoefficient;
         private CharacterBody ownerBody;
         private GameObject ownerObject;
         private bool isCrit;
 
-        private readonly List<RoR2.HealthComponent> standersToRemove = new List<RoR2.HealthComponent>();
-        private readonly List<RoR2.HealthComponent> standersToDamageThisPoll = new List<RoR2.HealthComponent>();
-
         private Dictionary<RoR2.HealthComponent, AfterburnData> afterburnTimers = new Dictionary<RoR2.HealthComponent, AfterburnData>();
         private Dictionary<RoR2.HealthComponent, DashStandData> dashStandTimers = new Dictionary<RoR2.HealthComponent, DashStandData>();
 
-        private LinkedList<RoR2.HealthComponent> flameDashVictims = new LinkedList<RoR2.HealthComponent>();
-
         private readonly List<RoR2.HealthComponent> toRemove = new List<RoR2.HealthComponent>();
         private readonly List<RoR2.HealthComponent> toDamageThisPoll = new List<RoR2.HealthComponent>();
+
+        private readonly List<RoR2.HealthComponent> standersToRemove = new List<RoR2.HealthComponent>();
+        private readonly List<RoR2.HealthComponent> standersToDamageThisPoll = new List<RoR2.HealthComponent>();
 
         public void Init(CharacterBody body)
         {
@@ -71,81 +69,21 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         public void FixedUpdate()
         {
-            currentFixedFrame = Time.frameCount;
             if (ownerBody == null) return;
 
             float dt = Time.fixedDeltaTime;
-
-            refreshDashContacts();
 
             dashTickAccumulator += PollInterval;
             if (dashTickAccumulator >= TickThreshold)
             {
                 updateTankCount();
-                dashTickAccumulator -= TickThreshold; 
+                dashTickAccumulator -= TickThreshold;
                 bodyDmgStat = ownerBody.damageFromRecalculateStats;
                 damagePreCoefficient = bodyDmgStat * tankMult * 0.5f;
             }
+
             afterburnUpdate(dt);
             dashStandUpdate(dt);
-
-            flameDashVictims.Clear();
-        }
-
-        private void refreshDashContacts()
-        {
-            foreach (RoR2.HealthComponent hc in flameDashVictims)
-            {
-                if (afterburnTimers.TryGetValue(hc, out AfterburnData data))
-                {
-                    data.remaining = maxDuration;
-                }
-            }
-        }
-        private void dashStandUpdate(float dt)
-        {
-            standersToRemove.Clear();
-            standersToDamageThisPoll.Clear();
-
-            foreach (RoR2.HealthComponent hc in dashStandTimers.Keys)
-            {
-                //check remaining, subtract time from remaining, if 0 deal damage
-                DashStandData data = dashStandTimers[hc];
-
-                if (!hc.alive)
-                {
-                    toRemove.Add(hc);
-                    continue;
-                }
-
-                data.remaining -= dt;
-                if (data.remaining <= 0f)
-                {
-                    toRemove.Add(hc);
-                    continue;
-                }
-
-                data.tickAccumulator += dt;
-                if (data.tickAccumulator >= data.remaining)
-                {
-                    data.tickAccumulator -= data.remaining;
-                    toDamageThisPoll.Add(hc);
-                }
-            }
-
-            foreach (RoR2.HealthComponent hc in standersToRemove)
-                dashStandTimers.Remove(hc);
-
-            if (standersToDamageThisPoll.Count > 0)
-            {
-                bodyDmgStat = ownerBody.damageFromRecalculateStats;
-                damagePreCoefficient = bodyDmgStat * tankMult * 0.5f;
-                isCrit = ownerBody.RollCrit();
-                foreach (RoR2.HealthComponent hc in standersToDamageThisPoll)
-                {
-                    dealDamageDash(hc);
-                }
-            }
         }
 
         private void afterburnUpdate(float dt)
@@ -153,7 +91,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             toRemove.Clear();
             toDamageThisPoll.Clear();
 
-            foreach(RoR2.HealthComponent hc in afterburnTimers.Keys)
+            foreach (RoR2.HealthComponent hc in afterburnTimers.Keys)
             {
                 AfterburnData data = afterburnTimers[hc];
 
@@ -188,49 +126,11 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                     dealDamageBurn(hc);
                 }
             }
-
         }
 
-        public void addDashTarget(RoR2.HurtBox hurtBox)
-        {
-            addDashTarget(hurtBox.healthComponent);
-        }
-
-        public void addDashTarget(RoR2.HealthComponent hc)
-        {
-            if (!flameDashVictims.Contains(hc))
-            {
-                flameDashVictims.AddFirst(hc);
-                dealDamageDash(hc);
-            }
-
-            if (!afterburnTimers.ContainsKey(hc))
-            {
-                afterburnTimers[hc] = new AfterburnData(5.0f);
-            }
-        }
         public void addBurnTarget(RoR2.HurtBox hurtBox)
         {
             addBurnTarget(hurtBox.healthComponent);
-        }
-
-        public void notifyStanding(RoR2.HurtBox hurtBox)
-        {
-            notifyStanding(hurtBox.healthComponent);
-        }
-
-        public void notifyStanding(RoR2.HealthComponent hc)
-        {
-            if (!dashStandTimers.ContainsKey(hc))
-            {
-                dealDamageDash(hc);
-                dashStandTimers[hc] = new DashStandData(0.5f);
-            }
-            //Adds duration if called on target
-            else
-            {
-                dashStandTimers[hc].remaining = Mathf.Min(dashStandTimers[hc].remaining + 0.5f, 0.5f);
-            }
         }
 
         public void addBurnTarget(RoR2.HealthComponent hc)
@@ -239,10 +139,17 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             {
                 afterburnTimers[hc] = new AfterburnData(5.0f);
             }
-            //Adds duration if called on target
             else
             {
                 afterburnTimers[hc].remaining = Mathf.Min(afterburnTimers[hc].remaining + 0.5f, maxDuration);
+            }
+        }
+
+        public void refreshBurnTarget(RoR2.HealthComponent hc)
+        {
+            if (afterburnTimers.ContainsKey(hc))
+            {
+                afterburnTimers[hc].remaining = 0.5f;
             }
         }
 
@@ -257,19 +164,10 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             {
                 afterburnTimers.Add(hc, new AfterburnData(maxDuration));
             }
-            //Adds duration if called on target
             else
             {
                 AfterburnData record = afterburnTimers[hc];
                 record.remaining = Mathf.Min(record.remaining + 1.0f, maxDuration);
-            }
-        }
-
-        private void dealDamageBurn()
-        {
-            foreach (HealthComponent a in afterburnTimers.Keys)
-            {
-                dealDamageBurn(a);
             }
         }
 
@@ -280,16 +178,13 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         public void dealDamageBurn(HealthComponent a)
         {
-            //Single target version by healthComponent value
-            //For outside use
-
             if (a == null || !a.alive) return;
 
             isCrit = ownerBody.RollCrit();
             DamageInfo info = new DamageInfo
             {
                 attacker = ownerObject,
-                inflictor = ownerObject, 
+                inflictor = ownerObject,
                 damage = InfernusStaticValues.afterburnDamageCoefficient * damagePreCoefficient,
                 procCoefficient = procCoefficientAfterburn,
                 position = a.transform.position,
@@ -316,17 +211,69 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             }
         }
 
-        private void updateTankCount()
+        // ════════════════════════════════════════════════════════════════
+        // Dash standing damage — presence-based, ticks every 0.5s for as
+        // long as a zone keeps reporting the target as still standing.
+        // Mirrors afterburnUpdate's shape; "presentThisFrame" replaces
+        // "remaining" as the expiry condition.
+        // ════════════════════════════════════════════════════════════════
+
+        private void dashStandUpdate(float dt)
         {
-            tankMult = 1f + ownerBody.inventory.GetItemCountEffective(DLC1Content.Items.StrengthenBurn);
+            standersToRemove.Clear();
+            standersToDamageThisPoll.Clear();
+
+            foreach (RoR2.HealthComponent hc in dashStandTimers.Keys)
+            {
+                DashStandData data = dashStandTimers[hc];
+
+                if (!hc.alive || !data.presentThisFrame)
+                {
+                    standersToRemove.Add(hc);
+                    continue;
+                }
+
+                data.tickAccumulator += dt;
+                if (data.tickAccumulator >= TickThreshold)
+                {
+                    data.tickAccumulator -= TickThreshold;
+                    standersToDamageThisPoll.Add(hc);
+                }
+
+                // Reset for next frame; a zone must re-flag it via notifyStanding
+                // or it's considered "left" by the time this runs again.
+                data.presentThisFrame = false;
+            }
+
+            foreach (RoR2.HealthComponent hc in standersToRemove)
+                dashStandTimers.Remove(hc);
+
+            if (standersToDamageThisPoll.Count > 0)
+            {
+                isCrit = ownerBody.RollCrit();
+                foreach (RoR2.HealthComponent hc in standersToDamageThisPoll)
+                {
+                    dealDamageDash(hc);
+                }
+            }
         }
 
-        private void dealDamageDash()
+        public void notifyStanding(RoR2.HurtBox hurtBox)
         {
-            isCrit = ownerBody.RollCrit();
-            foreach (HealthComponent a in flameDashVictims)
+            notifyStanding(hurtBox.healthComponent);
+        }
+
+        public void notifyStanding(RoR2.HealthComponent hc)
+        {
+            if (hc == null) return;
+
+            if (!dashStandTimers.TryGetValue(hc, out DashStandData data))
             {
-                dealDamageDash(a);
+                dashStandTimers[hc] = new DashStandData();
+            }
+            else
+            {
+                data.presentThisFrame = true;
             }
         }
 
@@ -338,7 +285,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         public void dealDamageDash(HealthComponent a)
         {
             if (a == null || !a.alive) return;
-            // Deal damage once
+
             DamageInfo info = new DamageInfo
             {
                 attacker = ownerObject,
@@ -356,5 +303,9 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             GlobalEventManager.instance.OnHitAll(info, a.gameObject);
         }
 
+        private void updateTankCount()
+        {
+            tankMult = 1f + ownerBody.inventory.GetItemCountEffective(DLC1Content.Items.StrengthenBurn);
+        }
     }
 }

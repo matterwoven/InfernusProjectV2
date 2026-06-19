@@ -1,4 +1,5 @@
 using EntityStates;
+using InfernusMod.Characters.Survivors.Infernus.SkillStates;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,9 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         private OverlapAttack overlapAttack;
         private bool          attackActive;
 
+        //Add this to top
+        private static Afterburn afterburnController;
+
         /// Enemies already hit this cast — prevents double-hits during the sweep.
         private readonly HashSet<HealthComponent> hitTargets = new HashSet<HealthComponent>();
         private readonly List<OverlapAttack.OverlapInfo> overlapResults = new List<OverlapAttack.OverlapInfo>();
@@ -73,6 +77,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             splashProxy.rotation = Quaternion.LookRotation(lockedAimDirection, Vector3.up);
 
             characterBody.SetAimTimer(2f);
+            enrollAfterburnManager();
 
             // Animation & sound placeholders
             PlayCrossfade("Gesture, Override", "Napalm", "Slash.playbackRate", duration, 0.05f);
@@ -130,6 +135,16 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             }
         }
 
+        private void enrollAfterburnManager()
+        {
+            //Add this to top
+            //private static Afterburn afterburnController;
+            if (this.characterBody != null)
+                afterburnController = characterBody.GetComponent<Afterburn>();
+            if (characterBody == null)
+                Chat.AddMessage("Hey that damn controller is null dangnabbit");
+        }
+
         private void FireSplashTick()
         {
             Collider[] cols = Physics.OverlapBox(
@@ -152,6 +167,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                     // Apply napalm debuff
                     CharacterBody body = hc.body;
                     if (body != null) body.AddTimedBuff(InfernusDebuffs.napalmDebuff, napalmDebuffDuration);
+                    afterburnController.refreshBurnTarget(hc);
                     dealDamageConstructed(hc);
                     hitTargets.Add(hc);
                 }

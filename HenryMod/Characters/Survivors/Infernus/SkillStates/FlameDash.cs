@@ -50,6 +50,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         private float dashSpeed;
         private float speedThisFrame;
         private float distanceSinceLastZone;
+        private static Afterburn afterburnController;
+
+        //Add this to top
+        //private static Afterburn afterburnController;
 
         public override void OnEnter()
         {
@@ -84,6 +88,16 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             //This should be the infernus dash SFX and voiceline with animation
             PlayAnimation("FullBody, Override", "Flame Dash", "Roll.playbackRate", duration);
             Util.PlaySound(dodgeSoundString, gameObject);
+        }
+
+        private void enrollAfterburnManager()
+        {
+            //Add this to top
+            //private static Afterburn afterburnController;
+            if (this.characterBody != null)
+                afterburnController = characterBody.GetComponent<Afterburn>();
+            if (characterBody == null)
+                Chat.AddMessage("Hey that damn controller is null dangnabbit");
         }
 
         private void inputMovementManager()

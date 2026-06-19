@@ -3,6 +3,7 @@ using InfernusMod.Survivors.Infernus;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using InfernusMod.Characters.Survivors.Infernus.SkillStates;
 
 namespace InfernusMod.Survivors.Infernus.SkillStates
 {
@@ -28,6 +29,9 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         private float fireTime;
         private bool hasFired;
 
+        //Add this to top
+        private static Afterburn afterburnController;
+
         //Synopsis for rework
 
         //OnEnter, load the area of the hit relative to the character
@@ -48,10 +52,20 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             hasFired = false;
             duration = baseDuration / attackSpeedStat;
             characterBody.SetAimTimer(duration);
-
+            enrollAfterburnManager();
             //Once you have anims PlayAnimation();
 
             //Once you have the audio Util.PlaySound("InfernusNapalm", gameObject);
+        }
+
+        private void enrollAfterburnManager()
+        {
+            //Add this to top
+            //private static Afterburn afterburnController;
+            if (this.characterBody != null)
+                afterburnController = characterBody.GetComponent<Afterburn>();
+            if (characterBody == null)
+                Chat.AddMessage("Hey that damn controller is null dangnabbit");
         }
 
         public void InitializeAttack()
@@ -115,7 +129,40 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             base.OnExit();
             InitializeAttack();
             concussiveAttack.Fire();
+            ReafflictAfterburnInArea();
             PlayAnimation(duration);
+        }
+
+        private void ReafflictAfterburnInArea()
+        {
+            if (afterburnController == null) return;
+
+            HitBoxGroup concussiveCombustion = FindHitBoxGroup("ConcussiveGroup");
+            if (concussiveCombustion == null || concussiveCombustion.hitBoxes.Length == 0) return;
+
+            HitBox hitbox = concussiveCombustion.hitBoxes[0];
+
+            Collider[] cols = Physics.OverlapBox(
+                hitbox.transform.position,
+                hitbox.transform.localScale * 0.5f,
+                hitbox.transform.rotation,
+                LayerIndex.entityPrecise.mask
+            );
+
+            foreach (Collider col in cols)
+            {
+                HurtBox hurtBox = col.GetComponent<HurtBox>();
+                if (hurtBox == null) continue;
+
+                HealthComponent hc = hurtBox.healthComponent;
+                if (hc == null || !hc.alive) continue;
+                if (hc.gameObject == gameObject) continue; // no self-affliction
+
+                TeamComponent tc = hc.GetComponent<TeamComponent>();
+                if (tc != null && tc.teamIndex == characterBody.teamComponent.teamIndex) continue; // skip allies
+
+                afterburnController.refreshBurnTarget(hc);
+            }
         }
     }
 }

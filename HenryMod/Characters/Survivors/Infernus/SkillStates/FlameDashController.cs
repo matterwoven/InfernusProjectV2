@@ -56,7 +56,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 triggerCollider.isTrigger = true;
                 triggerCollider.size = halfExtents * 2f;
 
-                // Cache the passive controller from the attacker
+                // Cache the passive controller from the owner
                 if (ownerBody != null)
                     afterBurnController = ownerBody.GetComponent<Afterburn>();
                 if (ownerBody == null)
@@ -107,6 +107,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                     TeamComponent tc = hc.GetComponent<TeamComponent>();
                     if (tc != null && tc.teamIndex == teamIndex) continue;
                     afterBurnController.notifyStanding(hc);
+                    afterBurnController.refreshBurnTarget(hc);
                 }
 
                 if (age >= lifetime)
