@@ -437,10 +437,6 @@ namespace InfernusMod.Survivors.Infernus
 
         private static void OnBodyStart(CharacterBody body)
         {
-            // Only attach to Infernus – match by prefab name or body index
-            // Adjust the string to match your actual body prefab name
-            if (body.name != "InfernusBody") return;
-
             Afterburn controller = body.gameObject.AddComponent<Afterburn>();
             controller.Init(body);
         }

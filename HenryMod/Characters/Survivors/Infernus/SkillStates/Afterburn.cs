@@ -53,6 +53,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
         public void FixedUpdate()
         {
+
             float dt = Time.fixedDeltaTime;
             fixedAge += dt;
 

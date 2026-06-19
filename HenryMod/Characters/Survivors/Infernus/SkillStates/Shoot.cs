@@ -16,7 +16,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public static float force = 200f;
         public static float recoil = 0.5f;
         public static float range = 256f;
+        public static Afterburn afterburnController;
         public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
+        public static bool initialized = false;
+
 
         public static int buildupThreshold = 10;
 
@@ -29,6 +32,12 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
+            if (initialized == false)
+            {
+                afterburnController = GetComponent<Afterburn>();
+                initialized = true;
+            }
+
             duration = baseDuration / attackSpeedStat;
             fireTime = firePercentTime * duration;
             characterBody.SetAimTimer(2f);
@@ -135,8 +144,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
         private void ApplyDebuffLogic(CharacterBody victim, HurtBox hitHurtBox)
         {
-            Afterburn afterburnController = GetComponent<Afterburn>();
-
             bool isAlreadyBurning = victim.HasBuff(InfernusDebuffs.afterburnDebuff);
 
             if (isAlreadyBurning)
@@ -144,9 +151,9 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 // Target is already burning — refresh to full duration.
                 // Made MonoBehavior handle the tick-timing itself.
                 if (prevIsCrit)
-                    afterburnController.addBurnTargetCrit(hitHurtBox);
+                    afterburnController.addBurnTargetCrit(hitHurtBox.healthComponent);
                 else
-                    afterburnController.addBurnTarget(hitHurtBox);
+                    afterburnController.addBurnTarget(hitHurtBox.healthComponent);
             }
             else
             {
@@ -164,10 +171,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                         victim.RemoveBuff(InfernusDebuffs.afterburnBuildup);
 
                     //Deal on-proc damage
-                    afterburnController.dealDamageBurn(hitHurtBox);
+                    afterburnController.dealDamageBurn(hitHurtBox.healthComponent);
 
                     // Apply afterburn dot fresh
-                    afterburnController.addBurnTarget(hitHurtBox);
+                    afterburnController.addBurnTarget(hitHurtBox.healthComponent);
 
                     victim.AddBuff(InfernusDebuffs.afterburnDebuff);
                 }

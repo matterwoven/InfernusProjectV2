@@ -37,17 +37,17 @@ namespace InfernusMod.Survivors.Infernus
                 true
             );
 
-            DotController.DotDef afterburnDot = new DotController.DotDef
-            {
-                associatedBuff = afterburnDebuff,
-                damageCoefficient = InfernusStaticValues.afterburnDamageCoefficient * 0.5f,
-                interval = 0.5f,
-                terminalTimedBuffDuration = 8.0f,
-                damageColorIndex = DamageColorIndex.Void,
-                resetTimerOnAdd = true
-            };
+            //DotController.DotDef afterburnDot = new DotController.DotDef
+            //{
+                //associatedBuff = afterburnDebuff,
+                //damageCoefficient = InfernusStaticValues.afterburnDamageCoefficient * 0.5f,
+                //interval = 0.5f,
+                //terminalTimedBuffDuration = 8.0f,
+                //damageColorIndex = DamageColorIndex.Void,
+                //resetTimerOnAdd = true
+            //};
 
-            afterburnDebuffIndex = DotAPI.RegisterDotDef(afterburnDot);
+            //afterburnDebuffIndex = DotAPI.RegisterDotDef(afterburnDot);
         }
     }
 }
