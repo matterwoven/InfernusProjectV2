@@ -240,6 +240,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
             zone.Initialize(
                 attacker: gameObject,
+                ownerBody: this.characterBody,
                 teamIndex: GetTeam(),
                 damage: damageStat * damageCoefficient,
                 procCoefficient: damageCoefficient,

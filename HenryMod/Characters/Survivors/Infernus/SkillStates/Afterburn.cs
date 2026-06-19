@@ -22,13 +22,13 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
     }
     public class DashStandData
     {
+        public float remaining;
         public float tickAccumulator;
-        public float lastFreshFrame;
 
-        public DashStandData(float currentFrame)
+        public DashStandData(float nextStandCheck)
         {
+            remaining = nextStandCheck;
             tickAccumulator = 0f;
-            lastFreshFrame = currentFrame;
         }
     }
 
@@ -109,20 +109,27 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
             foreach (RoR2.HealthComponent hc in dashStandTimers.Keys)
             {
+                //check remaining, subtract time from remaining, if 0 deal damage
                 DashStandData data = dashStandTimers[hc];
-                bool stillStanding = data.lastFreshFrame >= currentFixedFrame - 1;
 
-                if (!hc.alive || !stillStanding)
+                if (!hc.alive)
                 {
-                    standersToRemove.Add(hc);
+                    toRemove.Add(hc);
+                    continue;
+                }
+
+                data.remaining -= dt;
+                if (data.remaining <= 0f)
+                {
+                    toRemove.Add(hc);
                     continue;
                 }
 
                 data.tickAccumulator += dt;
-                if (data.tickAccumulator >= TickThreshold)
+                if (data.tickAccumulator >= data.remaining)
                 {
-                    data.tickAccumulator -= TickThreshold;
-                    standersToDamageThisPoll.Add(hc);
+                    data.tickAccumulator -= data.remaining;
+                    toDamageThisPoll.Add(hc);
                 }
             }
 
@@ -205,6 +212,25 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         public void addBurnTarget(RoR2.HurtBox hurtBox)
         {
             addBurnTarget(hurtBox.healthComponent);
+        }
+
+        public void notifyStanding(RoR2.HurtBox hurtBox)
+        {
+            notifyStanding(hurtBox.healthComponent);
+        }
+
+        public void notifyStanding(RoR2.HealthComponent hc)
+        {
+            if (!dashStandTimers.ContainsKey(hc))
+            {
+                dealDamageDash(hc);
+                dashStandTimers[hc] = new DashStandData(0.5f);
+            }
+            //Adds duration if called on target
+            else
+            {
+                dashStandTimers[hc].remaining = Mathf.Min(dashStandTimers[hc].remaining + 0.5f, 0.5f);
+            }
         }
 
         public void addBurnTarget(RoR2.HealthComponent hc)
@@ -328,25 +354,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             a.TakeDamage(info);
             GlobalEventManager.instance.OnHitEnemy(info, a.gameObject);
             GlobalEventManager.instance.OnHitAll(info, a.gameObject);
-        }
-
-        public void notifyStanding(RoR2.HurtBox hurtBox)
-        {
-            notifyStanding(hurtBox.healthComponent);
-        }
-
-        public void notifyStanding(RoR2.HealthComponent hc)
-        {
-            if (hc == null) return;
-
-            if (!dashStandTimers.TryGetValue(hc, out DashStandData data))
-            {
-                dashStandTimers[hc] = new DashStandData(currentFixedFrame);
-            }
-            else
-            {
-                data.lastFreshFrame = currentFixedFrame;
-            }
         }
 
     }

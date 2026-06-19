@@ -55,7 +55,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         private readonly HashSet<HealthComponent> hitTargets = new HashSet<HealthComponent>();
         private readonly List<OverlapAttack.OverlapInfo> overlapResults = new List<OverlapAttack.OverlapInfo>();
 
-        // ════════════════════════════════════════════════════════════════════
         public override void OnEnter()
         {
             base.OnEnter();
@@ -65,14 +64,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             attackEnd   = attackEndPercent   * duration;
 
 
-            // Lock aim at the moment the skill is activated
             Ray aimRay          = GetAimRay();
-            lockedAimDirection  = aimRay.direction;          // already normalized
+            lockedAimDirection  = aimRay.direction;
             lockedOrigin        = aimRay.origin;
 
-            // Build a world-space proxy Transform for the OverlapAttack.
-            // It is NOT parented to the model, so rotating it never fights
-            // the character's facing direction.
             GameObject proxyGO  = new GameObject("NapalmSplashProxy");
             splashProxy         = proxyGO.transform;
             splashProxy.rotation = Quaternion.LookRotation(lockedAimDirection, Vector3.up);
@@ -86,11 +81,9 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             if (isAuthority)
                 BuildOverlapAttack();
         }
-
-        // ════════════════════════════════════════════════════════════════════
         /// <summary>
         /// Creates the OverlapAttack once. The proxy Transform is repositioned
-        /// every frame during the attack window so the sweep moves outward.
+        /// every frame during the attack window.
         /// </summary>
         private void BuildOverlapAttack()
         {
@@ -104,14 +97,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 forceVector      = lockedAimDirection * pushForce,
                 isCrit           = RollCrit(),
                 damageType       = DamageType.Generic,
-
-                // Point the OverlapAttack at our proxy; we drive its position manually.
-                // hitBoxGroup is left null — we'll use Fire(overlapResults) with a
-                // Physics.OverlapBox call instead so we control the shape exactly.
             };
         }
-
-        // ════════════════════════════════════════════════════════════════════
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -120,7 +107,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
             if (isAuthority && inWindow)
             {
-                // Lerp the proxy outward along the locked aim ray
+                // Lerp outward along the locked aim ray
                 float t           = Mathf.InverseLerp(attackStart, attackEnd, fixedAge);
                 float offset      = Mathf.Lerp(splashStartOffset, splashEndOffset, t);
                 splashProxy.position = lockedOrigin + lockedAimDirection * offset;
@@ -133,12 +120,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 outer.SetNextStateToMain();
             }
         }
-
-        // ════════════════════════════════════════════════════════════════════
-        /// Runs a Physics.OverlapBox at the proxy position every fixed frame
-        /// during the attack window. Already-hit targets are skipped so each
-        /// enemy takes damage at most once per cast.
-        /// 
+        /// Already-hit targets are skipped
         public void PlayAnimation(float duration)
         {
 
@@ -197,11 +179,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             GlobalEventManager.instance.OnHitAll(info, healthComponentDmg.gameObject);
         }
 
-        // ════════════════════════════════════════════════════════════════════
         public override void OnExit()
         {
-            // Always clean up the proxy — it is not parented so Unity won't
-            // destroy it automatically when this state exits.
             if (splashProxy != null)
                 UnityEngine.Object.Destroy(splashProxy.gameObject);
 
@@ -210,7 +189,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             PlayAnimation(duration);
         }
 
-        // ════════════════════════════════════════════════════════════════════
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.PrioritySkill;

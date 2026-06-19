@@ -1,19 +1,21 @@
 using InfernusMod.Characters.Survivors.Infernus.SkillStates;
 using RoR2;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 {
     /// <summary>
-    /// Container class that keeps FlameDashZone out of the global namespace
-    /// while staying accessible to FlameDash via a simple using directive.
+    /// Heavily overhauled logic for single-target damage management
     /// </summary>
     internal class FlameDashController
     {
         public class FlameDashZone : MonoBehaviour
         {
             private GameObject attacker;
+            private CharacterBody ownerBody;
             private TeamIndex teamIndex;
             private float damage;
             private float procCoefficient;
@@ -28,16 +30,11 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             private readonly HashSet<HealthComponent> hitThisTick = new HashSet<HealthComponent>();
 
             private BoxCollider triggerCollider;
-
-            // Cached once on Initialize – avoids GetComponent every tick
             private Afterburn afterBurnController;
-
-            // ════════════════════════════════════════════════════════════════
-            // Init
-            // ════════════════════════════════════════════════════════════════
 
             public void Initialize(
                 GameObject attacker,
+                CharacterBody ownerBody,
                 TeamIndex teamIndex,
                 float damage,
                 float procCoefficient,
@@ -46,6 +43,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 float tickInterval)
             {
                 this.attacker = attacker;
+                this.ownerBody = ownerBody;
                 this.teamIndex = teamIndex;
                 this.damage = damage;
                 this.procCoefficient = procCoefficient;
@@ -59,10 +57,12 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 triggerCollider.size = halfExtents * 2f;
 
                 // Cache the passive controller from the attacker
-                if (attacker != null)
-                    afterBurnController = attacker.GetComponent<Afterburn>();
+                if (ownerBody != null)
+                    afterBurnController = ownerBody.GetComponent<Afterburn>();
+                if (ownerBody == null)
+                    Chat.AddMessage("Hey that damn controller is null dangnabbit");
 
-                CreateVisual();
+                    CreateVisual();
 
                 // First tick fires after a full interval
                 timeSinceTick = 0f;
@@ -85,9 +85,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             }
             #endregion
 
-            // ════════════════════════════════════════════════════════════════
-            // Lifecycle
-            // ════════════════════════════════════════════════════════════════
             private void FixedUpdate()
             {
                 age += Time.fixedDeltaTime;
@@ -98,8 +95,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                     Quaternion.identity,
                     LayerIndex.entityPrecise.mask
                 );
-
-                foreach (Collider col in cols)
+                foreach (Collider col in cols.Distinct())
                 {
                     HurtBox hurtBox = col.GetComponent<HurtBox>();
                     if (hurtBox == null) continue;
@@ -110,65 +106,11 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
                     TeamComponent tc = hc.GetComponent<TeamComponent>();
                     if (tc != null && tc.teamIndex == teamIndex) continue;
-
-                    afterBurnController?.notifyStanding(hc);
+                    afterBurnController.notifyStanding(hc);
                 }
 
                 if (age >= lifetime)
                     Destroy(gameObject);
-            }
-            // ════════════════════════════════════════════════════════════════
-            // Damage tick
-            // ════════════════════════════════════════════════════════════════
-
-            private void TickDamage()
-            {
-                Collider[] cols = Physics.OverlapBox(
-                    transform.position,
-                    halfExtents,
-                    Quaternion.identity,
-                    LayerIndex.entityPrecise.mask
-                );
-
-                foreach (Collider col in cols)
-                {
-                    HurtBox hurtBox = col.GetComponent<HurtBox>();
-                    if (hurtBox == null) continue;
-
-                    HealthComponent hc = hurtBox.healthComponent;
-                    if (hc == null || !hc.alive) continue;
-                    //if (hitThisTick.Contains(hc)) continue;
-                    if (hc.gameObject == attacker) continue; // no self-damage
-
-                    // Skip allies
-                    TeamComponent tc = hc.GetComponent<TeamComponent>();
-                    if (tc != null && tc.teamIndex == teamIndex) continue;
-
-                    //hitThisTick.Add(hc);
-
-                    // ── Bridge: tell AfterBurnController this enemy was hit ──
-                    // This refreshes their burn timer and registers them for
-                    // the dash damage tick in AfterBurnController.DealDamageDash()
-                    afterBurnController?.notifyStanding(hc);
-
-                    // ── Direct zone damage (immediate, handled here) ──
-                    //DamageInfo info = new DamageInfo
-                    //{
-                        //attacker = attacker,
-                        //inflictor = gameObject,
-                        //damage = damage,
-                        //procCoefficient = procCoefficient,
-                        //position = hc.transform.position,
-                        //force = Vector3.zero,
-                        //crit = false,
-                        //damageType = DamageType.IgniteOnHit,
-                        //damageColorIndex = DamageColorIndex.Item,
-                    //};
-
-                    //hc.TakeDamage(info);
-                    //GlobalEventManager.instance.OnHitEnemy(info, hc.gameObject);
-                    //GlobalEventManager.instance.OnHitAll(info, hc.gameObject);
-                }
             }
         }
     }
