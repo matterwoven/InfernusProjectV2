@@ -2746,8 +2746,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1813797484187622924, guid: 1a7f9316875ac6642b87685839283571,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 432235697f1f11d4c9f1b4acba2eae42, type: 2}
   m_Tag: 
   m_SpeedParameter: Roll.playbackRate
   m_MirrorParameter: 
