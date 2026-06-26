@@ -149,7 +149,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
         {
             if (afterburnTimers.ContainsKey(hc))
             {
-                afterburnTimers[hc].remaining = 0.5f;
+                afterburnTimers[hc].remaining = 5.0f;
             }
         }
 

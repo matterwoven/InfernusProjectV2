@@ -97,7 +97,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             if (this.characterBody != null)
                 afterburnController = characterBody.GetComponent<Afterburn>();
             if (characterBody == null)
-                Chat.AddMessage("Hey that damn controller is null dangnabbit");
+                Chat.AddMessage("Hey that controller is null dangnabbit");
         }
 
         private void inputMovementManager()

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1970885383
+CRC: 2347784588
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4f530f8f63ba548f147250d99780bb59
+    Hash: 8726619b227642da5acc7f8c0db00cf2
   TypeTreeHash:
     serializedVersion: 2
     Hash: 01ab68918a4dd982bcc4a740d1c90321
@@ -91,8 +91,9 @@ Assets:
 - Assets/BigContainer/InfernusBundle/Animation/animInfernusMenu.controller
 - Assets/BigContainer/HenryAssets/HenryBundle/Icons/texHenryIcon.png
 - Assets/BigContainer/HenryAssets/HenryBundle/VFX/Materials/matDust.mat
-- Assets/BigContainer/InfernusBundle/Animation/maskArms V2.mask
+- Assets/BigContainer/InfernusBundle/Animation/FullBody.mask
 - Assets/BigContainer/InfernusBundle/Materials/Materials/inferno_clothes_color_png_9ce427e7.mat
+- Assets/BigContainer/InfernusBundle/Animation/maskArms V2.mask
 - Assets/BigContainer/HenryAssets/HenryBundle/Textures/texHenry.png
 - Assets/BigContainer/InfernusBundle/Materials/inferno_headglow_vmat_g_tnormalroughness_40f3df6.png
 - Assets/BigContainer/InfernusBundle/FBX/primary_run_fast_gun_up_w.anim

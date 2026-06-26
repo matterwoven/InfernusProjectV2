@@ -454,6 +454,7 @@ namespace InfernusMod.Survivors.Infernus
             if (sender.HasBuff(InfernusDebuffs.napalmDebuff))
             {
                 args.armorAdd -= 38;
+                args.moveSpeedReductionMultAdd += 15;
             }
         }
     }
