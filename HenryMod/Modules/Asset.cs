@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using R2API;
 using UnityEngine;
 using UnityEngine.Networking;

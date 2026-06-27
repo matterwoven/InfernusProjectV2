@@ -1,4 +1,5 @@
 using InfernusMod.Characters.Survivors.Infernus.SkillStates;
+using InfernusMod.Survivors.Infernus;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
             private float age;
             private float timeSinceTick;
+            private bool initialized;
 
             // Dedup within one tick
             private readonly HashSet<HealthComponent> hitThisTick = new HashSet<HealthComponent>();
@@ -66,6 +68,8 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
                 // First tick fires after a full interval
                 timeSinceTick = 0f;
+
+                initialized = true;
             }
 
             // ════════════════════════════════════════════════════════════════
@@ -74,7 +78,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             #region ShaderVisuals
             private void CreateVisual()
             {
-                GameObject visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                GameObject visual = InfernusAssets.flameZonePrefab;
                 Destroy(visual.GetComponent<Collider>());
                 visual.transform.SetParent(transform, false);
                 visual.transform.localScale = halfExtents * 2f;
@@ -87,6 +91,11 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 
             private void FixedUpdate()
             {
+                if (!initialized)
+                {
+                    return;
+                }
+
                 age += Time.fixedDeltaTime;
 
                 Collider[] cols = Physics.OverlapBox(

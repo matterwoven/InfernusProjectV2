@@ -242,15 +242,23 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
         private void SpawnFlameZone(Vector3 position)
         {
+            if (!NetworkServer.active) return;
+
             // Centre the zone at chest height
             Vector3 spawnPos = position + Vector3.up * zoneHalfExtents.y;
 
-            GameObject zoneObj = new GameObject("FlameDashZone");
-            zoneObj.transform.position = spawnPos;
+            GameObject zoneObj = GameObject.Instantiate(
+                InfernusAssets.flameZonePrefab,
+                spawnPos,
+                Quaternion.identity
+            );
 
-            FlameDashController.FlameDashZone zone =
-                zoneObj.AddComponent<FlameDashController.FlameDashZone>();
-
+            FlameDashController.FlameDashZone zone = zoneObj.GetComponent<FlameDashController.FlameDashZone>();
+            if (zone == null)
+            {
+                Debug.LogError("FlameDash: flameZonePrefab is missing a FlameDashZone component!");
+                return;
+            }
 
             zone.Initialize(
                 attacker: gameObject,

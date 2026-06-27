@@ -8,22 +8,29 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: inferno_glow_png_c2e03ac5
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ValidKeywords:
+  m_Shader: {fileID: 4800000, guid: ef9b7c743c5ddd145a80e6e8a4d01215, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _EMISSION
-  m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud1Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud2Tex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -47,7 +54,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: 32fd34d48412a9e41abb50db3a519130, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 2800000, guid: 9337cc1a2c6d9244bb19033e87030afc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -59,25 +74,49 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RemapTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaBoost: 1
+    - _AngleLimit: 0.5
     - _BumpScale: 1
+    - _CloudOn: 0
     - _Cutoff: 0.5
+    - _DecalBlendMode: 0
+    - _DecalDstBlend: 10
+    - _DecalLayer: 1
+    - _DecalSrcBlend: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _LimitTo: 0
+    - _MaskMultiplier: 1
+    - _MaskNormals: 1
     - _Metallic: 0
     - _Mode: 3
+    - _NormalBlendMode: 0
+    - _NormalMultiplier: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _RampInfo: 0
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SpecularExponent: 1
     - _SpecularHighlights: 1
+    - _SpecularStrength: 0
     - _SrcBlend: 1
     - _UVSec: 0
+    - _UseAtlas: 0
     - _ZWrite: 0
     m_Colors:
+    - _AtlasCoord: {r: 0, g: 0, b: 0, a: 0}
+    - _AtlasSize: {r: 4, g: 4, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CutoffScroll: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0.029157283, g: 0.029157283, b: 0.029157283, a: 1}
   m_BuildTextureStacks: []

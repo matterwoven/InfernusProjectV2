@@ -11,6 +11,7 @@ using RoR2.Skills;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ShaderSwapper;
 
 namespace InfernusMod.Survivors.Infernus
 {
@@ -100,11 +101,13 @@ namespace InfernusMod.Survivors.Infernus
             //need the character unlockable before you initialize the survivordef
             InfernusUnlockables.Init();
 
+
             base.InitializeCharacter();
 
             InfernusConfig.Init();
             InfernusStates.Init();
             InfernusTokens.Init();
+
 
             InfernusAssets.Init(assetBundle);
             InfernusDebuffs.Init(assetBundle);
@@ -454,7 +457,7 @@ namespace InfernusMod.Survivors.Infernus
             if (sender.HasBuff(InfernusDebuffs.napalmDebuff))
             {
                 args.armorAdd -= 38;
-                args.moveSpeedReductionMultAdd += 15;
+                args.moveSpeedReductionMultAdd += 0.3f;
             }
         }
     }

@@ -5,6 +5,8 @@ using RoR2;
 using System.Collections.Generic;
 using System.Security;
 using System.Security.Permissions;
+using ShaderSwapper;
+using UnityEngine;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -32,7 +34,6 @@ namespace InfernusMod
         void Awake()
         {
             instance = this;
-
             //easy to use logger
             Log.Init(Logger);
 
@@ -41,7 +42,7 @@ namespace InfernusMod
 
             // character initialization
             new InfernusSurvivor().Initialize();
-
+            
             // make a content pack and add it. this has to be last
             new Modules.ContentPacks().Initialize();
         }

@@ -1,8 +1,12 @@
-﻿using RoR2;
+using RoR2;
 using UnityEngine;
 using InfernusMod.Modules;
 using System;
 using RoR2.Projectile;
+using R2API;
+using UnityEngine.Networking;
+using ShaderSwapper;
+using InfernusMod.Characters.Survivors.Infernus.SkillStates;
 
 namespace InfernusMod.Survivors.Infernus
 {
@@ -22,16 +26,24 @@ namespace InfernusMod.Survivors.Infernus
 
         private static AssetBundle _assetBundle;
 
+        //zones
+        public static GameObject flameZonePrefab;
+
+
         public static void Init(AssetBundle assetBundle)
         {
 
             _assetBundle = assetBundle;
+
+            InfernusPlugin.instance.StartCoroutine(_assetBundle.UpgradeStubbedShadersAsync());
 
             swordHitSoundEvent = Content.CreateAndAddNetworkSoundEventDef("InfernusSwordHit");
 
             CreateEffects();
 
             CreateProjectiles();
+
+            CreateZones();
         }
 
         #region effects
@@ -100,5 +112,23 @@ namespace InfernusMod.Survivors.Infernus
             bombController.startSound = "";
         }
         #endregion projectiles
+
+        #region zones
+        private static void CreateZones()
+        { 
+            flameZonePrefab = _assetBundle.LoadAsset<GameObject>("flameDashZone");
+
+            if (flameZonePrefab == null)
+            {
+                Log.Error("CreateZones: failed to load 'flameDashZone' from asset bundle — check the asset name.");
+                return;
+            }
+
+            flameZonePrefab.AddComponent<NetworkIdentity>();
+            flameZonePrefab.AddComponent<FlameDashController.FlameDashZone>();
+
+            ContentAddition.AddNetworkedObject(flameZonePrefab);
+        }
+        #endregion
     }
 }
