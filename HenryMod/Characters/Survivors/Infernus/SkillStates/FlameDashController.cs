@@ -62,7 +62,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 if (ownerBody != null)
                     afterBurnController = ownerBody.GetComponent<Afterburn>();
                 if (ownerBody == null)
-                    Chat.AddMessage("Hey that damn controller is null dangnabbit");
+                    Chat.AddMessage("Hey that controller is null dangnabbit");
 
                     CreateVisual();
 
@@ -78,13 +78,20 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
             #region ShaderVisuals
             private void CreateVisual()
             {
-                GameObject visual = InfernusAssets.flameZonePrefab;
+                //Code to create non-visible box with collider
+                GameObject visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 Destroy(visual.GetComponent<Collider>());
+                Destroy(visual.GetComponent<MeshRenderer>());
                 visual.transform.SetParent(transform, false);
                 visual.transform.localScale = halfExtents * 2f;
 
-                Renderer rend = visual.GetComponent<Renderer>();
-                if (!rend) return;
+                //Code to create visual of decal
+                GameObject visualCube = InfernusAssets.flameZonePrefab.gameObject;
+                visual.transform.SetParent(transform, false);
+                visual.transform.localScale = halfExtents * 2f;
+
+                //Renderer rend = visual.GetComponent<Renderer>();
+                //if (!rend) return;
                 // TODO: assign flame dash shader/material here
             }
             #endregion

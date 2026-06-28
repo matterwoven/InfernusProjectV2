@@ -11,7 +11,6 @@ Material:
   m_Shader: {fileID: 4800000, guid: ef9b7c743c5ddd145a80e6e8a4d01215, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
-  - _ALPHAPREMULTIPLY_ON
   - _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -55,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: 9337cc1a2c6d9244bb19033e87030afc, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6c1d09f3ee1074948b79c8c8dd494698, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -90,7 +89,7 @@ Material:
     - _DecalLayer: 1
     - _DecalSrcBlend: 1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
@@ -98,7 +97,7 @@ Material:
     - _MaskMultiplier: 1
     - _MaskNormals: 1
     - _Metallic: 0
-    - _Mode: 3
+    - _Mode: 0
     - _NormalBlendMode: 0
     - _NormalMultiplier: 1
     - _OcclusionStrength: 1
@@ -112,7 +111,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _UseAtlas: 0
-    - _ZWrite: 0
+    - _ZWrite: 1
     m_Colors:
     - _AtlasCoord: {r: 0, g: 0, b: 0, a: 0}
     - _AtlasSize: {r: 4, g: 4, b: 0, a: 0}

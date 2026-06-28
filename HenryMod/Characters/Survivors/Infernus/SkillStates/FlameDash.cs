@@ -13,9 +13,9 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public static float duration = 3f;
 
         //Start speed fast 3.8 -> 2/3 -> 2.53
-        public static float initialSpeedCoefficient = 2.5f;
+        public static float initialSpeedAdd = 7f;
         //Coast to a faster speed towards end 4.2 -> 2/3 -> 2.79
-        public static float finalSpeedCoefficient = 2.8f;
+        public static float finalSpeedAdd = 10f;
         //W key multiplier
         public static float forwardMultiplier = 1.2f;
 
@@ -59,6 +59,12 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             //Enter skill
             base.OnEnter();
+            if (Shoot.startFlag == true)
+            {
+                afterburnController = GetComponent<Afterburn>();
+                afterburnController.Init(this.characterBody);
+                Shoot.startFlag = false;
+            }
             //Nab animator, enables anims
             animator = GetModelAnimator();
 
@@ -164,7 +170,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             }
             
             //Base speed
-            speedThisFrame = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, transition);
+            speedThisFrame = moveSpeedStat + Mathf.Lerp(initialSpeedAdd, finalSpeedAdd, transition);
 
             if (inputBank.jump.justPressed && base.isGrounded)
             {
@@ -247,18 +253,11 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             // Centre the zone at chest height
             Vector3 spawnPos = position + Vector3.up * zoneHalfExtents.y;
 
-            GameObject zoneObj = GameObject.Instantiate(
-                InfernusAssets.flameZonePrefab,
-                spawnPos,
-                Quaternion.identity
-            );
+            GameObject zoneObj = new GameObject("FlameDashZone");
+            zoneObj.transform.position = spawnPos;
 
-            FlameDashController.FlameDashZone zone = zoneObj.GetComponent<FlameDashController.FlameDashZone>();
-            if (zone == null)
-            {
-                Debug.LogError("FlameDash: flameZonePrefab is missing a FlameDashZone component!");
-                return;
-            }
+            FlameDashController.FlameDashZone zone =
+                zoneObj.AddComponent<FlameDashController.FlameDashZone>();
 
             zone.Initialize(
                 attacker: gameObject,

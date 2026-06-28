@@ -80,7 +80,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             enrollAfterburnManager();
 
             // Animation & sound placeholders
-            PlayCrossfade("Gesture, Override", "Napalm", "Slash.playbackRate", duration, 0.05f);
+            PlayCrossfade("Gesture, Override", "Napalm", "Slash.playbackRate", 0.8f, 0.05f);
             Util.PlaySound("InfernusNapalm", gameObject);
 
             if (isAuthority)
