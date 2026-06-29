@@ -2,6 +2,6 @@
     "name": "InfernusMod.dll",
     "description": "",
     "version_number": "3.0.0",
-    "dependencies": [],
+    "dependencies": [ "Smooth_Salad-ShaderSwapper-1.0.1" ],
     "website_url": ""
 }

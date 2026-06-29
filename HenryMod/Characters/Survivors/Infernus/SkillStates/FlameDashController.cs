@@ -64,7 +64,7 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 if (ownerBody == null)
                     Chat.AddMessage("Hey that controller is null dangnabbit");
 
-                    CreateVisual();
+                //CreateVisual();
 
                 // First tick fires after a full interval
                 timeSinceTick = 0f;
@@ -86,9 +86,9 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 visual.transform.localScale = halfExtents * 2f;
 
                 //Code to create visual of decal
-                GameObject visualCube = InfernusAssets.flameZonePrefab.gameObject;
-                visual.transform.SetParent(transform, false);
-                visual.transform.localScale = halfExtents * 2f;
+                GameObject visualCube = Object.Instantiate(InfernusAssets.flameZonePrefab.gameObject);
+                visualCube.transform.SetParent(transform, false);
+                visualCube.transform.localScale = halfExtents * 2f;
 
                 //Renderer rend = visual.GetComponent<Renderer>();
                 //if (!rend) return;

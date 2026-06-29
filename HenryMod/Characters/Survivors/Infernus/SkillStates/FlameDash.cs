@@ -258,9 +258,13 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             // Centre the zone at chest height
             Vector3 spawnPos = position + Vector3.up * zoneHalfExtents.y;
 
-            GameObject zoneObj = new GameObject("FlameDashZone");
-            zoneObj.transform.position = spawnPos;
+            GameObject zoneObj = GameObject.Instantiate(
+                InfernusAssets.flameZonePrefab,
+                spawnPos,
+                Quaternion.identity
+            );
 
+            //Add visual component
             FlameDashController.FlameDashZone zone =
                 zoneObj.AddComponent<FlameDashController.FlameDashZone>();
 
