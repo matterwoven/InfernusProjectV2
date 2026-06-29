@@ -7,6 +7,7 @@ using System.Security;
 using System.Security.Permissions;
 using ShaderSwapper;
 using UnityEngine;
+using InfernusMod.Modules;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -42,6 +43,9 @@ namespace InfernusMod
 
             // character initialization
             new InfernusSurvivor().Initialize();
+
+            //shaderUpgrader
+            base.StartCoroutine(Asset.loadedBundles["infernusBundle"].UpgradeStubbedShadersAsync());
             
             // make a content pack and add it. this has to be last
             new Modules.ContentPacks().Initialize();

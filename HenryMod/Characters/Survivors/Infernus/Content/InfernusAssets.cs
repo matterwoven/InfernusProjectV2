@@ -35,8 +35,6 @@ namespace InfernusMod.Survivors.Infernus
 
             _assetBundle = assetBundle;
 
-            InfernusPlugin.instance.StartCoroutine(_assetBundle.UpgradeStubbedShadersAsync());
-
             swordHitSoundEvent = Content.CreateAndAddNetworkSoundEventDef("InfernusSwordHit");
 
             CreateEffects();

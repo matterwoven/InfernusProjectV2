@@ -31,9 +31,13 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            if (startFlag == true)
+            if(afterburnController == null)
             {
                 afterburnController = GetComponent<Afterburn>();
+                startFlag = true;
+            }
+            if (startFlag == true)
+            {
                 afterburnController.Init(this.characterBody);
                 startFlag = false;
             }

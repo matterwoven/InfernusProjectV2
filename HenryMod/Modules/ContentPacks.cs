@@ -1,9 +1,11 @@
-﻿using RoR2;
+using InfernusMod.Survivors.Infernus;
+using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Skills;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ShaderSwapper;
 
 namespace InfernusMod.Modules {
     internal class ContentPacks : IContentPackProvider
@@ -73,5 +75,6 @@ namespace InfernusMod.Modules {
             args.ReportProgress(1f);
             yield break;
         }
+
     }
 }

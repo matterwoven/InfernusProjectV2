@@ -59,9 +59,14 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             //Enter skill
             base.OnEnter();
-            if (Shoot.startFlag == true)
+            if (afterburnController == null)
             {
                 afterburnController = GetComponent<Afterburn>();
+                Shoot.startFlag = true;
+            }
+
+            if (Shoot.startFlag == true)
+            {
                 afterburnController.Init(this.characterBody);
                 Shoot.startFlag = false;
             }
@@ -92,7 +97,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             distanceSinceLastZone = 0f;
 
             //This should be the infernus dash SFX and voiceline with animation
-            PlayAnimation("FullBody, Override", "Flame Dash", "Roll.playbackRate", duration);
+            PlayAnimation("FullBody, Override", "Flame Dash", "forwardSpeed", duration);
             Util.PlaySound(dodgeSoundString, gameObject);
         }
 
