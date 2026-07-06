@@ -133,6 +133,16 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             PlayAnimation(duration);
         }
 
+        //progression:
+        //0-3 seconds
+        //0: 0.5 height
+        //1: 0.5 height
+        //2: 0.5 height
+        //3: 2.0 height
+        //goes from thin line to higher up on sphere edge line surrounding him
+        //image mirrors off edge piece for sphere
+
+
         private void ReafflictAfterburnInArea()
         {
             if (afterburnController == null) return;
