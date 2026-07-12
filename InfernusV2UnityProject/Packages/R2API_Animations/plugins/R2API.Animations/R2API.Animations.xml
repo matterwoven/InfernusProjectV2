@@ -1,0 +1,399 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>R2API.Animations</name>
+    </assembly>
+    <members>
+        <member name="T:R2API.AnimationsAPI">
+            <summary>
+            API for modifying <see cref="T:UnityEngine.RuntimeAnimatorController" />
+            </summary>
+        </member>
+        <member name="M:R2API.AnimationsAPI.AddModifications(System.String,UnityEngine.RuntimeAnimatorController,R2API.AnimatorModifications)">
+            <summary>
+            Add <see cref="T:UnityEngine.RuntimeAnimatorController" /> modifications
+            </summary>
+            <param name="sourceBundlePath">Path to a bundle containing <see cref="T:UnityEngine.RuntimeAnimatorController" />. For game bundles you can do System.IO.Path.Combine(Addressables.RuntimePath, "StandaloneWindows64", "bundle_name")</param>
+            <param name="sourceAnimatorController"><see cref="T:UnityEngine.RuntimeAnimatorController" /> to which modifications would be applied</param>
+            <param name="modifications">Modifications for <see cref="T:UnityEngine.RuntimeAnimatorController" /></param>
+        </member>
+        <member name="M:R2API.AnimationsAPI.AddAnimatorController(UnityEngine.Animator,UnityEngine.RuntimeAnimatorController)">
+            <summary>
+            Mapping <see cref="T:UnityEngine.RuntimeAnimatorController" /> to an <see cref="T:UnityEngine.Animator"/>. After modified controller will be created it will be applied to mapped animator. 
+            </summary>
+            <param name="animator"><see cref="T:UnityEngine.Animator"/> component from a prefab</param>
+            <param name="controller"><see cref="T:UnityEngine.RuntimeAnimatorController"/> that will have modifications applied</param>
+        </member>
+        <member name="F:R2API.AnimationsAPI.PluginVersion">
+            <summary>
+            Version of the plugin, should be matching with the thunderstore package.
+            </summary>
+        </member>
+        <member name="T:R2API.AnimatorModifications">
+            <summary>
+            Modifications for a <see cref="T:UnityEngine.RuntimeAnimatorController"/>
+            </summary>
+        </member>
+        <member name="P:R2API.AnimatorModifications.Key">
+            <summary>
+            A key for caching, calculated from plugin info.
+            </summary>
+        </member>
+        <member name="P:R2API.AnimatorModifications.NewStates">
+            <summary>
+            New states to add. The Key is a layer name to which a state will be added.
+            </summary>
+        </member>
+        <member name="P:R2API.AnimatorModifications.NewTransitions">
+            <summary>
+            New transitions to add. The key is a (layer name, state name)
+            </summary>
+        </member>
+        <member name="P:R2API.AnimatorModifications.NewParameters">
+            <inheritdoc cref="P:R2API.Animations.Models.Interfaces.IExistingAnimatorController.NewParameters"/>
+        </member>
+        <member name="P:R2API.AnimatorModifications.R2API#Animations#Models#Interfaces#IExistingAnimatorController#Layers">
+            <inheritdoc cref="P:R2API.Animations.Models.Interfaces.IExistingAnimatorController.Layers"/>
+        </member>
+        <member name="P:R2API.AnimatorModifications.R2API#Animations#Models#Interfaces#IExistingAnimatorController#NewLayers">
+            <inheritdoc cref="P:R2API.Animations.Models.Interfaces.IExistingAnimatorController.NewLayers"/>
+        </member>
+        <member name="M:R2API.AnimatorModifications.#ctor(BepInEx.BepInPlugin)">
+            <summary>
+            Modifications for a <see cref="T:UnityEngine.RuntimeAnimatorController"/>
+            </summary>
+            <param name="plugin">BepInPlugin instance</param>
+        </member>
+        <member name="M:R2API.AnimatorModifications.CreateFromDiff(R2API.Models.AnimatorDiff,BepInEx.BepInPlugin,System.String)">
+            <summary>
+            Creates an <see cref="T:R2API.AnimatorModifications"/> from <see cref="T:R2API.Models.AnimatorDiff"/> created in Unity.
+            <para/>
+            Use <see cref="M:R2API.AnimatorModifications.CreateFromDiff(R2API.Models.AnimatorDiff,BepInEx.BepInPlugin)"/> instead
+            </summary>
+            <param name="diff"></param>
+            <param name="plugin"></param>
+            <param name="clipBundlePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.AnimatorModifications.CreateFromDiff(R2API.Models.AnimatorDiff,BepInEx.BepInPlugin)">
+            <summary>
+            Creates an <see cref="T:R2API.AnimatorModifications"/> from <see cref="T:R2API.Models.AnimatorDiff"/> created in Unity.
+            </summary>
+            <param name="diff"></param>
+            <param name="plugin"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.AddBehaviours">
+            <summary>
+            Rebuilding controller behaviours and adding new ones if were found
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.GatherLayerBehaviourNodes(AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField,System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.UInt32,R2API.ModificationsBundleCreator.BehavioursNode}}@)">
+            <summary>
+            Collects BehaviourNodes from StateMachines and States
+            </summary>
+            <param name="layerArray"></param>
+            <param name="stateMachineArray"></param>
+            <param name="layerBehaviourNodes"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.FillBehaviourNodesFromExistingStateMachine(R2API.Models.ExistingStateMachine,System.Collections.Generic.Dictionary{System.UInt32,R2API.ModificationsBundleCreator.BehavioursNode},System.String,R2API.ModificationsBundleCreator.BehavioursNode)">
+            <summary>
+            Collects BehaviourNodes from modifications if they were not added already
+            </summary>
+            <param name="stateMachine"></param>
+            <param name="behavioursNodes"></param>
+            <param name="stateMachinePath"></param>
+            <param name="parent"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.FillBehaviourNodesFromStateMachine(R2API.Models.StateMachine,System.Collections.Generic.Dictionary{System.UInt32,R2API.ModificationsBundleCreator.BehavioursNode},System.String,R2API.ModificationsBundleCreator.BehavioursNode)">
+            <summary>
+            Collects BehaviourNodes from modifications if they were not added already
+            </summary>
+            <param name="stateMachine"></param>
+            <param name="behavioursNodes"></param>
+            <param name="stateMachinePath"></param>
+            <param name="parent"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.FillSyncedStateMachineBehaviours(System.Collections.Generic.List{R2API.Models.SyncedBehaviour},AssetsTools.NET.AssetTypeValueField,System.Collections.Generic.Dictionary{System.UInt32,R2API.ModificationsBundleCreator.BehavioursNode},AssetsTools.NET.AssetTypeValueField,System.Collections.Generic.List{System.ValueTuple{System.Int32,System.Int64}},System.Collections.Generic.Dictionary{UnityEngine.StateMachineBehaviour,System.UInt32})">
+            <summary>
+            Fills BehaviourNodes in a Synced Layer with new Behaviours
+            </summary>
+            <param name="syncedBehaviours"></param>
+            <param name="stateMachineArray"></param>
+            <param name="behavioursNodes"></param>
+            <param name="layerField"></param>
+            <param name="behaviours"></param>
+            <param name="addedBehaviours"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.FillStateMachineBehaviours(System.String,R2API.Models.StateMachine,System.Collections.Generic.List{System.ValueTuple{System.Int32,System.Int64}},System.Collections.Generic.Dictionary{System.UInt32,R2API.ModificationsBundleCreator.BehavioursNode},System.Collections.Generic.Dictionary{UnityEngine.StateMachineBehaviour,System.UInt32})">
+            <summary>
+            Fills BehaviourNodes in a new StateMachine with Behaviours
+            </summary>
+            <param name="stateMachinePath"></param>
+            <param name="stateMachine"></param>
+            <param name="behaviours"></param>
+            <param name="behavioursNodes"></param>
+            <param name="addedBehaviours"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.FillExistingStateMachineBehaviours(System.String,R2API.Models.ExistingStateMachine,System.Collections.Generic.List{System.ValueTuple{System.Int32,System.Int64}},System.Collections.Generic.Dictionary{System.UInt32,R2API.ModificationsBundleCreator.BehavioursNode},System.Collections.Generic.Dictionary{UnityEngine.StateMachineBehaviour,System.UInt32})">
+            <summary>
+            Fills BehaviourNodes in an existing StateMachine with new Behaviours
+            </summary>
+            <param name="stateMachinePath"></param>
+            <param name="stateMachine"></param>
+            <param name="behaviours"></param>
+            <param name="behavioursNodes"></param>
+            <param name="addedBehaviours"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateBlendTreeFromMotion(AssetsTools.NET.AssetTypeValueField,R2API.Animations.Models.Interfaces.IMotion,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField)">
+            <summary>
+            Creates new BlendTree from Motion
+            </summary>
+            <param name="animationClips"></param>
+            <param name="motion"></param>
+            <param name="blendTreeIndexArray"></param>
+            <param name="blendTreeConstantArray"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateBlendTreeNodeFromClip(AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField,UnityEngine.AnimationClip,System.Single,System.Boolean,System.Single)">
+            <summary>
+            Creates new BlendTreeNode from AnimationClip
+            </summary>
+            <param name="animationClips"></param>
+            <param name="nodeArray"></param>
+            <param name="clip"></param>
+            <param name="cycleOffset"></param>
+            <param name="mirror"></param>
+            <param name="timeScale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateBlendTreeNodeFromBlendTree(AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField,R2API.Animations.Models.Interfaces.IBlendTree,System.Single,System.Boolean)">
+            <summary>
+            Creates new BlendTreeNode from BlendTree
+            </summary>
+            <param name="animationClips"></param>
+            <param name="nodeArray"></param>
+            <param name="blendTree"></param>
+            <param name="cycleOffset"></param>
+            <param name="mirror"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.GatherNames">
+            <summary>
+            Collecting known names from source controller
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.AddLayers">
+            <summary>
+            Processing <see cref="P:R2API.AnimatorModifications.Layers"/> and <see cref="P:R2API.AnimatorModifications.NewLayers"/> fields.
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.ModifyStateMachine(AssetsTools.NET.AssetTypeValueField,R2API.Animations.Models.Interfaces.IExistingStateMachine,AssetsTools.NET.AssetTypeValueField,System.String)">
+            <summary>
+            Applies changes to an existing state machine
+            </summary>
+            <param name="animationClips"></param>
+            <param name="stateMachine"></param>
+            <param name="stateMachineField"></param>
+            <param name="stateMachinePath"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateSubStateMachine(System.String,R2API.Animations.Models.Interfaces.IStateMachine,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField)">
+            <summary>
+            Creates new sub StateMachine
+            </summary>
+            <param name="stateMachinePath"></param>
+            <param name="stateMachine"></param>
+            <param name="stateMachineField"></param>
+            <param name="animationClips"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateSelectorState(System.UInt32,AssetsTools.NET.AssetTypeValueField,System.Boolean)">
+            <summary>
+            Creates a SelectorState for a StateMachine
+            </summary>
+            <param name="stateMachinePathHash"></param>
+            <param name="selectorStatesArray"></param>
+            <param name="isEntry"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateSelectorTransition(System.String,R2API.Animations.Models.Interfaces.ISimpleTransition,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField)">
+            <summary>
+            Creates a SelectorState Transition for a StateMachine
+            </summary>
+            <param name="stateMachinePath"></param>
+            <param name="entryTransition"></param>
+            <param name="statesArray"></param>
+            <param name="selectorStatesArray"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateSelectorTransition(System.UInt32,AssetsTools.NET.AssetTypeValueField)">
+            <summary>
+            Creates a SelectorState Transition for a StateMachine
+            </summary>
+            <param name="destinationState"></param>
+            <param name="selectorState"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.ModifyState(System.String,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField,R2API.Animations.Models.Interfaces.IExistingState)">
+            <summary>
+            Applies changes to an existing State
+            </summary>
+            <param name="stateMachinePath"></param>
+            <param name="statesArray"></param>
+            <param name="selectorStatesArray"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateStateMachine(R2API.Animations.Models.Interfaces.IStateMachine,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField)">
+            <summary>
+            Creates a new StateMachine
+            </summary>
+            <param name="stateMachine"></param>
+            <param name="animationClips"></param>
+            <param name="stateMachineArray"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateSkeletonMaskFromAvatarMask(AssetsTools.NET.AssetTypeValueField,UnityEngine.AvatarMask)">
+            <summary>
+            Creates SkeletonMask from AvatarMask
+            </summary>
+            <param name="skeletonMaskArrayField"></param>
+            <param name="avatarMask"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateBodyMaskFromAvatarMask(AssetsTools.NET.AssetTypeValueField,UnityEngine.AvatarMask)">
+            <summary>
+            Creates Humanoid body mask from AvatarMask
+            </summary>
+            <param name="bodyMask"></param>
+            <param name="avatarMask"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.AddParameters">
+            <summary>
+            Processing <see cref="P:R2API.AnimatorModifications.NewParameters"/> field.
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.AddStates">
+            <summary>
+            Processing <see cref="P:R2API.AnimatorModifications.NewStates"/> field.
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateState(AssetsTools.NET.AssetTypeValueField,System.String,System.String,System.UInt32,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField,R2API.Animations.Models.Interfaces.IState)">
+            <summary>
+            Creates a new State for a StateMachine
+            </summary>
+            <param name="animationClips"></param>
+            <param name="stateMachinePath"></param>
+            <param name="stateMachineName"></param>
+            <param name="synchronizedLayerCount"></param>
+            <param name="statesArray"></param>
+            <param name="selectorStatesArray"></param>
+            <param name="state"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.TryAddDependency(UnityEngine.Object,System.Int32@,System.Int64@)">
+            <summary>
+            Adds dependency and returns it's reference
+            </summary>
+            <param name="obj"></param>
+            <param name="fileID"></param>
+            <param name="pathID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.AddTransitions">
+            <summary>
+            Processing <see cref="P:R2API.AnimatorModifications.NewTransitions"/> field.
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.CreateTransition(System.String,System.String,R2API.Animations.Models.Interfaces.ITransition,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField,System.String)">
+            <summary>
+            Creates a Transition from a State
+            </summary>
+            <param name="stateMachinePath"></param>
+            <param name="stateName"></param>
+            <param name="transition"></param>
+            <param name="transitions"></param>
+            <param name="states"></param>
+            <param name="selectorStates"></param>
+            <param name="fullPathOverride"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.GetTransitionDestinationState(System.String,AssetsTools.NET.AssetTypeValueField,AssetsTools.NET.AssetTypeValueField,System.UInt32,System.Boolean)">
+            <summary>
+            Finds correct destination index for Transition
+            </summary>
+            <param name="stateName"></param>
+            <param name="states"></param>
+            <param name="selectorStates"></param>
+            <param name="stateFullPathHash"></param>
+            <param name="isExit"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.AddTOS">
+            <summary>
+            Adds new names to TOS array
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.SaveBundle">
+            <summary>
+            Saves new AssetBundle with modified controller
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.SetExternals">
+            <summary>
+            Adds AssetBundle dependencies to metadata
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.RemapPPtrs">
+            <summary>
+            Increments FileID for all references 
+            </summary>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.GatherPPtrFileIDFields(AssetsTools.NET.AssetTypeValueField,System.Collections.Generic.List{AssetsTools.NET.AssetTypeValueField})">
+            <summary>
+            Collects all reference fields
+            </summary>
+            <param name="field"></param>
+            <param name="fields"></param>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.GetOrAddName(System.String)">
+            <summary>
+            Returns hash for a name and stores it if it wasn't already stored.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.ModificationsBundleCreator.LogError(System.String)">
+            <summary>
+            Logs an error adding current modification to the message
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:R2API.NativeHelpers.GetAssetPathID(UnityEngine.Object)">
+            <summary>
+            Get PathID in an AssetBundle that the object is loaded from
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.NativeHelpers.GetAssetPathID(System.Int32)">
+            <summary>
+            Get PathID in an AssetBundle that the object is loaded from
+            </summary>
+            <param name="instanceID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.NativeHelpers.GetPathName(UnityEngine.Object)">
+            <summary>
+            Get internal name for an AssetBundle that the object is loaded from
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R2API.NativeHelpers.GetPathName(System.Int32)">
+            <summary>
+            Get internal name for an AssetBundle that the object is loaded from
+            </summary>
+            <param name="instanceID"></param>
+            <returns></returns>
+        </member>
+        <member name="T:R2API.AutoVersionGen.AutoVersionAttribute">
+            <summary>
+            Add a PluginVersion field to the attribut-ed class filled from the thunderstore.toml versionNumber field
+            </summary>
+        </member>
+    </members>
+</doc>

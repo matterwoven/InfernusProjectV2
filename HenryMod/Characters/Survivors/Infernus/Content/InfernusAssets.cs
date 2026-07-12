@@ -49,8 +49,8 @@ namespace InfernusMod.Survivors.Infernus
         {
             CreateBombExplosionEffect();
 
-            swordSwingEffect = _assetBundle.LoadEffect("InfernusSwordSwingEffect", true);
-            swordHitImpactEffect = _assetBundle.LoadEffect("ImpactInfernusSlash");
+            //swordSwingEffect = _assetBundle.LoadEffect("InfernusSwordSwingEffect", true);
+            //swordHitImpactEffect = _assetBundle.LoadEffect("ImpactInfernusSlash");
         }
 
         private static void CreateBombExplosionEffect()
