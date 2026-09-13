@@ -7,6 +7,7 @@ using R2API;
 using UnityEngine.Networking;
 using ShaderSwapper;
 using InfernusMod.Characters.Survivors.Infernus.SkillStates;
+using UnityEngine.AddressableAssets;
 
 namespace InfernusMod.Survivors.Infernus
 {
@@ -28,6 +29,7 @@ namespace InfernusMod.Survivors.Infernus
 
         //zones
         public static GameObject flameZonePrefab;
+        public static GameObject acridGhostPrefab;
 
 
         public static void Init(AssetBundle assetBundle)
@@ -113,20 +115,53 @@ namespace InfernusMod.Survivors.Infernus
 
         #region zones
         private static void CreateZones()
-        { 
-            flameZonePrefab = _assetBundle.LoadAsset<GameObject>("flameDashZone");
+        {
 
-            if (flameZonePrefab == null)
-            {
-                Log.Error("CreateZones: failed to load 'flameDashZone' from asset bundle — check the asset name.");
-                return;
-            }
+            CreateFlameZoneProjectile();
+            Content.AddProjectilePrefab(bombProjectilePrefab);
+            acridGhostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoLeapAcidGhost.prefab").WaitForCompletion();
 
-            flameZonePrefab.AddComponent<NetworkIdentity>();
-            flameZonePrefab.AddComponent<FlameDashController.FlameDashZone>();
+            if (acridGhostPrefab == null)
+                Log.Error("CreateZones: failed to load Acrid's acid ghost — check the Resources path is correct for your RoR2 version.");
+                
 
-            ContentAddition.AddNetworkedObject(flameZonePrefab);
+            acridGhostPrefab = PrefabAPI.InstantiateClone(acridGhostPrefab, "InfernusFlameZone", true);
+
+            acridGhostPrefab.AddComponent<NetworkIdentity>();
+            acridGhostPrefab.AddComponent<FlameDashController.FlameDashZone>();
+
+            ContentAddition.AddNetworkedObject(acridGhostPrefab);
+
+            //flameZonePrefab = _assetBundle.LoadAsset<GameObject>("flameDashZone");
         }
+
+        private static void CreateFlameZoneProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            bombProjectilePrefab = Asset.CloneProjectilePrefab("CommandoGrenadeProjectile", "InfernusBombProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            UnityEngine.Object.Destroy(bombProjectilePrefab.GetComponent<ProjectileImpactExplosion>());
+            ProjectileImpactExplosion bombImpactExplosion = bombProjectilePrefab.AddComponent<ProjectileImpactExplosion>();
+
+            bombImpactExplosion.blastRadius = 16f;
+            bombImpactExplosion.blastDamageCoefficient = 1f;
+            bombImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
+            bombImpactExplosion.destroyOnEnemy = true;
+            bombImpactExplosion.lifetime = 12f;
+            bombImpactExplosion.impactEffect = bombExplosionEffect;
+            bombImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("InfernusBombExplosion");
+            bombImpactExplosion.timerAfterImpact = true;
+            bombImpactExplosion.lifetimeAfterImpact = 0.1f;
+
+            ProjectileController bombController = bombProjectilePrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("InfernusBombGhost") != null)
+                bombController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("InfernusBombGhost");
+
+            bombController.startSound = "";
+        }
+
         #endregion
     }
 }

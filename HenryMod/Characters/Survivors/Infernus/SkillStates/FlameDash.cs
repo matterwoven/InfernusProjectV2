@@ -52,9 +52,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         private float distanceSinceLastZone;
         private static Afterburn afterburnController;
 
-        //Add this to top
-        //private static Afterburn afterburnController;
-
         public override void OnEnter()
         {
             //Enter skill
@@ -85,8 +82,13 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 }
             }
 
+            if (base.characterMotor.velocity.y < -0.5f)
+            {
+                base.characterMotor.velocity.y = -0.5f;
+            }
+
             //Model tracks to the floor like MulT
-            if (base.modelLocator) base.modelLocator.normalizeToFloor = true;
+            if (base.modelLocator) base.modelLocator.normalizeToFloor = false;
 
 
             //Set velocity to dash calculated velocity
@@ -177,9 +179,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             //Base speed
             speedThisFrame = moveSpeedStat + Mathf.Lerp(initialSpeedAdd, finalSpeedAdd, transition);
 
-            if (inputBank.jump.justPressed && base.isGrounded)
+            if (inputBank.jump.justPressed && base.characterMotor.jumpCount < base.characterBody.maxJumpCount)
             {
                 characterMotor.Jump(1.0f, 1.0f);
+                characterMotor.jumpCount--;
             }
 
             if (inputBank.skill3.justPressed)
@@ -255,19 +258,15 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             if (!NetworkServer.active) return;
 
-            // Centre the zone at chest height
             Vector3 spawnPos = position + Vector3.up * zoneHalfExtents.y;
 
-            GameObject zoneObj = GameObject.Instantiate(
-                InfernusAssets.flameZonePrefab,
-                spawnPos,
-                Quaternion.identity
-            );
+            // Own container — your logic's lifetime isn't at the mercy of the VFX prefab's internals
+            GameObject zoneObj = new GameObject("InfernusFlameZone");
+            zoneObj.transform.position = spawnPos;
+            zoneObj.transform.rotation = Quaternion.identity;
+            zoneObj.AddComponent<NetworkIdentity>();
 
-            //Add visual component
-            FlameDashController.FlameDashZone zone =
-                zoneObj.AddComponent<FlameDashController.FlameDashZone>();
-
+            FlameDashController.FlameDashZone zone = zoneObj.AddComponent<FlameDashController.FlameDashZone>();
             zone.Initialize(
                 attacker: gameObject,
                 ownerBody: this.characterBody,
@@ -278,6 +277,14 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 lifetime: zoneLifetime,
                 tickInterval: zoneDamageInterval
             );
+
+            // Visual is now a decorative child, parented so it moves/dies with the zone,
+            // but its own internal destroy timers no longer matter for your damage logic.
+            if (InfernusAssets.acridGhostPrefab != null)
+            {
+                GameObject visual = GameObject.Instantiate(InfernusAssets.acridGhostPrefab, zoneObj.transform, false);
+                visual.transform.localPosition = Vector3.zero;
+            }
 
             NetworkServer.Spawn(zoneObj);
         }

@@ -15,7 +15,7 @@ namespace InfernusMod.Survivors.Infernus
         {
             afterburnDebuff = Modules.Content.CreateAndAddBuff(
                 "InfernusAfterburn",
-                bundle.LoadAsset<Sprite>("infFireDebuff"),
+                bundle.LoadAsset<Sprite>("texFireDebuffFR"),
                 Color.yellow,
                 false,
                 true
@@ -23,7 +23,7 @@ namespace InfernusMod.Survivors.Infernus
 
             afterburnBuildup = Modules.Content.CreateAndAddBuff(
                 "InfernusBuildup",
-                bundle.LoadAsset<Sprite>("infFireDebuff"),
+                bundle.LoadAsset<Sprite>("texFireDebuffFR"),
                 Color.white,
                 true,
                 false
@@ -31,8 +31,8 @@ namespace InfernusMod.Survivors.Infernus
 
             napalmDebuff = Modules.Content.CreateAndAddBuff(
                 "NapalmDebuff",
-                bundle.LoadAsset<Sprite>("infNapalmDebuffFR"),
-                Color.red,
+                bundle.LoadAsset<Sprite>("texNapalmDebuffFR"),
+                Color.white,
                 false,
                 true
             );

@@ -8,9 +8,6 @@ using UnityEngine.Networking;
 
 namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
 {
-    /// <summary>
-    /// Heavily overhauled logic for single-target damage management
-    /// </summary>
     internal class FlameDashController
     {
         public class FlameDashZone : MonoBehaviour
@@ -64,37 +61,12 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 if (ownerBody == null)
                     Chat.AddMessage("Hey that controller is null dangnabbit");
 
-                //CreateVisual();
-
                 // First tick fires after a full interval
                 timeSinceTick = 0f;
 
                 initialized = true;
             }
 
-            // ════════════════════════════════════════════════════════════════
-            // Visual
-            // ════════════════════════════════════════════════════════════════
-            #region ShaderVisuals
-            private void CreateVisual()
-            {
-                //Code to create non-visible box with collider
-                GameObject visual = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Destroy(visual.GetComponent<Collider>());
-                Destroy(visual.GetComponent<MeshRenderer>());
-                visual.transform.SetParent(transform, false);
-                visual.transform.localScale = halfExtents * 2f;
-
-                //Code to create visual of decal
-                GameObject visualCube = Object.Instantiate(InfernusAssets.flameZonePrefab.gameObject);
-                visualCube.transform.SetParent(transform, false);
-                visualCube.transform.localScale = halfExtents * 2f;
-
-                //Renderer rend = visual.GetComponent<Renderer>();
-                //if (!rend) return;
-                // TODO: assign flame dash shader/material here
-            }
-            #endregion
 
             private void FixedUpdate()
             {

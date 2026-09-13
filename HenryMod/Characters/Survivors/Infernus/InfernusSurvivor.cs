@@ -34,7 +34,9 @@ namespace InfernusMod.Survivors.Infernus
 
         //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => INFERNUS_PREFIX;
-        
+
+        public Color infernusColor = new Color(225f / 256f, 255f / 255f, 192f / 255f);
+
         public override BodyInfo bodyInfo => new BodyInfo
         {
             bodyName = bodyName,
@@ -42,7 +44,7 @@ namespace InfernusMod.Survivors.Infernus
             subtitleNameToken = INFERNUS_PREFIX + "SUBTITLE",
 
             characterPortrait = assetBundle.LoadAsset<Texture>("texInfernusIcon"),
-            bodyColor = Color.white,
+            bodyColor = infernusColor,
             sortPosition = 100,
 
             crosshair = Asset.LoadCrosshair("Standard"),
@@ -65,22 +67,6 @@ namespace InfernusMod.Survivors.Infernus
                 new CustomRendererInfo
                 {
                     childName = "models/heroes_staging/inferno_v4/inferno.vmdl_c.inferno"
-                },
-                new CustomRendererInfo
-                {
-                    childName = "models/heroes_staging/inferno_v4/inferno.vmdl_c.hat"
-                },
-                new CustomRendererInfo
-                {
-                    childName = "models/heroes_staging/inferno_v4/inferno.vmdl_c.inferno_flames"
-                },
-                new CustomRendererInfo
-                {
-                    childName = "models/heroes_staging/inferno_v4/inferno.vmdl_c.flame_hair"
-                },
-                new CustomRendererInfo
-                {
-                    childName = "models/heroes_staging/inferno_v4/inferno.vmdl_c.flask_on_hip"
                 }
         };
 
@@ -160,8 +146,8 @@ namespace InfernusMod.Survivors.Infernus
             //if you set up a custom main characterstate, set it up here
                 //don't forget to register custom entitystates in your InfernusStates.cs
 
-            //Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon");
-            //Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon2");
+            Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon");
+            Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon2");
         }
 
         #region skills
@@ -188,7 +174,7 @@ namespace InfernusMod.Survivors.Infernus
                 skillNameToken = INFERNUS_PREFIX + "PASSIVE_NAME",
                 skillDescriptionToken = INFERNUS_PREFIX + "PASSIVE_DESCRIPTION",
                 keywordToken = "KEYWORD_STUNNING",
-                icon = assetBundle.LoadAsset<Sprite>("infPassiveFR"),
+                icon = assetBundle.LoadAsset<Sprite>("texPassiveFR"),
             };
 
             Afterburn controller = bodyPrefab.AddComponent<Afterburn>();
@@ -245,14 +231,23 @@ namespace InfernusMod.Survivors.Infernus
                     "InfernusGun",
                     INFERNUS_PREFIX + "PRIMARY_REMARKS_NAME",
                     INFERNUS_PREFIX + "PRIMARY_REMARKS_DESCRIPTION",
-                    assetBundle.LoadAsset<Sprite>("infPrimaryFR"),
+                    assetBundle.LoadAsset<Sprite>("texPrimaryFR"),
                     new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
-                    "Weapon",
-                    true
+                    "Weapon"
                 ));
             //custom Skilldefs can have additional fields that you can set manually
             primarySkillDef1.stepCount = 2;
             primarySkillDef1.stepGraceDuration = 0.5f;
+            primarySkillDef1.fullRestockOnAssign = true;
+
+            primarySkillDef1.baseMaxStock = 27;
+            primarySkillDef1.rechargeStock = 1;
+            primarySkillDef1.requiredStock = 1;
+            primarySkillDef1.stockToConsume = 1;
+
+            primarySkillDef1.resetCooldownTimerOnUse = true;
+
+            primarySkillDef1.isCombatSkill = true;
 
             Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1);
         }
@@ -268,7 +263,7 @@ namespace InfernusMod.Survivors.Infernus
                 skillNameToken = INFERNUS_PREFIX + "SECONDARY_NAPALM_NAME",
                 skillDescriptionToken = INFERNUS_PREFIX + "SECONDARY_NAPALM_DESCRIPTION",
                 keywordTokens = new string[] { "KEYWORD_EMBER" },
-                skillIcon = assetBundle.LoadAsset<Sprite>("infSecondaryFR"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("texSecondaryFR"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Napalm)),
                 activationStateMachineName = "Weapon2",
@@ -307,7 +302,7 @@ namespace InfernusMod.Survivors.Infernus
                 skillName = "InfernusDash",
                 skillNameToken = INFERNUS_PREFIX + "UTILITY_DASH_NAME",
                 skillDescriptionToken = INFERNUS_PREFIX + "UTILITY_DASH_DESCRIPTION",
-                skillIcon = assetBundle.LoadAsset<Sprite>("infUtilityFR"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("texUtilityFR"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(FlameDash)),
                 activationStateMachineName = "Body",
@@ -345,7 +340,7 @@ namespace InfernusMod.Survivors.Infernus
                 skillName = "Concussive Combustion",
                 skillNameToken = INFERNUS_PREFIX + "SPECIAL_BOMB_NAME",
                 skillDescriptionToken = INFERNUS_PREFIX + "SPECIAL_BOMB_DESCRIPTION",
-                skillIcon = assetBundle.LoadAsset<Sprite>("infSpecialFR"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("texSpecialFR"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ConcussiveCombustion)),
                 //setting this to the "weapon2" EntityStateMachine allows us to cast this skill at the same time primary, which is set to the "weapon" EntityStateMachine
