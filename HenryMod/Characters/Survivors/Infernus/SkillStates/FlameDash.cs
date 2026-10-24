@@ -179,6 +179,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             //Base speed
             speedThisFrame = moveSpeedStat + Mathf.Lerp(initialSpeedAdd, finalSpeedAdd, transition);
 
+            //currently bugged, jumps with hoopoo feather are infinite
             if (inputBank.jump.justPressed && base.characterMotor.jumpCount < base.characterBody.maxJumpCount)
             {
                 characterMotor.Jump(1.0f, 1.0f);
@@ -260,7 +261,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
             Vector3 spawnPos = position + Vector3.up * zoneHalfExtents.y;
 
-            // Own container — your logic's lifetime isn't at the mercy of the VFX prefab's internals
             GameObject zoneObj = new GameObject("InfernusFlameZone");
             zoneObj.transform.position = spawnPos;
             zoneObj.transform.rotation = Quaternion.identity;
@@ -278,8 +278,6 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 tickInterval: zoneDamageInterval
             );
 
-            // Visual is now a decorative child, parented so it moves/dies with the zone,
-            // but its own internal destroy timers no longer matter for your damage logic.
             if (InfernusAssets.acridGhostPrefab != null)
             {
                 GameObject visual = GameObject.Instantiate(InfernusAssets.acridGhostPrefab, zoneObj.transform, false);

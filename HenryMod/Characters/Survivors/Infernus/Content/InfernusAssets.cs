@@ -122,7 +122,7 @@ namespace InfernusMod.Survivors.Infernus
             acridGhostPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoLeapAcidGhost.prefab").WaitForCompletion();
 
             if (acridGhostPrefab == null)
-                Log.Error("CreateZones: failed to load Acrid's acid ghost — check the Resources path is correct for your RoR2 version.");
+                Log.Error("CreateZones: failed to load ghost — check the Resources path is correct for this RoR2 version.");
                 
 
             acridGhostPrefab = PrefabAPI.InstantiateClone(acridGhostPrefab, "InfernusFlameZone", true);

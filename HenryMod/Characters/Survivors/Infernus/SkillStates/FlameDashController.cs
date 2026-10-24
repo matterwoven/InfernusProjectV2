@@ -50,7 +50,6 @@ namespace InfernusMod.Characters.Survivors.Infernus.SkillStates
                 this.lifetime = lifetime;
                 this.tickInterval = tickInterval;
 
-                // Trigger collider – no physics collision
                 triggerCollider = gameObject.AddComponent<BoxCollider>();
                 triggerCollider.isTrigger = true;
                 triggerCollider.size = halfExtents * 2f;

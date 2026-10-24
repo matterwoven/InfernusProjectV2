@@ -62,7 +62,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             {
                 Fire();
             }
-
+            
             if (fixedAge >= duration && isAuthority)
             {
                 outer.SetNextStateToMain();
@@ -78,7 +78,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                 prevIsCrit = RollCrit();
 
                 characterBody.AddSpreadBloom(1.5f);
-                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
+                EffectManager.SimpleMuzzleFlash(EntityStates.Mage.Weapon.Flamethrower.impactEffectPrefab, gameObject, muzzleString, false);
                 Util.PlaySound("InfernusShootPistol", gameObject);
 
                 if (isAuthority)
@@ -93,8 +93,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                         origin = aimRay.origin,
                         damage = damageCoefficient * damageStat,
                         damageColorIndex = DamageColorIndex.Default,
-                        damageType = DamageTypeCombo.GenericSecondary,
-                        falloffModel = BulletAttack.FalloffModel.None,
+                        damageType = DamageTypeCombo.GenericPrimary,
+                        falloffModel = BulletAttack.FalloffModel.DefaultBullet,
                         maxDistance = range,
                         force = force,
                         hitMask = LayerIndex.CommonMasks.bullet,

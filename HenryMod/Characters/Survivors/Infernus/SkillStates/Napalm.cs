@@ -9,8 +9,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 {
     public class Napalm : BaseSkillState
     {
-        //WAVE LOGIC NOT HANDLED BY A HUMAN, Napalms wave logic was handled by Claude code and not by me, only as a learning element comparing the two did I make changes for readability
-        // ── Timing ────────────────────────────────────────────────────────────
+        //OMNIDIRECTIONAL LOGIC NOT HANDLED BY A HUMAN, Napalms wave logic was handled by AI and not by me, I made changes to understand and increase readability, as well as addressing multiple AI-made bugs such as multi-hit detection
         /// Total state length in seconds (scaled by attack speed).
         public static float baseDuration          = 0.5f;
         /// Duration in seconds at which the hitbox starts sweeping.
@@ -161,7 +160,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
 
                 HealthComponent hc = hurtBox.healthComponent;
                 if (hc == null || !hc.alive)       continue;
-                if (hurtBox.teamIndex == GetTeam()) continue; // no friendly fire
+                if (hurtBox.teamIndex == GetTeam()) continue;
                 if (!hitTargets.Contains(hc))
                 {
                     // Apply napalm debuff
