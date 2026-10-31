@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
 using InfernusMod.Characters.Survivors.Infernus.SkillStates;
+using InfernusMod.Survivors.Infernus.Components;
 
 namespace InfernusMod.Survivors.Infernus.SkillStates
 {
@@ -24,6 +25,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         public static float hitboxScale = 30f;
 
         private static float duration;
+        private ConcussiveSphereIndicator sphere;
 
         private float attackDelay;
         private float fireTime;
@@ -49,6 +51,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             base.OnEnter();
 
+            sphere = InfernusVFX.CreateFlameSphere(characterBody.transform, hitboxScale);
             hasFired = false;
             duration = baseDuration / attackSpeedStat;
             characterBody.SetAimTimer(duration);
@@ -99,8 +102,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             base.FixedUpdate();
 
 
-            float readyState = PercentageDone();
-
+            float readyState = PercentageDone(); 
+            if (sphere) sphere.SetProgress(readyState);
 
             // Fire only during active hit window
             if (isAuthority && (readyState >= 1f))
@@ -128,7 +131,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             base.OnExit();
             InitializeAttack();
-            concussiveAttack.Fire();
+            concussiveAttack.Fire(); 
+            sphere = InfernusVFX.CreateFlameSphere(characterBody.transform, hitboxScale * 0.5f, 0.25f,
+            characterBody.footPosition.y - characterBody.transform.position.y);
+            if (sphere) { sphere.Detonate(); sphere = null; }
             ReafflictAfterburnInArea();
             PlayAnimation(duration);
         }

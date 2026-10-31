@@ -44,6 +44,8 @@ namespace InfernusMod.Survivors.Infernus
             CreateProjectiles();
 
             CreateZones();
+
+            InfernusVFX.Init();
         }
 
         #region effects

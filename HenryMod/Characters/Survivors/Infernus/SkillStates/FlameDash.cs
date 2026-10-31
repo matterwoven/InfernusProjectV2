@@ -51,6 +51,11 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         private float speedThisFrame;
         private float distanceSinceLastZone;
         private static Afterburn afterburnController;
+        public static float footstepInterval = 1.1f;
+        public static float burnSpotDiameter = 2.8f;
+        private float distanceSinceLastFootstep;
+        private float distanceSinceLastBurnSpot;
+        private bool leftFootNext;
 
         public override void OnEnter()
         {
@@ -221,6 +226,18 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
                     distanceSinceLastZone -= dashZoneInterval;
                     SpawnFlameZone(previousPosition);
                 }
+            }
+
+            Vector3 flatMove = transform.position - previousPosition;
+            flatMove.y = 0f;
+            distanceSinceLastFootstep += flatMove.magnitude;
+            distanceSinceLastBurnSpot += flatMove.magnitude;
+
+            while (distanceSinceLastFootstep >= footstepInterval)
+            {
+                distanceSinceLastFootstep -= footstepInterval;
+                InfernusVFX.SpawnFootprint(characterBody.footPosition, dashDirection, leftFootNext);
+                leftFootNext = !leftFootNext;
             }
 
             //Note last position in frame

@@ -1,5 +1,6 @@
 using EntityStates;
 using InfernusMod.Characters.Survivors.Infernus.SkillStates;
+using InfernusMod.Survivors.Infernus.Components;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         /// Increase this for a more "thrown" feel.
         public static float splashEndOffset       = 20f;
         /// Half-extents of the overlap box (width, height, depth).
-        public static Vector3 splashHalfExtents   = new Vector3(1.2f, 1.2f, 1.2f);
+        public static Vector3 splashHalfExtents   = new Vector3(1.2f, 1.2f, 1.2f); 
+        private bool sprayStarted;
 
         // ── Debuff ────────────────────────────────────────────────────────────
         public static float napalmDebuffDuration  = 8f;
@@ -47,6 +49,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         /// World-space proxy Transform — detached from the model so we can
         /// position and orient it freely along the aim ray.
         private Transform splashProxy;
+        private OilSprayEmitter oilSpray;
 
         private OverlapAttack overlapAttack;
         private bool          attackActive;
@@ -74,6 +77,8 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             GameObject proxyGO  = new GameObject("NapalmSplashProxy");
             splashProxy         = proxyGO.transform;
             splashProxy.rotation = Quaternion.LookRotation(lockedAimDirection, Vector3.up);
+
+            oilSpray = InfernusVFX.SpawnOilSpray(aimRay.origin, aimRay.direction, attackEndPercent * splashEndOffset, duration);
 
             characterBody.SetAimTimer(2f);
             enrollAfterburnManager();
@@ -108,6 +113,20 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             base.FixedUpdate();
 
             bool inWindow = fixedAge >= attackStart && fixedAge <= attackEnd;
+
+            if (!sprayStarted && fixedAge >= attackStart)
+            {
+                sprayStarted = true;
+                InfernusVFX.SpawnOilSpray(lockedOrigin, lockedAimDirection, splashEndOffset, attackEnd - attackStart, 0.45f, 1.6f);
+            }
+            if (inWindow)
+            {
+                float tv = Mathf.InverseLerp(attackStart, attackEnd, fixedAge);
+                Vector3 sweepPoint = lockedOrigin + lockedAimDirection * Mathf.Lerp(splashStartOffset, splashEndOffset, tv);
+                Vector3 side = Vector3.Cross(Vector3.up, lockedAimDirection).normalized;
+                for (int i = 0; i < 2; i++)
+                    InfernusVFX.StampOilBelow(sweepPoint + side * UnityEngine.Random.Range(-1.5f, 1.5f), 3f, UnityEngine.Random.Range(1.2f, 2.0f));
+            }
 
             if (isAuthority && inWindow)
             {
@@ -198,6 +217,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             if (splashProxy != null)
                 UnityEngine.Object.Destroy(splashProxy.gameObject);
+            if (oilSpray) oilSpray.Stop();
 
             base.OnExit();
 
