@@ -165,7 +165,7 @@ namespace InfernusMod.Survivors.Infernus.Components
             }
             InfernusVFX.PlayDetonation(center, radius);
 
-            transform.SetParent(null, true); // don't vanish with the body mid fade
+            transform.parent = null; // don't vanish with the body mid fade
         }
         public void Cancel()
         {

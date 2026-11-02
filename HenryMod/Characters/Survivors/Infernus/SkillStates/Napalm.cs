@@ -117,7 +117,7 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             if (!sprayStarted && fixedAge >= attackStart)
             {
                 sprayStarted = true;
-                InfernusVFX.SpawnOilSpray(lockedOrigin, lockedAimDirection, splashEndOffset, attackEnd - attackStart, 0.45f, 1.6f);
+                InfernusVFX.SpawnOilSpray(lockedOrigin, lockedAimDirection, splashEndOffset, 0.25f, 0.45f, 1.6f);
             }
             if (inWindow)
             {
