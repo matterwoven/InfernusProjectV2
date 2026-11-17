@@ -35,6 +35,12 @@ namespace InfernusMod.Survivors.Infernus
         private const int MaxFootprints = 48;
         private const int MaxScorches = 40;
 
+        /// <summary>How long the sphere takes to fade out after the blast (seconds). It fades in place at the blast point.</summary>
+        public static float sphereFadeSeconds = 1.5f;
+
+        /// <summary>false = back faces are culled, so the sphere is invisible from inside it (owner keeps full visibility, others still see it).</summary>
+        public static bool sphereVisibleFromInside = true;
+
         // HGCloudRemap knobs, tweak in game if the sphere is too faint / blown out
         private const float FlameBoost = 1.5f;
         private const float FlameAlphaBoost = 2f;
@@ -204,7 +210,7 @@ namespace InfernusMod.Survivors.Infernus
         }
 
         /// <summary>Special: spherical flame indicator parented to the body. Call Detonate() when the blast resolves.</summary>
-        public static ConcussiveSphereIndicator CreateFlameSphere(Transform parent, float radius, float growDuration = 0.25f, float footOffsetY = 0f)
+        public static ConcussiveSphereIndicator CreateFlameSphere(Transform parent, float radius, float growDuration = 0.25f, float footOffsetY = 0f, float autoDetonateAfter = 0f)
         {
             if (!initialized || sphereMesh == null) return null;
 
@@ -215,7 +221,7 @@ namespace InfernusMod.Survivors.Infernus
             GameObject go = new GameObject("InfernusFlameSphere");
             go.transform.SetParent(parent, false);
             ConcussiveSphereIndicator indicator = go.AddComponent<ConcussiveSphereIndicator>();
-            indicator.Build(sphereMesh, outer, inner, radius, growDuration, footOffsetY);
+            indicator.Build(sphereMesh, outer, inner, radius, growDuration, footOffsetY, autoDetonateAfter);
             return indicator;
         }
 
@@ -266,10 +272,40 @@ namespace InfernusMod.Survivors.Infernus
             Track(scorches, decal.gameObject, MaxScorches);
         }
 
+        /// <summary>
+        /// Special: large scorch + fire ring draped over the actual terrain (see ConformingDecal).
+        /// Falls back to the flat sprite version if no ground mesh could be built.
+        /// </summary>
+        public static void StampBlastDecal(Vector3 groundPoint, Vector3 groundNormal, float radius)
+        {
+            if (!initialized) return;
+
+            Material scorchMat = MakeSpriteShaderMaterial(scorchSprite.texture);
+            Material ringMat = MakeSpriteShaderMaterial(ringSprite.texture);
+
+            GameObject go = new GameObject("InfernusBlastDecal");
+            ConformingDecal decal = go.AddComponent<ConformingDecal>();
+
+            int rings = Mathf.Clamp(Mathf.RoundToInt(radius * 2f), 12, 40); // ~0.5m between rings
+            if (scorchMat == null || ringMat == null || !decal.BuildMesh(groundPoint, radius, rings, 64, 0.07f))
+            {
+                if (scorchMat) UnityEngine.Object.Destroy(scorchMat);
+                if (ringMat) UnityEngine.Object.Destroy(ringMat);
+                UnityEngine.Object.Destroy(go);
+                StampScorch(groundPoint, groundNormal, radius * 2f, true);
+                return;
+            }
+
+            Color soot = new Color(1f, 1f, 1f, 0.9f);
+            decal.AddLayer(scorchMat, 0, soot, soot, 6f, 6f);
+            decal.AddLayer(ringMat, 1, new Color(1f, 0.7f, 0.2f, 1f), new Color(0.6f, 0.1f, 0.02f, 1f), 0.8f, 5f);
+            Track(scorches, go, MaxScorches);
+        }
+
         public static void PlayDetonation(Vector3 position, float radius)
         {
             if (detonationEffectPrefab != null)
-                EffectManager.SpawnEffect(detonationEffectPrefab, new EffectData { origin = position, scale = radius }, true); // false = local only
+                EffectManager.SpawnEffect(detonationEffectPrefab, new EffectData { origin = position, scale = radius }, false); // false = local only
             SpawnEmbers(position, 40, radius * 0.5f, 9f);
         }
 
@@ -322,6 +358,7 @@ namespace InfernusMod.Survivors.Infernus
             r.receiveShadows = false;
 
             ps.Play();
+            UnityEngine.Object.Destroy(go, 6f); // failsafe; embers live ~1.2s
         }
         #endregion
 
@@ -424,7 +461,7 @@ namespace InfernusMod.Survivors.Infernus
                 SetFloat(m, "_Boost", FlameBoost);
                 SetFloat(m, "_AlphaBoost", FlameAlphaBoost);
                 SetFloat(m, "_AlphaBias", 0f);
-                SetFloat(m, "_Cull", 0f); // double sided
+                SetFloat(m, "_Cull", sphereVisibleFromInside ? 0f : 2f); // 0 = double sided, 2 = hide back faces (invisible from inside)
                 SetFloat(m, "_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 SetFloat(m, "_DstBlend", (float)UnityEngine.Rendering.BlendMode.One); // additive glow
                 if (m.HasProperty("_TintColor"))

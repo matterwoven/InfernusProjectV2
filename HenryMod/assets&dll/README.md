@@ -20,6 +20,28 @@ If people are interested in this project I'll see about importing other characte
   
   
 ## Changelog
+ - v2.0.4 -
+    To do:
+    Add startStop animation for when player movement hits zero, returning to standing, massively improves jank
+    Add utility start animation for when the player starts running, then returns to standing, improves character immersion
+    Make shots appear from fingertip rather than center of mass
+    Make animations play forward rather than tilted to the right
+    Make arm not tilt with every shot
+    Make ammo used as resource on primary skill (Emulating Reloading)
+    Make default pose an arm up pose for character select, facing camera as well
+    Add physics for hair bones, emulating his head flame in Deadlock
+    Make larger hair brighter, and only enable during special use
+    
+
+ - v2.0.3 - 
+    Updated animations
+    Updated player model
+    Updated dash logic
+    Updated special logic
+    Updated texturing
+    New visual effects
+    Updated damage type logic
+ 
  - v2.0.2 - Updated UI colors and added player icon for Infernus  
    
  - v2.0.1 - Updated readme bottom text to account for found animations

@@ -51,13 +51,18 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         {
             base.OnEnter();
 
-            sphere = InfernusVFX.CreateFlameSphere(characterBody.transform, hitboxScale);
             hasFired = false;
             duration = baseDuration / attackSpeedStat;
             characterBody.SetAimTimer(duration);
             enrollAfterburnManager();
             //Once you have anims PlayAnimation();
-
+            sphere = InfernusVFX.CreateFlameSphere(
+                characterBody.transform,
+                hitboxScale * 0.5f,
+                0.25f,
+                characterBody.footPosition.y - characterBody.transform.position.y,
+            duration
+            );   // auto-detonate when the windup ends
             //Once you have the audio Util.PlaySound("InfernusNapalm", gameObject);
         }
 
@@ -132,9 +137,10 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             base.OnExit();
             InitializeAttack();
             concussiveAttack.Fire(); 
-            sphere = InfernusVFX.CreateFlameSphere(characterBody.transform, hitboxScale * 0.5f, 0.25f,
+            sphere = InfernusVFX.CreateFlameSphere(characterBody.transform, hitboxScale * 0.8f, 0.25f,
             characterBody.footPosition.y - characterBody.transform.position.y);
-            if (sphere) { sphere.Detonate(); sphere = null; }
+            sphere.Detonate();
+            sphere = null;
             ReafflictAfterburnInArea();
             PlayAnimation(duration);
         }
