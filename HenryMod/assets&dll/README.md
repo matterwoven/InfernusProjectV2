@@ -31,6 +31,9 @@ If people are interested in this project I'll see about importing other characte
     Make default pose an arm up pose for character select, facing camera as well
     Add physics for hair bones, emulating his head flame in Deadlock
     Make larger hair brighter, and only enable during special use
+    Raise infernus up by 0.2f for his idle, his feet sink into the ground on idle
+    Fix hoopoo feather giving infinite jumps during Flame Dash
+    Add item placements on character
     
 
  - v2.0.3 - 
