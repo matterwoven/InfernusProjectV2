@@ -3,6 +3,7 @@ using InfernusMod.Survivors.Infernus.Components;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using static UnityEngine.ParticleSystem.PlaybackState;
 
 namespace InfernusMod.Survivors.Infernus
 {
@@ -17,6 +18,7 @@ namespace InfernusMod.Survivors.Infernus
     /// Everything else (oil, footprints, scorch, cracks, ember sprites, flame noise, fire ramp) is generated
     /// procedurally at Init so there are no asset bundle dependencies.
     /// </summary>
+    /// 
     public static class InfernusVFX
     {
         #region RoR2 resources
@@ -34,6 +36,8 @@ namespace InfernusMod.Survivors.Infernus
         private const int MaxOilDecals = 90;
         private const int MaxFootprints = 48;
         private const int MaxScorches = 40;
+        private const int MaxBurnSpots = 30;
+        private static readonly Queue<GameObject> burnSpots = new Queue<GameObject>();
 
         /// <summary>How long the sphere takes to fade out after the blast (seconds). It fades in place at the blast point.</summary>
         public static float sphereFadeSeconds = 1.5f;
@@ -125,14 +129,36 @@ namespace InfernusMod.Survivors.Infernus
         }
 
         /// <summary>Utility: charred ground patch with glowing cracks that cool off, plus a few embers.</summary>
-        public static void SpawnBurnSpot(Vector3 footPosition, float diameter = 2.6f)
+        public static void SpawnBurnSpot(Vector3 footPosition, float diameter = 5.2f, float emission = 1f)
         {
             if (!initialized) return;
             RaycastHit hit;
             if (!GroundCast(footPosition + Vector3.up * 0.8f, 3f, out hit)) return;
 
-            StampScorch(hit.point, hit.normal, diameter, false);
-            SpawnEmbers(hit.point + hit.normal * 0.15f, 8, diameter * 0.25f, 3f);
+            StampScorch(hit.point, hit.normal, diameter, false, emission);
+            int embers = Mathf.RoundToInt(8f * emission);
+            if (embers > 0)
+                SpawnEmbers(hit.point + hit.normal * 0.15f, embers, diameter * 0.25f, 3f);
+        }
+        public static void StampScorch(Vector3 point, Vector3 normal, float diameter, bool blast, float emission = 1f)
+        {
+            if (!initialized) return;
+
+            GroundDecal decal = NewDecal(blast ? "InfernusBlastScorch" : "InfernusBurnSpot", point, normal, RandomTangent(normal), diameter, blast ? 0.03f : 0.02f);
+            if (blast) decal.Configure(0.2f);          // burn spots: no pop-in, they appear at full size
+
+            const float spotFadeIn = 0.8f;             // must stay under the layer hold times (crack hold is 1.2s)
+            float fadeIn = blast ? 0f : spotFadeIn;
+
+            Color soot = new Color(1f, 1f, 1f, 0.9f);
+            decal.AddLayer(scorchSprite, 1, soot, soot, blast ? 6f : 7f, blast ? 6f : 4f, false, 1f, fadeIn);
+
+            if (blast)
+                decal.AddLayer(ringSprite, 2, new Color(1f, 0.7f, 0.2f, 1f), new Color(0.6f, 0.1f, 0.02f, 1f), 0.8f, 5f, false, 1f);
+            else if (emission > 0f)
+                decal.AddLayer(crackSprite, 2, new Color(1f, 0.8f, 0.25f, emission), new Color(0.7f, 0.1f, 0.02f, emission), 1.2f, 4.5f, false, 1f, fadeIn);
+
+            Track(blast ? scorches : burnSpots, decal.gameObject, blast ? MaxScorches : MaxBurnSpots);
         }
 
         /// <summary>Secondary: start spraying oil. Keep the handle and call SetAim each frame; Stop() when the state ends.</summary>
@@ -592,13 +618,23 @@ namespace InfernusMod.Survivors.Infernus
             // boot print, toe toward +V. Arch sits on the +U side, flip for the other foot.
             footprintSprite = MakeSprite(64, 128, (u, v) =>
             {
-                float ball = Ell(u, v, 0.50f, 0.70f, 0.30f, 0.24f);
-                float heel = Ell(u, v, 0.50f, 0.17f, 0.20f, 0.15f);
-                float arch = Ell(u, v, 0.60f, 0.44f, 0.12f, 0.17f);
-                float m = Mathf.Max(ball, Mathf.Max(heel, arch));
-                float a = Sstep(0f, 0.15f, m);
-                float tread = 0.88f + 0.12f * Mathf.Sin(v * 70f);
-                Color c = Color.Lerp(new Color(1f, 0.55f, 0.05f), new Color(1f, 0.92f, 0.25f), Sstep(0.1f, 0.6f, m));
+                float len = (v - 0.05f) / 0.9f;                       // 0 = heel, 1 = toe
+                if (len <= 0f || len >= 1f) return new Color(0f, 0f, 0f, 0f);
+
+                float w = Mathf.Lerp(0.15f, 0.27f, Sstep(0.3f, 0.72f, len));   // widens toward the ball
+                float waist = Sstep(0.2f, 0.4f, len) * Sstep(0.62f, 0.42f, len);
+
+                float toe = Mathf.Clamp01((len - 0.78f) / 0.22f);     // rounded toe cap
+                float heel = Mathf.Clamp01((0.14f - len) / 0.14f);    // rounded heel cap
+                w *= Mathf.Sqrt(1f - toe * toe) * Mathf.Sqrt(1f - heel * heel);
+
+                float dx = u - 0.5f;
+                float half = dx > 0f ? w * (1f - 0.45f * waist) : w * (1f - 0.08f * waist); // arch cut-in on +U side
+                float edge = 1f - Mathf.Abs(dx) / Mathf.Max(half, 0.001f);
+
+                float a = Sstep(0f, 0.18f, edge);
+                float tread = 0.9f + 0.1f * Mathf.Sin(v * 60f);
+                Color c = Color.Lerp(new Color(1f, 0.55f, 0.05f), new Color(1f, 0.92f, 0.25f), Sstep(0.05f, 0.5f, edge));
                 c.a = a * tread;
                 return c;
             });
@@ -661,6 +697,209 @@ namespace InfernusMod.Survivors.Infernus
                 c.a = 1f;
                 return c;
             });
+
+        }
+        /// <summary>
+        /// One continuous scorch ribbon draped over the ground. Sections are appended as the dash moves; each
+        /// section fades in and out on its own clock via vertex colors. A second mesh with the same geometry
+        /// holds the (optional) glowing cracks.
+        /// </summary>
+        public class BurnTrail : MonoBehaviour
+        {
+            private const int Across = 7;               // verts across the width (more = follows bumps better)
+            private const float SectionLength = 0.6f;   // distance between sections
+            private const float MaxStep = 1.0f;         // height jump that breaks the ribbon (ledges, cliffs)
+            private const float FadeIn = 0.8f;
+            private const float SootHold = 7f, SootFade = 4f;
+            private const float CrackHold = 1.2f, CrackFade = 4.5f;
+
+            private readonly List<Vector3> verts = new List<Vector3>();
+            private readonly List<Vector2> uvs = new List<Vector2>();
+            private readonly List<int> tris = new List<int>();
+            private readonly List<float> births = new List<float>();
+
+            private Mesh sootMesh, crackMesh;
+            private Material sootMat, crackMat;
+            private Color[] sootColors, crackColors;
+
+            private float halfWidth, lift, emission, travelled, lastAddTime;
+            private Vector3 lastPos;
+            private int prevBase;
+            private bool hasPrev, finished;
+
+            public void Begin(Material soot, Material crack, float width, float lift, float emission)
+            {
+                halfWidth = width * 0.5f;
+                this.lift = lift;
+                this.emission = emission;
+                lastAddTime = Time.time;
+                transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity); // verts are in world space
+
+                sootMat = soot;
+                sootMesh = NewMesh();
+                MakeRenderer("Soot", sootMesh, sootMat);
+
+                if (crack != null)
+                {
+                    crackMat = crack;
+                    crackMesh = NewMesh();
+                    MakeRenderer("Cracks", crackMesh, crackMat);
+                }
+            }
+
+            /// <summary>Call every FixedUpdate with the feet position and travel direction. Spacing is handled internally.</summary>
+            public void AddPoint(Vector3 footPos, Vector3 direction)
+            {
+                if (finished || sootMesh == null) return;
+
+                Vector3 fwd = Vector3.ProjectOnPlane(direction, Vector3.up);
+                if (fwd.sqrMagnitude < 0.0001f) return;
+                fwd.Normalize();
+
+                if (hasPrev && Vector3.Distance(footPos, lastPos) < SectionLength) return;
+
+                Vector3 side = Vector3.Cross(Vector3.up, fwd);
+                Vector3[] row = new Vector3[Across];
+                bool[] ok = new bool[Across];
+
+                for (int i = 0; i < Across; i++)
+                {
+                    float t = i / (float)(Across - 1) * 2f - 1f;
+                    Vector3 xz = footPos + side * (t * halfWidth);
+                    row[i] = new Vector3(xz.x, footPos.y, xz.z);
+
+                    RaycastHit hit;
+                    if (Physics.Raycast(new Vector3(xz.x, footPos.y + 2f, xz.z), Vector3.down, out hit, 8f,
+                            LayerIndex.world.mask, QueryTriggerInteraction.Ignore) && hit.normal.y > 0.3f)
+                    {
+                        row[i].y = hit.point.y + lift;
+                        ok[i] = true;
+                    }
+                }
+
+                int mid = Across / 2;
+                if (!ok[mid]) { hasPrev = false; return; }   // no ground under the center: break the ribbon here
+                for (int i = 0; i < Across; i++)
+                    if (!ok[i]) row[i].y = row[mid].y;       // edge over a gap: borrow the center height
+
+                if (hasPrev && Mathf.Abs(row[mid].y - verts[prevBase + mid].y) > MaxStep) hasPrev = false;
+                if (hasPrev) travelled += Vector3.Distance(lastPos, footPos);
+
+                int baseIdx = verts.Count;
+                float v = travelled / (halfWidth * 2f);      // texture tiles once per width of travel
+                for (int i = 0; i < Across; i++)
+                {
+                    verts.Add(row[i]);
+                    uvs.Add(new Vector2(i / (float)(Across - 1), v));
+                }
+
+                if (hasPrev)
+                {
+                    for (int i = 0; i < Across - 1; i++)
+                    {
+                        int a = prevBase + i, b = prevBase + i + 1, c = baseIdx + i, d = baseIdx + i + 1;
+                        tris.Add(a); tris.Add(c); tris.Add(b);
+                        tris.Add(b); tris.Add(c); tris.Add(d);
+                    }
+                }
+
+                births.Add(Time.time);
+                prevBase = baseIdx;
+                lastPos = footPos;
+                lastAddTime = Time.time;
+                hasPrev = true;
+
+                ApplyGeometry(sootMesh);
+                if (crackMesh) ApplyGeometry(crackMesh);
+                UpdateColors();
+            }
+
+            /// <summary>Stop extending. The existing trail fades out and the object cleans itself up.</summary>
+            public void Finish() { finished = true; }
+
+            private void Update()
+            {
+                if (!finished && Time.time - lastAddTime > 5f) finished = true; // failsafe if the state never called Finish
+
+                if (births.Count == 0)
+                {
+                    if (finished) Destroy(gameObject);
+                    return;
+                }
+
+                UpdateColors();
+
+                if (finished && Time.time - lastAddTime > SootHold + SootFade + 0.2f) Destroy(gameObject);
+            }
+
+            private void UpdateColors()
+            {
+                int n = verts.Count;
+                if (n == 0) return;
+                if (sootColors == null || sootColors.Length != n) sootColors = new Color[n];
+                if (crackMesh && (crackColors == null || crackColors.Length != n)) crackColors = new Color[n];
+
+                float now = Time.time;
+                Color hot = new Color(1f, 0.8f, 0.25f), cool = new Color(0.7f, 0.1f, 0.02f);
+
+                for (int s = 0; s < births.Count; s++)
+                {
+                    float age = now - births[s];
+                    float inT = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(age / FadeIn));
+
+                    float sootA = inT * (1f - Mathf.Clamp01((age - SootHold) / SootFade));
+                    Color sc = new Color(1f, 1f, 1f, sootA);
+
+                    float crackT = Mathf.Clamp01((age - CrackHold) / CrackFade);
+                    Color cc = Color.Lerp(hot, cool, crackT);
+                    cc.a = emission * inT * (1f - crackT);
+
+                    for (int i = 0; i < Across; i++)
+                    {
+                        int idx = s * Across + i;
+                        sootColors[idx] = sc;
+                        if (crackColors != null) crackColors[idx] = cc;
+                    }
+                }
+
+                sootMesh.colors = sootColors;
+                if (crackMesh) crackMesh.colors = crackColors;
+            }
+
+            private void ApplyGeometry(Mesh m)
+            {
+                m.Clear();
+                m.SetVertices(verts);
+                m.SetUVs(0, uvs);
+                m.SetTriangles(tris, 0);
+                m.RecalculateBounds();
+            }
+
+            private static Mesh NewMesh()
+            {
+                Mesh m = new Mesh();
+                m.MarkDynamic();
+                return m;
+            }
+
+            private void MakeRenderer(string name, Mesh mesh, Material mat)
+            {
+                GameObject child = new GameObject(name);
+                child.transform.SetParent(transform, false);
+                child.AddComponent<MeshFilter>().sharedMesh = mesh;
+                MeshRenderer mr = child.AddComponent<MeshRenderer>();
+                mr.sharedMaterial = mat;
+                mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                mr.receiveShadows = false;
+            }
+
+            private void OnDestroy()
+            {
+                if (sootMat) Destroy(sootMat);
+                if (crackMat) Destroy(crackMat);
+                if (sootMesh) Destroy(sootMesh);
+                if (crackMesh) Destroy(crackMesh);
+            }
         }
         #endregion
     }

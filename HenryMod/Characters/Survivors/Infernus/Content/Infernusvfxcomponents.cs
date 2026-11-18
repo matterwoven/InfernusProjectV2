@@ -8,6 +8,7 @@ namespace InfernusMod.Survivors.Infernus.Components
     /// A sprite decal lying on a surface, made of one or more layers that hold, then fade (optionally shifting color).
     /// Destroys itself when every layer is gone.
     /// </summary>
+    /// 
     public class GroundDecal : MonoBehaviour
     {
         private struct Layer
@@ -17,6 +18,7 @@ namespace InfernusMod.Survivors.Infernus.Components
             public Color endColor;
             public float hold;
             public float fade;
+            public float fadeIn;
         }
 
         private readonly List<Layer> layers = new List<Layer>();
@@ -34,7 +36,7 @@ namespace InfernusMod.Survivors.Infernus.Components
             return this;
         }
 
-        public SpriteRenderer AddLayer(Sprite sprite, int order, Color color, Color endColor, float hold, float fade, bool flipX, float scale)
+        public SpriteRenderer AddLayer(Sprite sprite, int order, Color color, Color endColor, float hold, float fade, bool flipX, float scale, float fadeIn = 0f)
         {
             GameObject child = new GameObject("Layer");
             child.transform.SetParent(transform, false);
@@ -48,7 +50,7 @@ namespace InfernusMod.Survivors.Infernus.Components
             sr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             sr.receiveShadows = false;
 
-            layers.Add(new Layer { renderer = sr, color = color, endColor = endColor, hold = hold, fade = fade });
+            layers.Add(new Layer { renderer = sr, color = color, endColor = endColor, hold = hold, fade = fade, fadeIn = fadeIn });
             life = Mathf.Max(life, hold + fade);
             return sr;
         }
@@ -77,7 +79,8 @@ namespace InfernusMod.Survivors.Infernus.Components
                 if (!l.renderer) continue;
                 float fadeT = age <= l.hold ? 0f : Mathf.Clamp01((age - l.hold) / Mathf.Max(0.01f, l.fade));
                 Color c = Color.Lerp(l.color, l.endColor, fadeT);
-                c.a = l.color.a * (1f - fadeT);
+                float inT = l.fadeIn > 0f ? Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(age / l.fadeIn)) : 1f;
+                c.a = l.color.a * (1f - fadeT) * inT;
                 l.renderer.color = c;
             }
 

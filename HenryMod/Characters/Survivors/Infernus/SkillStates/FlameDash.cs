@@ -52,10 +52,12 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
         private float distanceSinceLastZone;
         private static Afterburn afterburnController;
         public static float footstepInterval = 1.1f;
-        public static float burnSpotDiameter = 2.8f;
+        public static float burnSpotDiameter = 10f;
         private float distanceSinceLastFootstep;
         private float distanceSinceLastBurnSpot;
         private bool leftFootNext;
+        public static float burnSpotInterval = 4f;     // a bit less than the diameter so spots overlap into a trail
+        public static float burnSpotEmission = 0.1f;   // 0 = soot only, 1 = full glowing cracks
 
         public override void OnEnter()
         {
@@ -183,6 +185,12 @@ namespace InfernusMod.Survivors.Infernus.SkillStates
             
             //Base speed
             speedThisFrame = moveSpeedStat + Mathf.Lerp(initialSpeedAdd, finalSpeedAdd, transition);
+
+            while (distanceSinceLastBurnSpot >= burnSpotInterval)
+            {
+                distanceSinceLastBurnSpot -= burnSpotInterval;
+                InfernusVFX.SpawnBurnSpot(characterBody.footPosition, burnSpotDiameter, burnSpotEmission);
+            }
 
             //currently bugged, jumps with hoopoo feather are infinite
             if (inputBank.jump.justPressed && base.characterMotor.jumpCount < base.characterBody.maxJumpCount)

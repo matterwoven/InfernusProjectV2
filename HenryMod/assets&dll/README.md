@@ -20,6 +20,20 @@ If people are interested in this project I'll see about importing other characte
   
   
 ## Changelog
+PendingFor2.0.5: Multiplayer Fix
+    To do (When player isn't host):
+    Flame Dash does not damage enemies
+    Afterburn buildup doesn't apply on primary fire hit
+    Concussive Combustion works as intended, but needs a nerf
+    On Death player is stuck in limbo, unable to respawn, become a drone, or spectate (Addendum: If host dies, death completes regardless)
+    Visuals work as intended across network in 2 player mode
+    If Host:
+    No issues :) (No vis, ui or vfx issues)
+
+    Work on Fun Factor
+
+
+PendingFor2.0.4
  - v2.0.4 -
     To do:
     Add startStop animation for when player movement hits zero, returning to standing, massively improves jank
@@ -34,6 +48,7 @@ If people are interested in this project I'll see about importing other characte
     Raise infernus up by 0.2f for his idle, his feet sink into the ground on idle
     Fix hoopoo feather giving infinite jumps during Flame Dash
     Add item placements on character
+PendingFor2.0.4End
     
 
  - v2.0.3 - 
